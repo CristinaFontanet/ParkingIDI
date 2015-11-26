@@ -10,11 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView android:text="@string/hey" android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/sd"
-            android:layout_weight="40" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -31,19 +26,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p1"
-                    android:layout_weight="10" />
+                    android:layout_weight="10"
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p2"
-                    android:layout_weight="10" />
+                    android:layout_weight="10"
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p3"
-                    android:layout_weight="10" />
+                    android:layout_weight="10"
+                    android:src="@drawable/simplegreencartopviewsquare" />
             </LinearLayout>
 
             <LinearLayout
@@ -57,21 +55,21 @@
                     android:layout_height="match_parent"
                     android:id="@+id/p4"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p5"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p6"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
             </LinearLayout>
 
             <LinearLayout
@@ -85,21 +83,21 @@
                     android:layout_height="match_parent"
                     android:id="@+id/p7"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p8"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p9"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
             </LinearLayout>
 
             <LinearLayout
@@ -113,21 +111,21 @@
                     android:layout_height="match_parent"
                     android:id="@+id/p10"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p11"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p12"
                     android:layout_weight="5"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
             </LinearLayout>
 
             <LinearLayout
@@ -141,23 +139,44 @@
                     android:layout_height="match_parent"
                     android:id="@+id/p13"
                     android:layout_weight="10"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p14"
                     android:layout_weight="10"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/p15"
                     android:layout_weight="10"
-                    android:src="@drawable/SimpleGreenCarTopViewSquare" />
+                    android:src="@drawable/simplegreencartopviewsquare" />
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="40">
+
+            <TextView android:text="@string/hey" android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/sd"
+                android:layout_weight="40" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nou"
+                android:id="@+id/nou" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

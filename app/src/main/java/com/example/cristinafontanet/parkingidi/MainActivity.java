@@ -1,17 +1,21 @@
 package com.example.cristinafontanet.parkingidi;
 
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener, NewCar.OnCompleteListener, NewCar.OnFragmentInteractionListener {
 
     ImageView p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15;
-
+    Button nou;
     Controller bigControl;
 
     public static final int SHORT = 3;
@@ -19,6 +23,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
    // protected DateFormat();
 
     private void iniButtons() {
+
+        nou = (Button)findViewById(R.id.nou);
+        nou.setOnClickListener(this);
+
         p1 = (ImageView)findViewById(R.id.p1);
         p1.setOnClickListener(this);
 
@@ -98,6 +106,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.nou:
+                    FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+                    DialogFragment dialogFragment = NewCar.newInstance();
+                    dialogFragment.show(frag, "bu");
+
+            }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
