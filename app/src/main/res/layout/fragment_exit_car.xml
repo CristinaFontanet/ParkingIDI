@@ -1,0 +1,82 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cristinafontanet.parkingidi.ExitCar">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/exitDialogMessage"
+            android:id="@+id/exitDialogMes"
+            android:layout_weight="10" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:id="@+id/dia"
+            android:text="@string/edmDia" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/edmMatr"
+            android:id="@+id/matricula"
+            android:layout_weight="10" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/edmHoraEntrada"
+            android:id="@+id/hora"
+            android:layout_weight="10" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/edmHoraSortida"
+            android:id="@+id/horaSort"
+            android:layout_weight="10" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/edmCalculPreu1"
+            android:id="@+id/calculPreu"
+            android:layout_weight="10" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/edmPreu"
+            android:id="@+id/preu"
+            android:layout_weight="10" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="10">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Cancel"
+                android:id="@+id/bcancela"
+                android:layout_weight="10" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Paga"
+                android:id="@+id/bPaga"
+                android:layout_weight="10" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -2,84 +2,142 @@ package com.example.cristinafontanet.parkingidi;
 
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
-import android.net.Uri;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.Toast;
+import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener, NewCar.OnCompleteListener, NewCar.OnFragmentInteractionListener {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener, NewCar.OnCompleteListener, ExitCar.OnFragmentInteractionListener {
 
-    ImageView p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15;
-    Button nou;
+    static ArrayList<Button> buttonPlots;
+    Button bnew, bhisto, bday;
     Controller bigControl;
+    int actualCar;
 
-    public static final int SHORT = 3;
-
-   // protected DateFormat();
+    static Drawable freeImage, busyImage;
 
     private void iniButtons() {
+        buttonPlots = new ArrayList<>(15);
+        freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
+        busyImage = getResources().getDrawable(R.drawable.simpleredquare);
 
-        nou = (Button)findViewById(R.id.nou);
-        nou.setOnClickListener(this);
+        bday = (Button)findViewById(R.id.bDiari);
+        bday.setOnClickListener(this);
 
-        p1 = (ImageView)findViewById(R.id.p1);
+        bnew = (Button)findViewById(R.id.bnou);
+        bnew.setOnClickListener(this);
+
+        bhisto = (Button)findViewById(R.id.bhistorial);
+        bhisto.setOnClickListener(this);
+
+        Button p1;
+        p1 = (Button)findViewById(R.id.p1);
         p1.setOnClickListener(this);
+        if(bigControl.isFree(1)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p2 = (ImageView)findViewById(R.id.p2);
-        p2.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p2);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(2)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p3 = (ImageView)findViewById(R.id.p3);
-        p3.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p3);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(3)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p4 = (ImageView)findViewById(R.id.p4);
-        p4.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p4);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(4)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p5 = (ImageView)findViewById(R.id.p5);
-        p5.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p5);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(5)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p6 = (ImageView)findViewById(R.id.p6);
-        p6.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p6);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(6)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p7 = (ImageView)findViewById(R.id.p7);
-        p7.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p7);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(7)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p8 = (ImageView)findViewById(R.id.p8);
-        p8.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p8);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(8)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p9 = (ImageView)findViewById(R.id.p9);
-        p9.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p9);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(9)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p10 = (ImageView)findViewById(R.id.p10);
-        p10.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p10);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(10)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p11 = (ImageView)findViewById(R.id.p11);
-        p11.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p11);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(11)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p12 = (ImageView)findViewById(R.id.p12);
-        p12.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p12);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(12)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p13 = (ImageView)findViewById(R.id.p13);
-        p13.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p13);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(13)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p14 = (ImageView)findViewById(R.id.p14);
-        p14.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p14);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(14)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
 
-        p15 = (ImageView)findViewById(R.id.p15);
-        p15.setOnClickListener(this);
+        p1 = (Button)findViewById(R.id.p15);
+        p1.setOnClickListener(this);
+        if(bigControl.isFree(0)) p1.setBackground(freeImage);
+        else p1.setBackground(busyImage);
+        buttonPlots.add(p1);
+
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bigControl = new Controller(this);
-        bigControl.estatPakingBD();
+        bigControl.BDPakingStaus();
         iniButtons();
-
     }
 
     @Override
@@ -100,6 +158,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id==R.id.menu_drain) {
+            bigControl.drainParking();
+            for(Button b: buttonPlots) {
+                b.setBackground(freeImage);
+            }
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -107,16 +171,102 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
             switch (view.getId()){
-                case R.id.nou:
-                    FragmentTransaction frag = this.getFragmentManager().beginTransaction();
-                    DialogFragment dialogFragment = NewCar.newInstance();
-                    dialogFragment.show(frag, "bu");
-
+                case R.id.bnou:
+                    if(bigControl.freePeaches()>0) {
+                        FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+                        DialogFragment dialogFragment = NewCar.newInstance();
+                        dialogFragment.show(frag, "AskRegistration");
+                    }
+                    else {
+                        FragmentTransaction frag = getFragmentManager().beginTransaction();
+                        DialogFragment dialogFragment = BasicDialog.newInstance(getString(R.string.busyParking), getString(R.string.ok));
+                        dialogFragment.show(frag,"ShowMessage");
+                    }
+                    break;
+                case R.id.bhistorial:
+                    bigControl.saveActualState();
+                    break;
+                case R.id.p1:
+                    carClicked(1);
+                    break;
+                case R.id.p2:
+                    carClicked(2);
+                    break;
+                case R.id.p3:
+                    carClicked(3);
+                    break;
+                case R.id.p4:
+                    carClicked(4);
+                    break;
+                case R.id.p5:
+                    carClicked(5);
+                    break;
+                case R.id.p6:
+                    carClicked(6);
+                    break;
+                case R.id.p7:
+                    carClicked(7);
+                    break;
+                case R.id.p8:
+                    carClicked(8);
+                    break;
+                case R.id.p9:
+                    carClicked(9);
+                    break;
+                case R.id.p10:
+                    carClicked(10);
+                    break;
+                case R.id.p11:
+                    carClicked(11);
+                    break;
+                case R.id.p12:
+                    carClicked(12);
+                    break;
+                case R.id.p13:
+                    carClicked(13);
+                    break;
+                case R.id.p14:
+                    carClicked(14);
+                    break;
+                case R.id.p15:
+                    carClicked(15);
+                    break;
+                default:
+                    break;
             }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
+    private void carClicked(int i) {
+        if(!bigControl.isFree(i - 1)) {
+            actualCar = i;
+            FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+            DialogFragment dialogFragment = ExitCar.newInstance(bigControl.getCarReg(i - 1), bigControl.getCarDayEntry(i-1), bigControl.getCarHourEntry(i-1));
+            dialogFragment.show(frag, "ExitRegistre");
+        }
+        else Log.i("Parking", "Aquesta plasa esta lliure");
+    }
 
+    @Override
+    public void onComplete(String res) {
+        Log.i("MATR",res);
+        if(!res.isEmpty()) {
+            Log.i("matr", "el cotxe "+res+ " ocupa una plasa");
+            bigControl.newBusyPlot(res);
+        }
+        else {
+            Toast toast = Toast.makeText(this, getString(R.string.introdueix_matricula), Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Boolean uri) {
+        Log.i("MATRRRR", "MainActivity rep onFragmentInteraction de ExitCar");
+        if(uri){
+            buttonPlots.get(actualCar - 1).setBackground(freeImage);
+            bigControl.newFreePlot(actualCar-1);
+            Log.i("Matr", "Falta guardar al registre la sortida del cotxe");
+        }
     }
 }

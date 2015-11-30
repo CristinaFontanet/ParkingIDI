@@ -2,9 +2,20 @@
 <resources>
 
     <string name="app_name">ParkingIDI</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name= "hey">Hey! </string>
+    <string name="menu_drain">Buida el Parking</string>
+    <string name="hey">Hey! </string>
+    <string name="introdueix_matricula">Introdueix una matricula si us plau.</string>
+    <string name="busyParking">El parking està ple, no pot entrar cap més cotxe.</string>
+
+    <string name="ok">Ok</string>
+    <string name="exitDialogMessage">Dades de sortida del cotxe: </string>
+    <string name="edmMatr">Matricula: </string>
+    <string name="edmDia">El dia: </string>
+    <string name="edmHoraEntrada">Hora d\'entrada:   </string>
+    <string name="edmHoraSortida">Hora de sortida: </string>
+    <string name="edmCalculPreu1">Tenint en compte que el preu és de 0,02 cèntims al minut i que el cotxe n\'hi ha estat </string>
+    <string name="edmPreu">El preu a pagar és</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
