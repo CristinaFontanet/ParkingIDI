@@ -9,19 +9,25 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Cristina on 25/11/2015.
  */
 public class Controller {
     static private int maxPlaces = 15;
+    int busyPlots;
     ArrayList<Parking> plots;
     BD dades;
     SQLiteDatabase db;
 
     public Controller(Activity vista) {
-        plots = new ArrayList<>(15);
+        Parking aux = null;
+        plots = new ArrayList<Parking>(Collections.nCopies(maxPlaces, aux));
         dades = new BD(vista);
+        busyPlots = 0;
     }
 
     public void BDPakingStaus() {
@@ -34,31 +40,44 @@ public class Controller {
         if(curs.moveToFirst()) {
             do {
                 Parking nou = new Parking(curs.getString(1),Date.valueOf(curs.getString(2)), Time.valueOf(curs.getString(3)) );
-                plots.add(curs.getInt(0), nou);
+                plots.set(curs.getInt(0), nou);
+                ++busyPlots;
             } while(curs.moveToNext());
         }
         db.close();
     }
 
     public int freePeaches() {
-        Log.i("Park", "Hi ha " + plots.size() + " plases ocupades");
-        return maxPlaces- plots.size();
+        Log.i("Park", "Hi ha " +(maxPlaces- busyPlots) + " plases ocupades");
+        return maxPlaces- busyPlots; //plots.size();
     }
 
     public void newBusyPlot(String matr) {
-       // java.sql.Date aux = new java.sql.Date();
         Calendar cal = Calendar.getInstance();
         Date aux = new Date(cal.getTime().getTime());
         Time aux2 = new Time(cal.getTime().getTime());
-        Log.i("MATR", "Ocupem plasa el dia "+aux+" a les "+aux2+"a la plasa "+ (plots.size()));
         Parking nou = new Parking(matr,new Date(cal.getTime().getTime()), new Time(cal.getTime().getTime()));
         //plots.add(nou);
-        plots.add(plots.size(),nou);
-        MainActivity.buttonPlots.get(plots.size()-1).setBackground(MainActivity.busyImage);
-
+        Random r = new Random();
+        int where = r.nextInt(maxPlaces);
+        boolean found = false;
+        Log.i("Random","where: "+where);
+        for(int i =0; i < plots.size() && !found; ++i) {
+            if(plots.get((where+i)%maxPlaces)==null) {
+                Log.i("Random","a la i: " + i +", on la suma es: "+(where+i)+", on el modul passa a donar: "+ (where+i)%maxPlaces);
+                plots.set((where+i)%maxPlaces, nou);
+                ++busyPlots;
+                MainActivity.buttonPlots.get((where+i)%maxPlaces).setBackground(MainActivity.busyImage);
+                Log.i("MATR", "Ocupem plasa el dia " + aux + " a les " + aux2 + "a la plasa " + (where+i)%maxPlaces);
+                found = true;
+            }
+            else Log.i("Random","a la i "+i+", la plasa "+(where+i)%maxPlaces +" esta ocupada");
+        }
+        if(!found) Log.i("Matr", "Ha passat algo i no s'ha ocupat cap plasa");
     }
 
     public void newFreePlot(int num) {
+        --busyPlots;
         plots.set(num, null);
     }
 
@@ -84,8 +103,10 @@ public class Controller {
         db = dades.getWritableDatabase();
         dades.resetActualState(db);
         for(Integer i = 0; i < plots.size(); ++i) {
-            String[] s = {};
-            db.execSQL("INSERT INTO TActual (plot,matricula,day,entryHour) VALUES ('" + i.toString() + "','" + plots.get(i).getMatricula() + "','"+  plots.get(i).getDay().toString()+ "','"+ plots.get(i).getEntryHour()+")", s);
+            if(plots.get(i)!=null) {
+                String[] s = {};
+                db.execSQL("INSERT INTO TActual (plot,matricula,day,entryHour) VALUES ('" + i.toString() + "','" + plots.get(i).getMatricula() + "','" + plots.get(i).getDay().toString() + "','" + plots.get(i).getEntryHour() + ")", s);
+            }
         }
         db.close();
     }
@@ -104,5 +125,8 @@ public class Controller {
 
     public void drainParking() {
         plots.clear();
+        Parking aux = null;
+        plots = new ArrayList<>(Collections.nCopies(maxPlaces, aux));
+        busyPlots = 0;
     }
 }
