@@ -57,7 +57,6 @@ public class Controller {
         Date aux = new Date(cal.getTime().getTime());
         Time aux2 = new Time(cal.getTime().getTime());
         Parking nou = new Parking(matr,new Date(cal.getTime().getTime()), new Time(cal.getTime().getTime()));
-        //plots.add(nou);
         Random r = new Random();
         int where = r.nextInt(maxPlaces);
         boolean found = false;
@@ -105,7 +104,7 @@ public class Controller {
         for(Integer i = 0; i < plots.size(); ++i) {
             if(plots.get(i)!=null) {
                 String[] s = {};
-                db.execSQL("INSERT INTO TActual (plot,matricula,day,entryHour) VALUES ('" + i.toString() + "','" + plots.get(i).getMatricula() + "','" + plots.get(i).getDay().toString() + "','" + plots.get(i).getEntryHour() + ")", s);
+                db.execSQL("INSERT INTO TActual (plot,matricula,day,entryHour) VALUES ('" + i.toString() + "','" + plots.get(i).getMatricula() + "','" + plots.get(i).getDay().toString() + "','" + plots.get(i).getEntryHour() + "')", s);
             }
         }
         db.close();

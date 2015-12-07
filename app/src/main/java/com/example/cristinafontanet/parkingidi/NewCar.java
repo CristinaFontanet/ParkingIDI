@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,7 +32,7 @@ public class NewCar extends android.app.DialogFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_new_car, container, false);
-
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         matr = (EditText) v.findViewById(R.id.editText);
         enter = (Button) v.findViewById(R.id.button);
         enter.setOnClickListener(this);

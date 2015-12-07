@@ -17,17 +17,17 @@
             android:id="@+id/exitDialogMes"
             android:layout_weight="10" />
 
-        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:id="@+id/dia"
-            android:text="@string/edmDia" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/edmMatr"
             android:id="@+id/matricula"
             android:layout_weight="10" />
+
+        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:id="@+id/dia"
+            android:text="@string/edmDia" />
 
         <TextView
             android:layout_width="match_parent"
