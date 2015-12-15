@@ -3,6 +3,7 @@ package com.example.cristinafontanet.parkingidi;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,10 +22,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button bnew, bhisto, bday;
     static private Controller bigControl;
     int actualCar;
-
-    public Controller getController() {
-        return bigControl;
-    }
     static Drawable freeImage, busyImage;
 
     private void iniButtons() {
@@ -246,7 +243,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             DialogFragment dialogFragment = ExitCar.newInstance(i-1,bigControl);
             dialogFragment.show(frag, "ExitRegistre");
         }
-        else Log.i("Parking", "Aquesta plasa esta lliure");
+        else {
+            showFastToast("Plaça lliure");
+        }
     }
 
     @Override
@@ -263,12 +262,26 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
+    private void showFastToast(String message) {
+        final Toast toast = Toast.makeText(this,message , Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 500);
+    }
+
     @Override
     public void onFragmentInteraction(Boolean uri) {
         Log.i("MATRRRR", "MainActivity rep onFragmentInteraction de ExitCar");
         if(uri){
             buttonPlots.get(actualCar - 1).setBackground(freeImage);
-            bigControl.newFreePlot(actualCar-1);
+            bigControl.newFreePlot(actualCar - 1);
+            showFastToast("Falta guardar al registre la sortida del cotxe i guardar-ho");
             Log.i("Matr", "Falta guardar al registre la sortida del cotxe");
         }
     }

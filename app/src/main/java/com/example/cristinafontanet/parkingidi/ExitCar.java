@@ -8,20 +8,19 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+/*
+ * Created by CristinaFontanet on 25/11/2015.
+ */
 public class ExitCar extends android.app.DialogFragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
-
     private static final double pricePerMinute = 0.02;
-    static Controller bigControl;
-
-    // TODO: Rename and change types of parameters
+    private static Controller bigControl;
     private String mMatr;
     private Timestamp mDay;
     private int car;
@@ -40,9 +39,7 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
         return fragment;
     }
 
-    public ExitCar() {
-        // Required empty public constructor
-    }
+    public ExitCar() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +68,6 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
 
         SimpleDateFormat diaF = new SimpleDateFormat("dd/MM/yyy");
         SimpleDateFormat horaF = new SimpleDateFormat("HH:mm:ss");
-        SimpleDateFormat horaF2 = new SimpleDateFormat("hh:mm:ss");
         Date actualT = new Date(Calendar.getInstance().getTime().getTime());
         int days = bigControl.difDays(mDay);
 
@@ -101,8 +97,7 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(activity.toString()+ " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -132,7 +127,6 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Boolean uri);
+         void onFragmentInteraction(Boolean uri);
     }
 }

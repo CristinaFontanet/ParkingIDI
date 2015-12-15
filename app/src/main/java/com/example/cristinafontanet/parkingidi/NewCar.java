@@ -14,10 +14,7 @@ public class NewCar extends android.app.DialogFragment implements View.OnClickLi
     EditText matr;
     Button enter;
 
-    public static NewCar newInstance() {
-        NewCar fragment = new NewCar();
-        return fragment;
-    }
+    public static NewCar newInstance() {return new NewCar();}
 
     public NewCar() {
         // Required empty public constructor
@@ -66,9 +63,7 @@ public class NewCar extends android.app.DialogFragment implements View.OnClickLi
         dismiss();
     }
 
-    public static interface OnCompleteListener {
-        public abstract void onComplete(String res);
-    }
+    public interface OnCompleteListener { void onComplete(String res); }
 
 
 }

@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-/**
- * Created by Cristina on 15/12/2015.
+/*
+ * Created by CristinaFontanet on 15/12/2015.
  */
 public class BDController {
     BD dades;
@@ -23,23 +21,22 @@ public class BDController {
     public int bDParkingStatus(ArrayList<Parking> plots) {
         int busyPlots = 0;
         db = dades.getReadableDatabase();
-        Cursor curs = null;
+        Cursor curs;
         if(db != null) {
             String[] s = {};
             curs = db.rawQuery("SELECT * FROM TActual", s);
+            if(curs.moveToFirst()) {
+                do {
+                    Timestamp auxi = new Timestamp(curs.getLong(2));
+                    Parking nou = new Parking(curs.getString(1),auxi);
+                    plots.set(curs.getInt(0), nou);
+                    ++busyPlots;
+                    Log.i("LOADBD", "Carrego a la pos " + curs.getInt(0) + " el cotxe amb matricula " + plots.get(curs.getInt(0)).getMatricula() + " el dia " + auxi );
+                } while(curs.moveToNext());
+            }
+            curs.close();
+            db.close();
         }
-        if(curs.moveToFirst()) {
-            do {
-                Timestamp auxi = new Timestamp(curs.getLong(2));
-                Date aux = new Date(auxi.getTime());
-
-                Parking nou = new Parking(curs.getString(1),auxi);
-                plots.set(curs.getInt(0), nou);
-                ++busyPlots;
-                Log.i("LOADBD", "Carrego a la pos " + curs.getInt(0) + " el cotxe amb matricula " + plots.get(curs.getInt(0)).getMatricula() + " el dia " + auxi );
-            } while(curs.moveToNext());
-        }
-        db.close();
         Log.i("LOAD", "Despres de carregar el parking, tenim "+busyPlots+" places ocupades");
         return busyPlots;
     }

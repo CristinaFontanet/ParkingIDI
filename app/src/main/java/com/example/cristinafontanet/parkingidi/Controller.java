@@ -1,8 +1,6 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.sql.Date;
@@ -15,8 +13,8 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Cristina on 25/11/2015.
+/*
+ * Created by CristinaFontanet on 25/11/2015.
  */
 public final class Controller {
     static private int maxPlaces = 15;
@@ -27,7 +25,7 @@ public final class Controller {
     BDController bdContr;
 
     public Controller(Activity vista) {
-        plots = new ArrayList<Parking>(Collections.nCopies(maxPlaces, (Parking)null));
+        plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
         busyPlots = 0;
         bdContr = new BDController(vista);
     }
@@ -96,8 +94,7 @@ public final class Controller {
 
     public void drainParking() {
         plots.clear();
-        Parking aux = null;
-        plots = new ArrayList<>(Collections.nCopies(maxPlaces, aux));
+        plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
         busyPlots = 0;
     }
 
@@ -116,7 +113,7 @@ public final class Controller {
 
         int days = difDays(mDay);
 
-        double  min=0.0;
+        double  min;
         if(days>0) {
             cal.add(Calendar.DATE,1);
             cal.set(Calendar.HOUR_OF_DAY,0);
