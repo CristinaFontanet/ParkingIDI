@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -20,9 +19,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     static ArrayList<Button> buttonPlots;
     Button bnew, bhisto, bday;
-    Controller bigControl;
+    static private Controller bigControl;
     int actualCar;
 
+    public Controller getController() {
+        return bigControl;
+    }
     static Drawable freeImage, busyImage;
 
     private void iniButtons() {
@@ -126,7 +128,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         p1 = (Button)findViewById(R.id.p15);
         p1.setOnClickListener(this);
-        if(bigControl.isFree(0)) p1.setBackground(freeImage);
+        if(bigControl.isFree(15)) p1.setBackground(freeImage);
         else p1.setBackground(busyImage);
         buttonPlots.add(p1);
 
@@ -173,7 +175,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onClick(View view) {
             switch (view.getId()){
                 case R.id.bnou:
-                    if(bigControl.freePeaches()>0) {
+                    if(bigControl.getNumFreePeaches()>0) {
                         FragmentTransaction frag = this.getFragmentManager().beginTransaction();
                         DialogFragment dialogFragment = NewCar.newInstance();
                         dialogFragment.show(frag, "AskRegistration");
@@ -238,10 +240,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void carClicked(int i) {
-        if(!bigControl.isFree(i - 1)) {
+        if(!bigControl.isFree(i)) {
             actualCar = i;
             FragmentTransaction frag = this.getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = ExitCar.newInstance(bigControl.getCarReg(i - 1), bigControl.getCarDayEntry(i-1), bigControl.getCarHourEntry(i-1));
+            DialogFragment dialogFragment = ExitCar.newInstance(i-1,bigControl);
             dialogFragment.show(frag, "ExitRegistre");
         }
         else Log.i("Parking", "Aquesta plasa esta lliure");

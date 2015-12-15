@@ -29,8 +29,7 @@ public class NewCar extends android.app.DialogFragment implements View.OnClickLi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_new_car, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         matr = (EditText) v.findViewById(R.id.editText);

@@ -14,7 +14,7 @@
     <string name="edmDia">El dia: </string>
     <string name="edmHoraEntrada">Hora d\'entrada:   </string>
     <string name="edmHoraSortida">Hora de sortida: </string>
-    <string name="edmCalculPreu1">Amb un preu de 0,02 cèntims al minut i una estada de </string>
+    <string name="edmCalculPreu1">Amb un preu de 0,02 cènt/min i una estada de </string>
     <string name="edmPreu">El preu a pagar és</string>
 
 <!-- TODO: Remove or change this placeholder text -->
