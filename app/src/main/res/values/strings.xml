@@ -4,6 +4,7 @@
     <string name="app_name">ParkingIDI</string>
     <string name="action_settings">Settings</string>
     <string name="menu_drain">Buida el Parking</string>
+    <string name="menu_historicDrain">Buida tot l\'historic</string>
     <string name="hey">Hey! </string>
     <string name="introdueix_matricula">Introdueix una matricula si us plau.</string>
     <string name="busyParking">El parking està ple, no pot entrar cap més cotxe.</string>

@@ -40,95 +40,59 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         Button p1;
         p1 = (Button)findViewById(R.id.p1);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(1)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 0);
 
         p1 = (Button)findViewById(R.id.p2);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(2)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 1);
 
         p1 = (Button)findViewById(R.id.p3);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(3)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 2);
 
         p1 = (Button)findViewById(R.id.p4);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(4)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 3);
 
         p1 = (Button)findViewById(R.id.p5);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(5)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 4);
 
         p1 = (Button)findViewById(R.id.p6);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(6)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 5);
 
         p1 = (Button)findViewById(R.id.p7);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(7)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 6);
 
         p1 = (Button)findViewById(R.id.p8);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(8)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 7);
 
         p1 = (Button)findViewById(R.id.p9);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(9)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 8);
 
         p1 = (Button)findViewById(R.id.p10);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(10)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 9);
 
         p1 = (Button)findViewById(R.id.p11);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(11)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 10);
 
         p1 = (Button)findViewById(R.id.p12);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(12)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 11);
 
         p1 = (Button)findViewById(R.id.p13);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(13)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 12);
 
         p1 = (Button)findViewById(R.id.p14);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(14)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 13);
 
         p1 = (Button)findViewById(R.id.p15);
-        p1.setOnClickListener(this);
-        if(bigControl.isFree(15)) p1.setBackground(freeImage);
-        else p1.setBackground(busyImage);
-        buttonPlots.add(p1);
+        fillButton(p1, 14);
+    }
 
+    private void fillButton(Button p1, int i) {
+        p1.setOnClickListener(this);
+        if (bigControl.isFree(i)) p1.setBackground(freeImage);
+        else{
+            p1.setBackground(busyImage);
+            p1.setText(bigControl.getCarReg(i));
+        }
+        buttonPlots.add(p1);
     }
 
     @Override
@@ -162,7 +126,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             bigControl.drainParking();
             for(Button b: buttonPlots) {
                 b.setBackground(freeImage);
+                b.setText("");
             }
+        }
+        else if (id==R.id.menu_historicDrain) {
+            bigControl.drainHistoric();
         }
 
         return super.onOptionsItemSelected(item);
@@ -184,7 +152,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     }
                     break;
                 case R.id.bhistorial:
-                    bigControl.saveActualState();
+                    FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+                    DialogFragment dialogFragment = historicFragment.newInstance(bigControl,this);
+                    dialogFragment.show(frag, "ShowHisto");
                     break;
                 case R.id.p1:
                     carClicked(1);
@@ -237,7 +207,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void carClicked(int i) {
-        if(!bigControl.isFree(i)) {
+        if(!bigControl.isFree(i-1)) {
             actualCar = i;
             FragmentTransaction frag = this.getFragmentManager().beginTransaction();
             DialogFragment dialogFragment = ExitCar.newInstance(i-1,bigControl);
@@ -276,13 +246,27 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.i("SAVE", "entro a onDestroy");
+        bigControl.saveActualState();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.i("SAVE","entro a onPause");
+        bigControl.saveActualState();
+    }
+
+    @Override
     public void onFragmentInteraction(Boolean uri) {
         Log.i("MATRRRR", "MainActivity rep onFragmentInteraction de ExitCar");
         if(uri){
             buttonPlots.get(actualCar - 1).setBackground(freeImage);
+            buttonPlots.get(actualCar-1).setText("");
+            bigControl.registerCarExit(actualCar - 1);
             bigControl.newFreePlot(actualCar - 1);
-            showFastToast("Falta guardar al registre la sortida del cotxe i guardar-ho");
-            Log.i("Matr", "Falta guardar al registre la sortida del cotxe");
         }
     }
 }

@@ -18,11 +18,15 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Controller {
     static private int maxPlaces = 15;
+    private static final double pricePerMinute = 0.02;
     private static final int segDay = 24*60*60;
-    SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
-    int busyPlots;
-    ArrayList<Parking> plots;
-    BDController bdContr;
+    private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+    private int busyPlots;
+    private ArrayList<Parking> plots;
+    private BDController bdContr;
+
+    private Timestamp actualT;
+    private double price;
 
     public Controller(Activity vista) {
         plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
@@ -31,10 +35,12 @@ public final class Controller {
     }
     public void BDPakingStaus() { busyPlots = bdContr.bDParkingStatus(plots);}
 
+    public void bdHistoricStatus(ArrayList<Parking> contactos) {bdContr.bdHistoricStatus(contactos);}
+
     public void saveActualState() { bdContr.saveActualState(plots);}
 
     public int getNumFreePeaches() {
-        Log.i("Park", "Hi ha " + (maxPlaces - busyPlots) + " plases ocupades");
+        Log.i("Park", "Hi ha " + (maxPlaces - busyPlots) + " plases lliures");
         return maxPlaces- busyPlots; //plots.size();
     }
 
@@ -52,6 +58,7 @@ public final class Controller {
                 plots.set((where + i) % maxPlaces, nou);
                 ++busyPlots;
                 MainActivity.buttonPlots.get((where+i)%maxPlaces).setBackground(MainActivity.busyImage);
+                MainActivity.buttonPlots.get((where+i)%maxPlaces).setText(matr);
                 Log.i("ENTRY", "Ocupem plasa el dia " + aux + "a la plasa " + (where + i) % maxPlaces);
                 found = true;
             }
@@ -66,7 +73,6 @@ public final class Controller {
     }
 
     public boolean isFree(int num) {
-        num--;
         Log.i("LOAD", "num: " + num + " i size: " + plots.size());
         if(num+1> plots.size()) {
             Log.i("LOAD", "la plasa num: " + num + " està buida, el parking encara no s'ha omplert fins aqui");
@@ -107,7 +113,7 @@ public final class Controller {
     public double minsCalcul(int i){
         Timestamp mDay = plots.get(i).getEntryDay();
         Calendar cal = Calendar.getInstance();
-        Time actualT = new Time(cal.getTime().getTime());
+        actualT = new Timestamp(cal.getTime().getTime());
         Log.i("HoraEntrada", "mDay: " + logAux.format(mDay) + ", el q implica: " + TimeUnit.MILLISECONDS.toSeconds(mDay.getTime()) / 60 + " minuts");
         Log.i("HoraSortida", "Actual: " + actualT + ", el q implica: " + TimeUnit.MILLISECONDS.toSeconds(actualT.getTime()) / 60 + " minuts");
 
@@ -136,5 +142,20 @@ public final class Controller {
         }
         Log.i("Calc", "s'ha estat al parking "+ min+ " min");
         return min;
+    }
+
+    public void registerCarExit(int num) {
+        plots.get(num).setExitDay(actualT);
+        plots.get(num).setPricePayed(price);
+        bdContr.registerCarExit(plots.get(num));
+    }
+
+    public Double priceCalcul(double min) {
+        price = Math.rint(min*pricePerMinute*100)/100;
+        return price;
+    }
+
+    public void drainHistoric() {
+        bdContr.drainHistoric();
     }
 }

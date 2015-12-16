@@ -57,4 +57,37 @@ public class BDController {
         Log.i("SAVE","Ja he acabat de guardar les places");
     }
 
+    public void registerCarExit(Parking car) {
+        db = dades.getWritableDatabase();
+        //dades.resetActualState(db);
+        if(car!=null) {
+            String[] s = {};
+            Log.i("SAVE","Arxivo el cotxe "+car.getMatricula()+" amb sortida del dia "+ car.getExitDay()+ " i preu pagat de "+car.getPricePayed());
+            db.execSQL("INSERT INTO THistorial (matricula, entryDay, exitDay, pricePayed) VALUES ('" + car.getMatricula() + "','" + car.getEntryDay().getTime()+ "','" + car.getExitDay().getTime()+  "','" + car.getPricePayed()+"')", s);
+        }
+        else Log.e("SAVE", "Error al guardar la sortida del cotxe, el la plasa està lliure");
+        db.close();
+    }
+
+    public void bdHistoricStatus(ArrayList<Parking> contactos) {
+        db = dades.getReadableDatabase();
+        Cursor curs = null;
+        if(db != null) {
+            String[] s = {};
+            curs = db.rawQuery("SELECT * FROM THistorial ORDER BY entryDay ASC, exitDay ASC", s);
+        }
+        if(curs.moveToFirst()) {
+            do {
+                contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
+            } while(curs.moveToNext());
+        }
+        db.close();
+        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit");
+    }
+
+    public void drainHistoric() {
+        db = dades.getWritableDatabase();
+        dades.resetHistoricState(db);
+        db.close();
+    }
 }
