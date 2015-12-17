@@ -13,7 +13,7 @@ import android.view.Window;
 /*
  * Created by Cristina on 16/12/2015.
  */
-public class historicFragment extends android.app.DialogFragment {
+public class historicFragment extends android.app.DialogFragment implements View.OnClickListener{
     private static RecyclerView mRecyclerViewx;
     public static historicAdapter hisAdapter;
     private static Controller bigControl;
@@ -37,6 +37,7 @@ public class historicFragment extends android.app.DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStyle(R.style.HistoricTheme,android.R.style.Theme_DeviceDefault_Dialog_MinWidth);
     }
 
     @Override
@@ -45,11 +46,16 @@ public class historicFragment extends android.app.DialogFragment {
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
         mRecyclerViewx = (RecyclerView) v.findViewById(R.id.mRecyclerView);
+        mRecyclerViewx.setHasFixedSize(true);
         mRecyclerViewx.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        hisAdapter = new historicAdapter(bigControl);
+        hisAdapter = new historicAdapter(bigControl,this);
         mRecyclerViewx.setAdapter(hisAdapter);
         return v;
     }
 
+    @Override
+    public void onClick(View view) {
+        Log.i("HISTO","He clicat alguna cosaaaa");
+    }
 }

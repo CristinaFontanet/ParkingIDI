@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    style="@style/HistoricTheme">
 
         <LinearLayout
             android:orientation="vertical"
@@ -20,52 +21,52 @@
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView8"
-                    android:layout_weight="1"
                     android:phoneNumber="false"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:typeface="monospace"
-                    android:text="Data\nEntrada" />
+                    android:text="Data\nEntrada"
+                    android:layout_weight="10.5" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView10"
-                    android:layout_weight="1"
                     android:phoneNumber="false"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:textStyle="bold"
                     android:typeface="monospace"
-                    android:text="Data\nSortida" />
+                    android:text="Data\nSortida"
+                    android:layout_weight="10.5" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView11"
-                    android:layout_weight="1"
+                    android:layout_weight="10"
                     android:phoneNumber="false"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center"
                     android:textStyle="bold"
                     android:typeface="monospace"
-                    android:text="Matricula" />
+                    android:text="Matricula"
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView15"
-                    android:layout_weight="1"
+                    android:layout_weight="11.5"
                     android:phoneNumber="false"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center"
                     android:textStyle="bold"
                     android:typeface="monospace"
-                    android:text="Pagat" />
+                    android:text="Pagat"
+                    android:gravity="center" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
