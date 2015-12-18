@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -34,12 +35,15 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
     public historicAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.row_layout, viewGroup, false);
-        view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.MATCH_PARENT));
+        //view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.MATCH_PARENT));
         return new AdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final historicAdapter.AdapterViewHolder adapterViewholder, final int position) {
+       // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+      //  params.height=80;
+     //   adapterViewholder.itemView.setLayoutParams(params);
         adapterViewholder.entryD.setText(logAux.format(contactos.get(position).getEntryDay()));
         adapterViewholder.exitD.setText(logAux.format(contactos.get(position).getExitDay()));
         adapterViewholder.matr.setText(contactos.get(position).getMatricula());

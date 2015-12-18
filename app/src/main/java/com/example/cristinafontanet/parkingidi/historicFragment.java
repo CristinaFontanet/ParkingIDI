@@ -44,10 +44,11 @@ public class historicFragment extends android.app.DialogFragment implements View
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.historic_table,container,false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+LinearLayoutManager linearLayoutManager = new LinearLayoutManager(pare,LinearLayoutManager.VERTICAL,false);
 
         mRecyclerViewx = (RecyclerView) v.findViewById(R.id.mRecyclerView);
-        mRecyclerViewx.setHasFixedSize(true);
-        mRecyclerViewx.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+     //   mRecyclerViewx.setHasFixedSize(true);
+        mRecyclerViewx.setLayoutManager(linearLayoutManager);
 
         hisAdapter = new historicAdapter(bigControl,this);
         mRecyclerViewx.setAdapter(hisAdapter);
