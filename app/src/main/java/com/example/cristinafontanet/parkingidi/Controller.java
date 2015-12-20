@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -57,8 +56,8 @@ public final class Controller {
                 Log.i("Random","a la i: " + i +", on la suma es: "+(where+i)+", on el modul passa a donar: "+ (where+i)%maxPlaces);
                 plots.set((where + i) % maxPlaces, nou);
                 ++busyPlots;
-                MainActivity.buttonPlots.get((where+i)%maxPlaces).setBackground(MainActivity.busyImage);
-                MainActivity.buttonPlots.get((where+i)%maxPlaces).setText(matr);
+                ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setBackground(ParkingStatus.busyImage);
+                ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setText(matr);
                 Log.i("ENTRY", "Ocupem plasa el dia " + aux + "a la plasa " + (where + i) % maxPlaces);
                 found = true;
             }

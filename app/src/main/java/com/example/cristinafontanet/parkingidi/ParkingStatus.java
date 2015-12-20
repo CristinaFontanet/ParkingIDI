@@ -1,87 +1,96 @@
 package com.example.cristinafontanet.parkingidi;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener, NewCar.OnCompleteListener, ExitCar.OnFragmentInteractionListener {
+public class ParkingStatus extends android.support.v4.app.Fragment implements View.OnClickListener, NewCar.OnCompleteListener, ExitCar.OnFragmentInteractionListener {
 
     static ArrayList<Button> buttonPlots;
     Button bnew, bhisto, bday;
     static private Controller bigControl;
     int actualCar;
     static Drawable freeImage, busyImage;
+    static private PagerAdapter pare;
+    View parentView;
+    private static Activity father;
+
+    public ParkingStatus(){
+
+    }
+
 
     private void iniButtons() {
         buttonPlots = new ArrayList<>(15);
         freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
         busyImage = getResources().getDrawable(R.drawable.simpleredquare);
 
-        bday = (Button)findViewById(R.id.bDiari);
+        bday = (Button) parentView.findViewById(R.id.bDiari);
         bday.setOnClickListener(this);
 
-        bnew = (Button)findViewById(R.id.bnou);
+        bnew = (Button)parentView.findViewById(R.id.bnou);
         bnew.setOnClickListener(this);
 
-        bhisto = (Button)findViewById(R.id.bhistorial);
+        bhisto = (Button)parentView.findViewById(R.id.bhistorial);
         bhisto.setOnClickListener(this);
 
         Button p1;
-        p1 = (Button)findViewById(R.id.p1);
+        p1 = (Button)parentView.findViewById(R.id.p1);
         fillButton(p1, 0);
 
-        p1 = (Button)findViewById(R.id.p2);
+        p1 = (Button)parentView.findViewById(R.id.p2);
         fillButton(p1, 1);
 
-        p1 = (Button)findViewById(R.id.p3);
+        p1 = (Button)parentView.findViewById(R.id.p3);
         fillButton(p1, 2);
 
-        p1 = (Button)findViewById(R.id.p4);
+        p1 = (Button)parentView.findViewById(R.id.p4);
         fillButton(p1, 3);
 
-        p1 = (Button)findViewById(R.id.p5);
+        p1 = (Button)parentView.findViewById(R.id.p5);
         fillButton(p1, 4);
 
-        p1 = (Button)findViewById(R.id.p6);
+        p1 = (Button)parentView.findViewById(R.id.p6);
         fillButton(p1, 5);
 
-        p1 = (Button)findViewById(R.id.p7);
+        p1 = (Button)parentView.findViewById(R.id.p7);
         fillButton(p1, 6);
 
-        p1 = (Button)findViewById(R.id.p8);
+        p1 = (Button)parentView.findViewById(R.id.p8);
         fillButton(p1, 7);
 
-        p1 = (Button)findViewById(R.id.p9);
+        p1 = (Button)parentView.findViewById(R.id.p9);
         fillButton(p1, 8);
 
-        p1 = (Button)findViewById(R.id.p10);
+        p1 = (Button)parentView.findViewById(R.id.p10);
         fillButton(p1, 9);
 
-        p1 = (Button)findViewById(R.id.p11);
+        p1 = (Button)parentView.findViewById(R.id.p11);
         fillButton(p1, 10);
 
-        p1 = (Button)findViewById(R.id.p12);
+        p1 = (Button)parentView.findViewById(R.id.p12);
         fillButton(p1, 11);
 
-        p1 = (Button)findViewById(R.id.p13);
+        p1 = (Button)parentView.findViewById(R.id.p13);
         fillButton(p1, 12);
 
-        p1 = (Button)findViewById(R.id.p14);
+        p1 = (Button)parentView.findViewById(R.id.p14);
         fillButton(p1, 13);
 
-        p1 = (Button)findViewById(R.id.p15);
+        p1 = (Button)parentView.findViewById(R.id.p15);
         fillButton(p1, 14);
     }
 
@@ -95,21 +104,34 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         buttonPlots.add(p1);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        bigControl = new Controller(this);
-        bigControl.BDPakingStaus();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
+        parentView = inflater.inflate(R.layout.activity_main, container,false);
         iniButtons();
+        return parentView;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void sendFather(PagerAdapter pareAd, Controller am, Activity fatherAct){
+        bigControl = am;
+        father =fatherAct;
+        pare = pareAd;
+        bigControl.BDPakingStaus();
+      //  iniButtons();
     }
+  //      @Override
+ //   public void onCreate(Bundle savedInstanceState) {
+ //       super.onCreate(savedInstanceState);
+      //  setContentView(R.layout.activity_main);
+   //     bigControl = new Controller(pare);
+  //      bigControl.BDPakingStaus();
+  //      iniButtons();
+//    }
+
+ //   @Override
+  //  public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+    //    getMenuInflater().inflate(R.menu.menu_main, menu);
+   //     return true;
+  //  }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -141,20 +163,21 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             switch (view.getId()){
                 case R.id.bnou:
                     if(bigControl.getNumFreePeaches()>0) {
-                        FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+                        FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
                         DialogFragment dialogFragment = NewCar.newInstance();
                         dialogFragment.show(frag, "AskRegistration");
                     }
                     else {
-                        FragmentTransaction frag = getFragmentManager().beginTransaction();
+                        FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
                         DialogFragment dialogFragment = BasicDialog.newInstance(getString(R.string.busyParking), getString(R.string.ok));
                         dialogFragment.show(frag,"ShowMessage");
                     }
                     break;
                 case R.id.bhistorial:
-                    FragmentTransaction frag = this.getFragmentManager().beginTransaction();
-                    DialogFragment dialogFragment = historicFragment.newInstance(bigControl,this);
-                    dialogFragment.show(frag, "ShowHisto");
+                    showFastToast("Botó inutil");
+     //               FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+     //               DialogFragment dialogFragment = historicFragment.newInstance(bigControl,pare);
+      //              dialogFragment.show(frag, "ShowHisto");
                     break;
                 case R.id.p1:
                     carClicked(1);
@@ -206,12 +229,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             }
     }
 
-    private void carClicked(int i) {
+        private void carClicked(int i) {
         if(!bigControl.isFree(i-1)) {
             actualCar = i;
-            FragmentTransaction frag = this.getFragmentManager().beginTransaction();
+            FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
             DialogFragment dialogFragment = ExitCar.newInstance(i-1,bigControl);
-            dialogFragment.show(frag, "ExitRegistre");
+            dialogFragment.show(frag,"ExitRegistre");
         }
         else {
             showFastToast("Plaça lliure");
@@ -226,14 +249,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             bigControl.newBusyPlot(res);
         }
         else {
-            Toast toast = Toast.makeText(this, getString(R.string.introdueix_matricula), Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(father, getString(R.string.introdueix_matricula), Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
     }
 
     private void showFastToast(String message) {
-        final Toast toast = Toast.makeText(this,message , Toast.LENGTH_SHORT);
+        final Toast toast = Toast.makeText(father,message , Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
         Handler handler = new Handler();
@@ -246,14 +269,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     @Override
-    protected void onDestroy(){
+    public void onDestroy(){
         super.onDestroy();
         Log.i("SAVE", "entro a onDestroy");
         bigControl.saveActualState();
     }
 
     @Override
-    protected void onPause(){
+    public void onPause(){
         super.onPause();
         Log.i("SAVE","entro a onPause");
         bigControl.saveActualState();
@@ -261,7 +284,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onFragmentInteraction(Boolean uri) {
-        Log.i("MATRRRR", "MainActivity rep onFragmentInteraction de ExitCar");
+        Log.i("MATRRRR", "ParkingStatus rep onFragmentInteraction de ExitCar");
         if(uri){
             buttonPlots.get(actualCar - 1).setBackground(freeImage);
             buttonPlots.get(actualCar-1).setText("");
