@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,6 +22,8 @@ import java.util.ArrayList;
 public class ParkingStatus extends android.support.v4.app.Fragment implements View.OnClickListener, NewCar.OnCompleteListener, ExitCar.OnFragmentInteractionListener {
 
     static ArrayList<Button> buttonPlots;
+    private static RecyclerView mRecyclerViewx;
+    public static ParkingAdapter parkAdapter;
     Button bnew, bhisto, bday;
     static private Controller bigControl;
     int actualCar;
@@ -30,68 +34,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     public ParkingStatus(){
 
-    }
-
-
-    private void iniButtons() {
-        buttonPlots = new ArrayList<>(15);
-        freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
-        busyImage = getResources().getDrawable(R.drawable.simpleredquare);
-
-        bday = (Button) parentView.findViewById(R.id.bDiari);
-        bday.setOnClickListener(this);
-
-        bnew = (Button)parentView.findViewById(R.id.bnou);
-        bnew.setOnClickListener(this);
-
-        bhisto = (Button)parentView.findViewById(R.id.bhistorial);
-        bhisto.setOnClickListener(this);
-
-        Button p1;
-        p1 = (Button)parentView.findViewById(R.id.p1);
-        fillButton(p1, 0);
-
-        p1 = (Button)parentView.findViewById(R.id.p2);
-        fillButton(p1, 1);
-
-        p1 = (Button)parentView.findViewById(R.id.p3);
-        fillButton(p1, 2);
-
-        p1 = (Button)parentView.findViewById(R.id.p4);
-        fillButton(p1, 3);
-
-        p1 = (Button)parentView.findViewById(R.id.p5);
-        fillButton(p1, 4);
-
-        p1 = (Button)parentView.findViewById(R.id.p6);
-        fillButton(p1, 5);
-
-        p1 = (Button)parentView.findViewById(R.id.p7);
-        fillButton(p1, 6);
-
-        p1 = (Button)parentView.findViewById(R.id.p8);
-        fillButton(p1, 7);
-
-        p1 = (Button)parentView.findViewById(R.id.p9);
-        fillButton(p1, 8);
-
-        p1 = (Button)parentView.findViewById(R.id.p10);
-        fillButton(p1, 9);
-
-        p1 = (Button)parentView.findViewById(R.id.p11);
-        fillButton(p1, 10);
-
-        p1 = (Button)parentView.findViewById(R.id.p12);
-        fillButton(p1, 11);
-
-        p1 = (Button)parentView.findViewById(R.id.p13);
-        fillButton(p1, 12);
-
-        p1 = (Button)parentView.findViewById(R.id.p14);
-        fillButton(p1, 13);
-
-        p1 = (Button)parentView.findViewById(R.id.p15);
-        fillButton(p1, 14);
     }
 
     private void fillButton(Button p1, int i) {
@@ -106,7 +48,15 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.activity_main, container,false);
-        iniButtons();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
+        mRecyclerViewx = (RecyclerView) parentView.findViewById(R.id.rv);
+        mRecyclerViewx.setLayoutManager(linearLayoutManager);
+        freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
+        busyImage = getResources().getDrawable(R.drawable.simpleredquare);
+
+        parkAdapter = new ParkingAdapter(bigControl,this,freeImage,busyImage);
+        mRecyclerViewx.setAdapter(parkAdapter);
+        mRecyclerViewx.setHasFixedSize(true);
         return parentView;
     }
 
@@ -117,21 +67,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         bigControl.BDPakingStaus();
       //  iniButtons();
     }
-  //      @Override
- //   public void onCreate(Bundle savedInstanceState) {
- //       super.onCreate(savedInstanceState);
-      //  setContentView(R.layout.activity_main);
-   //     bigControl = new Controller(pare);
-  //      bigControl.BDPakingStaus();
-  //      iniButtons();
-//    }
-
- //   @Override
-  //  public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-    //    getMenuInflater().inflate(R.menu.menu_main, menu);
-   //     return true;
-  //  }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -161,69 +96,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     @Override
     public void onClick(View view) {
             switch (view.getId()){
-                case R.id.bnou:
-                    if(bigControl.getNumFreePeaches()>0) {
-                        FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-                        DialogFragment dialogFragment = NewCar.newInstance();
-                        dialogFragment.show(frag, "AskRegistration");
-                    }
-                    else {
-                        FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-                        DialogFragment dialogFragment = BasicDialog.newInstance(getString(R.string.busyParking), getString(R.string.ok));
-                        dialogFragment.show(frag,"ShowMessage");
-                    }
-                    break;
-                case R.id.bhistorial:
-                    showFastToast("Botó inutil");
-     //               FragmentTransaction frag = this.getFragmentManager().beginTransaction();
-     //               DialogFragment dialogFragment = historicFragment.newInstance(bigControl,pare);
-      //              dialogFragment.show(frag, "ShowHisto");
-                    break;
-                case R.id.p1:
-                    carClicked(1);
-                    break;
-                case R.id.p2:
-                    carClicked(2);
-                    break;
-                case R.id.p3:
-                    carClicked(3);
-                    break;
-                case R.id.p4:
-                    carClicked(4);
-                    break;
-                case R.id.p5:
-                    carClicked(5);
-                    break;
-                case R.id.p6:
-                    carClicked(6);
-                    break;
-                case R.id.p7:
-                    carClicked(7);
-                    break;
-                case R.id.p8:
-                    carClicked(8);
-                    break;
-                case R.id.p9:
-                    carClicked(9);
-                    break;
-                case R.id.p10:
-                    carClicked(10);
-                    break;
-                case R.id.p11:
-                    carClicked(11);
-                    break;
-                case R.id.p12:
-                    carClicked(12);
-                    break;
-                case R.id.p13:
-                    carClicked(13);
-                    break;
-                case R.id.p14:
-                    carClicked(14);
-                    break;
-                case R.id.p15:
-                    carClicked(15);
-                    break;
+
                 default:
                     break;
             }
