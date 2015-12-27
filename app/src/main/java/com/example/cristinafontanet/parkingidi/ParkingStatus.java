@@ -6,8 +6,10 @@ import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,13 +50,14 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.activity_main, container,false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
+       StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+       // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
         mRecyclerViewx = (RecyclerView) parentView.findViewById(R.id.rv);
-        mRecyclerViewx.setLayoutManager(linearLayoutManager);
+        mRecyclerViewx.setLayoutManager(manager);
         freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
         busyImage = getResources().getDrawable(R.drawable.simpleredquare);
 
-        parkAdapter = new ParkingAdapter(bigControl,this,freeImage,busyImage);
+        parkAdapter = new ParkingAdapter(bigControl,this);
         mRecyclerViewx.setAdapter(parkAdapter);
         mRecyclerViewx.setHasFixedSize(true);
         return parentView;
@@ -96,17 +99,20 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     @Override
     public void onClick(View view) {
             switch (view.getId()){
-
                 default:
+                    Log.i("CLICK", "Rebo click a ParkingStatus");
+                    int clicked = mRecyclerViewx.getChildPosition(view);
+                    Log.i("CLICK", "Vaig a mirar el cotxe: "+clicked);
+                    carClicked(clicked);
                     break;
             }
     }
 
         private void carClicked(int i) {
-        if(!bigControl.isFree(i-1)) {
+        if(!bigControl.isFree(i)) {
             actualCar = i;
             FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = ExitCar.newInstance(i-1,bigControl);
+            DialogFragment dialogFragment = ExitCar.newInstance(i,bigControl);
             dialogFragment.show(frag,"ExitRegistre");
         }
         else {
@@ -157,8 +163,10 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     @Override
     public void onFragmentInteraction(Boolean uri) {
-        Log.i("MATRRRR", "ParkingStatus rep onFragmentInteraction de ExitCar");
+        Log.i("MATRRRR", "ParkingStatus rep onFragmentInteraction de ExitCar, FALTA IMPLEMENTAR!!");
         if(uri){
+           // int itemPosition = mRecyclerViewx.getChildAt(actualCar);
+          //  mList.get(actualCar);
             buttonPlots.get(actualCar - 1).setBackground(freeImage);
             buttonPlots.get(actualCar-1).setText("");
             bigControl.registerCarExit(actualCar - 1);

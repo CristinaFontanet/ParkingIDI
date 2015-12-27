@@ -9,31 +9,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 /*
  * Created by CristinaFontanet on 16/12/2015.
  */
 public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlotViewHolder>{
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
-  //  private ArrayList<>
     private AdapterViewCompat.OnClickListener mListener;
     private Controller bigControl;
-    static Drawable freeImage, busyImage;
-    private int num;
 
 
-    ParkingAdapter(Controller control, AdapterViewCompat.OnClickListener listener, Drawable lliure,Drawable ple){
+    ParkingAdapter(Controller control, AdapterViewCompat.OnClickListener listener){
         mListener = listener;
         bigControl = control;
-        freeImage = lliure;
-        busyImage = ple;
-        num = 0;
     }
 
     @Override
@@ -51,7 +42,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
         //   adapterViewholder.itemView.setLayoutParams(params);
 
         adapterViewholder.id=position;
-        adapterViewholder.idCar.setText(position + ".");
+        adapterViewholder.idCar.setText(position+1 + ".");
         Log.i("NEW","VAig a fer Bind del num: "+position+ " a la pos: "+position);
         if(bigControl.isFree(position)) {
             adapterViewholder.matr.setText("LLiure");
@@ -83,7 +74,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
         public TextView matr;
         public TextView idCar;
         public RelativeLayout layout;
-       // public ImageView photoId;
+        // public ImageView photoId;
         public View v;
         public BusyPlotViewHolder(View itemView) {
             super(itemView);
@@ -93,6 +84,10 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
             this.idCar = (TextView) itemView.findViewById(R.id.idCar);
             this.layout = (RelativeLayout) itemView.findViewById(R.id.carLayout);
             this.v = itemView;
+        }
+
+        public void drain() {
+
         }
     }
 
