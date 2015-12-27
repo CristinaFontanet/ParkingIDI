@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 
 public class ParkingStatus extends android.support.v4.app.Fragment implements View.OnClickListener, NewCar.OnCompleteListener, ExitCar.OnFragmentInteractionListener {
 
-    static ArrayList<Button> buttonPlots;
     private static RecyclerView mRecyclerViewx;
     public static ParkingAdapter parkAdapter;
     Button bnew, bhisto, bday;
@@ -38,16 +38,13 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     }
 
-    private void fillButton(Button p1, int i) {
-        p1.setOnClickListener(this);
-        if (bigControl.isFree(i)) p1.setBackground(freeImage);
-        else{
-            p1.setBackground(busyImage);
-            p1.setText(bigControl.getCarReg(i));
-        }
-        buttonPlots.add(p1);
+    public void drainedParking(){
+        parkAdapter.notifyDataSetChanged();
     }
 
+    public void historicRemoved() {
+        pare.notifyDataSetChanged();
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
         parentView = inflater.inflate(R.layout.activity_main, container,false);
        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
@@ -56,6 +53,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         mRecyclerViewx.setLayoutManager(manager);
         freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
         busyImage = getResources().getDrawable(R.drawable.simpleredquare);
+        Log.i("ENTRY","OnCreteView ParkingStatus");
 
         parkAdapter = new ParkingAdapter(bigControl,this);
         mRecyclerViewx.setAdapter(parkAdapter);
@@ -69,31 +67,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         pare = pareAd;
         bigControl.BDPakingStaus();
       //  iniButtons();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id==R.id.menu_drain) {
-            bigControl.drainParking();
-            for(Button b: buttonPlots) {
-                b.setBackground(freeImage);
-                b.setText("");
-            }
-        }
-        else if (id==R.id.menu_historicDrain) {
-            bigControl.drainHistoric();
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -165,12 +138,15 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     public void onFragmentInteraction(Boolean uri) {
         Log.i("MATRRRR", "ParkingStatus rep onFragmentInteraction de ExitCar, FALTA IMPLEMENTAR!!");
         if(uri){
-           // int itemPosition = mRecyclerViewx.getChildAt(actualCar);
-          //  mList.get(actualCar);
-            buttonPlots.get(actualCar - 1).setBackground(freeImage);
-            buttonPlots.get(actualCar-1).setText("");
-            bigControl.registerCarExit(actualCar - 1);
-            bigControl.newFreePlot(actualCar - 1);
+            View itemPosition = mRecyclerViewx.getChildAt(actualCar);
+            Log.i("ENTRY","id: "+parkAdapter.getItemId(actualCar));//.setEmpty(actualCar);
+
+          //  buttonPlots.get(actualCar - 1).setBackground(freeImage);
+          //  buttonPlots.get(actualCar-1).setText("");
+            bigControl.registerCarExit(actualCar);
+            bigControl.newFreePlot(actualCar);
+            parkAdapter.notifyItemChanged(actualCar);
+
         }
     }
 }

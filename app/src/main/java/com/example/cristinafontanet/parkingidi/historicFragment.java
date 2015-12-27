@@ -29,12 +29,6 @@ public class historicFragment extends android.support.v4.app.Fragment implements
 
     public historicFragment(){}
 
-    public void setData(){
-        Log.i("Ranking", "ESTUPIDA, ESTIC AQUI");
-       // hisAdapter.update();
-        hisAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

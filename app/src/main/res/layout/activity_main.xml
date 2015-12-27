@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:paddingTop="@dimen/activity_vertical_margin_small"
+    android:paddingBottom="@dimen/activity_vertical_margin_small" tools:context=".MainActivity"
     style="">
 
     <android.support.v7.widget.RecyclerView
@@ -12,20 +12,4 @@
         android:layout_height="match_parent"
         android:id="@+id/rv"
         />
-
-    <ImageButton
-        android:id="@+id/fab"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        android:layout_gravity="bottom|right"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ripple"
-        android:stateListAnimator="@anim/anim"
-        android:src="@drawable/ic_action_add"
-        android:elevation="4dp"
-        />
-
 </RelativeLayout>

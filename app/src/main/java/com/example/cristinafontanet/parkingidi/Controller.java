@@ -56,10 +56,12 @@ public final class Controller {
                 Log.i("Random","a la i: " + i +", on la suma es: "+(where+i)+", on el modul passa a donar: "+ (where+i)%maxPlaces);
                 plots.set((where + i) % maxPlaces, nou);
                 ++busyPlots;
-                ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setBackground(ParkingStatus.busyImage);
-                ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setText(matr);
+              //  Log.i("ENTRY","places: "+ParkingStatus.buttonPlots.size());
+            //    ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setBackground(ParkingStatus.busyImage);
+             //   ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setText(matr);
                 Log.i("ENTRY", "Ocupem plasa el dia " + aux + "a la plasa " + (where + i) % maxPlaces);
                 found = true;
+                saveActualState();
             }
             else Log.i("ENTRY","a la i "+i+", la plasa "+(where+i)%maxPlaces +" esta ocupada");
         }

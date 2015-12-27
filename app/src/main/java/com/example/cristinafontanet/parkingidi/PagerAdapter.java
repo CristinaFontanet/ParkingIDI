@@ -19,10 +19,10 @@ public class PagerAdapter extends FragmentPagerAdapter{
     android.support.v4.app.Fragment tab = null;
     private static Activity father;
 
-    public PagerAdapter(FragmentManager fm,Activity fatherAct) {
+    public PagerAdapter(FragmentManager fm,Activity fatherAct, Controller contr) {
         super(fm);
         father = fatherAct;
-        bigControl = new Controller(father);
+        bigControl = contr;
     }
     @Override
     public int getCount() {
@@ -51,6 +51,15 @@ public class PagerAdapter extends FragmentPagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
         return tabTitles[position];
+    }
+
+    public void updateHistory() {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 }
 
