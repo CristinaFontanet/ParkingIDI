@@ -40,11 +40,17 @@ public final class Controller {
 
     public void BDPakingStaus() { busyPlots = bdContr.bDParkingStatus(plots);}
 
-    public void bdHistoricStatus(ArrayList<Parking> contactos) {
-        bdContr.bdHistoricStatus(contactos);
+    public Double bdHistoricStatus(ArrayList<Parking> contactos) {
+        return bdContr.bdHistoricStatus(contactos);
     }
 
-    public void bdHistoricToday(ArrayList<Parking> contactos) {bdContr.bdHistoricStatus(contactos);}
+    public Double bdHistoricToday(ArrayList<Parking> contactos) {
+        return bdContr.bdHistoricToday(contactos);
+    }
+
+    public Double bdHistoricBetween(ArrayList<Parking> contactos, Timestamp iniTime, Timestamp endTime) {
+        return bdContr.bdHistoricBetween(contactos,iniTime,endTime);
+    }
 
     public void saveActualState() { bdContr.saveActualState(plots);}
 
@@ -54,7 +60,7 @@ public final class Controller {
     }
 
     public void showFastToast(String message, Activity father) {
-        final Toast toast = Toast.makeText(father,message , Toast.LENGTH_SHORT);
+        final Toast toast = Toast.makeText(father, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
         Handler handler = new Handler();
@@ -164,7 +170,7 @@ public final class Controller {
             long diffT = actualT.getTime() - mDay.getTime();
             min = (double)TimeUnit.MILLISECONDS.toSeconds(diffT)/60;
         }
-        Log.i("Calc", "s'ha estat al parking "+ min+ " min");
+        Log.i("Calc", "s'ha estat al parking " + min + " min");
         return min;
     }
 
@@ -182,4 +188,6 @@ public final class Controller {
     public void drainHistoric() {
         bdContr.drainHistoric();
     }
+
+
 }

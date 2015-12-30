@@ -5,7 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /*
  * Created by CristinaFontanet on 15/12/2015.
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 public class BDController {
     BD dades;
     SQLiteDatabase db;
+    SimpleDateFormat diaOnlyF = new SimpleDateFormat("yyy-MM-dd 00:00:00.0");
 
     BDController(Activity vista) {
         dades = new BD(vista);
@@ -54,7 +58,7 @@ public class BDController {
             else Log.i("SAVE", "NOO guardo la plasa "+i+" ja que està lliure");
         }
         db.close();
-        Log.i("SAVE","Ja he acabat de guardar les places");
+        Log.i("SAVE", "Ja he acabat de guardar les places");
     }
 
     public void registerCarExit(Parking car) {
@@ -69,7 +73,8 @@ public class BDController {
         db.close();
     }
 
-    public void bdHistoricStatus(ArrayList<Parking> contactos) {
+    public Double bdHistoricStatus(ArrayList<Parking> contactos) {
+        Double payed = 0.0;
         db = dades.getReadableDatabase();
         Cursor curs = null;
         if(db != null) {
@@ -78,14 +83,26 @@ public class BDController {
         }
         if(curs.moveToFirst()) {
             do {
+                payed +=curs.getDouble(3);
                 contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
             } while(curs.moveToNext());
         }
         db.close();
         Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit");
+        return payed;
     }
 
-    public void bdHistoricDay(ArrayList<Parking> contactos, Timestamp day) {
+    public void drainHistoric() {
+        db = dades.getWritableDatabase();
+        dades.resetHistoricState(db);
+        db.close();
+    }
+
+    public Double bdHistoricToday(ArrayList<Parking> contactos) {
+        Calendar cal =Calendar.getInstance();
+        Date auxday= cal.getTime();
+        Timestamp day = Timestamp.valueOf(diaOnlyF.format(auxday));
+        Double money = 0.0;
         db = dades.getReadableDatabase();
         Cursor curs = null;
         if(db != null) {
@@ -94,16 +111,31 @@ public class BDController {
         }
         if(curs.moveToFirst()) {
             do {
+                money+=curs.getDouble(3);
                 contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
             } while(curs.moveToNext());
         }
         db.close();
-        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit el dia "+day);
+        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit el dia " + day);
+        return money;
     }
 
-    public void drainHistoric() {
-        db = dades.getWritableDatabase();
-        dades.resetHistoricState(db);
+    public Double bdHistoricBetween(ArrayList<Parking> contactos, Timestamp iniTime, Timestamp endTime) {
+        Double money = 0.0;
+        db = dades.getReadableDatabase();
+        Cursor curs = null;
+        if(db != null) {
+            String[] s = {};
+            curs = db.rawQuery("SELECT * FROM THistorial WHERE exitDay>="+iniTime.getTime()+" and exitDay<="+endTime.getTime()+" ORDER BY entryDay ASC, exitDay ASC", s);
+        }
+        if(curs.moveToFirst()) {
+            do {
+                money+=curs.getDouble(3);
+                contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
+            } while(curs.moveToNext());
+        }
         db.close();
+        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit entre el dia " + iniTime+" i el dia " + endTime);
+        return money;
     }
 }

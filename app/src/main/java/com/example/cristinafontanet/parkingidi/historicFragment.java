@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 /*
  * Created by Cristina on 16/12/2015.
@@ -21,7 +23,9 @@ public class historicFragment extends android.support.v4.app.Fragment implements
     private static Controller bigControl;
     static private TabPagerAdapter pare;
     private static Activity father;
-    private TextView recaptText;
+    private TextView recaptText, recaptMoney;
+    private SimpleDateFormat diaF = new SimpleDateFormat(" dd/MM/yyy HH:mm:ss");
+    private SimpleDateFormat diaOnlyF = new SimpleDateFormat(" dd/MM/yyy");
 
     public static historicFragment newInstance(Controller controller, Activity am) {
         historicFragment fragment = new historicFragment();
@@ -45,8 +49,12 @@ public class historicFragment extends android.support.v4.app.Fragment implements
         mRecyclerViewx.setLayoutManager(linearLayoutManager);
         hisAdapter = new historicAdapter(bigControl,this);
         mRecyclerViewx.setAdapter(hisAdapter);
-        recaptText = (TextView) v.findViewById(R.id.textRecapt);
 
+        recaptText = (TextView) v.findViewById(R.id.textRecapt);
+        recaptText.setText(getString(R.string.historicRecaud));
+
+        recaptMoney = (TextView) v.findViewById(R.id.textMoney);
+        showAllHistoric();
         return v;
     }
 
@@ -60,5 +68,24 @@ public class historicFragment extends android.support.v4.app.Fragment implements
         father = fatherAct;
         pare = tabPagerAdapter;
 
+    }
+
+    public void showAllHistoric() {
+        recaptText.setText(getString(R.string.historicRecaud));
+        Double price = Math.rint(hisAdapter.showAllHistoric()*100)/100;
+        recaptMoney.setText(price.toString()+getString(R.string.edmMoneda));
+    }
+
+    public void showTodayHistoric() {
+        Calendar cal =Calendar.getInstance();
+        recaptText.setText(getString(R.string.historicRecaudDay) + diaOnlyF.format(cal.getTime())+": ");
+        Double price = Math.rint(hisAdapter.showTodayHistoric()*100)/100;
+        recaptMoney.setText(price.toString()+getString(R.string.edmMoneda));
+    }
+
+    public void showHistoBetween(Timestamp iniTime, Timestamp endTime) {
+        recaptText.setText(getString(R.string.historicRecaudBet) + diaF.format(iniTime.getTime())+"\n i "+diaF.format(endTime.getTime())+": ");
+        Double price = Math.rint(hisAdapter.showHistoricBetween(iniTime, endTime)*100)/100;
+        recaptMoney.setText(price.toString()+getString(R.string.edmMoneda));
     }
 }

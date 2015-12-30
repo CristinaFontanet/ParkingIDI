@@ -3,7 +3,6 @@ package com.example.cristinafontanet.parkingidi;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -14,16 +13,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 /*
  * Created by CristinaFontanet on 20/12/2015.
  */
-public class ParkingActivity extends AppCompatActivity implements View.OnClickListener, DialogNewCar.OnCompleteListener, DialogExitCar.OnFragmentInteractionListener, ViewPager.OnPageChangeListener, DialogHistory.OnFragmentInteractionListener {
-    ParkingStatus bu;
-    Controller bigControl;
-    TabPagerAdapter pagAdapt;
-    ViewPager viewPager;
-    FloatingActionButton fab;
-    int tabPosition;
+public class ParkingActivity extends AppCompatActivity implements View.OnClickListener, DialogNewCar.OnCompleteListener, DialogExitCar.OnFragmentInteractionListener, ViewPager.OnPageChangeListener, DialogHistory.OnFragmentInteractionListener, DialogDateChooser.OnFragmentInteractionListener,DialogHourChoose.OnFragmentInteractionListener {
+    private Controller bigControl;
+    private TabPagerAdapter pagAdapt;
+    private DialogHistory dialogHistoryFragment;
+    private ViewPager viewPager;
+    private FloatingActionButton fab;
+    private int tabPosition;
+    private int historicType;
+    private Timestamp tini,tend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         viewPager.setAdapter(pagAdapt);     //Solo para MATERIAL
         viewPager.addOnPageChangeListener(this);
         tabPosition = viewPager.getCurrentItem();
-        Log.i("PARKACT", "Current item: " + tabPosition);
+        historicType = 0;
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setTabTextColors(Color.DKGRAY, Color.BLACK);      //Per canviar el color de la pestanya a on estas
@@ -52,7 +56,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                     if (bigControl.getNumFreePeaches() > 0) {
                         FragmentTransaction frag = getFragmentManager().beginTransaction();
                         DialogFragment dialogFragment = DialogNewCar.newInstance();
-                        //dialogFragment.
                         dialogFragment.show(frag, "AskRegistration");
                     } else {
                         FragmentTransaction frag = getFragmentManager().beginTransaction();
@@ -62,9 +65,8 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 else {
                     FragmentTransaction frag = getFragmentManager().beginTransaction();
-                    DialogFragment dialogFragment = DialogHistory.newInstance();
-                    dialogFragment.show(frag,"DialogHistory");
-
+                    dialogHistoryFragment = DialogHistory.newInstance(historicType,tini,tend);
+                    dialogHistoryFragment.show(frag,"DialogHistory");
                 }
             }
         });
@@ -105,16 +107,14 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onComplete(String res) {
         Log.i("PARKINGACTIVITY", "Entro al onComplete dspres d'haver ocupat una nova plasa");
-        bu = TabPagerAdapter.ajudaParking;
-        bu.onComplete(res);
+        pagAdapt.forceOnComplete(res);
         pagAdapt = new TabPagerAdapter(getSupportFragmentManager(), this, bigControl);
         viewPager.setAdapter(pagAdapt);
     }
 
     @Override
     public void onFragmentInteraction(Boolean uri) {
-        bu = TabPagerAdapter.ajudaParking;
-        bu.onFragmentInteraction(uri);
+        pagAdapt.forceOnFragmentInteraction(uri);
         pagAdapt = new TabPagerAdapter(getSupportFragmentManager(), this, bigControl);
         viewPager.setAdapter(pagAdapt);
 
@@ -122,7 +122,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        Log.i("PARKACT", "ON CLICK!!!!!!!!!!!!!!");
+        Log.i("PARKACT", "ON CLICK!!!!!!!!!!!!!! de ParkingActivity");
     }
 
     @Override
@@ -145,7 +145,32 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onFragmentInteraction(int dayOfMonth, int month, int year) {
+        Log.i("DATE","onFragmentInteraction Del PARKING ACTIVITY");
+        if(dialogHistoryFragment!=null) {
+            dialogHistoryFragment.selectedDate(dayOfMonth,month,year);
+        }
+    }
+
+    @Override
+    public void onFragmentInteraction(Integer currentHour, Integer currentMinute) {
+        if(dialogHistoryFragment!=null) dialogHistoryFragment.selectedHour(currentHour, currentMinute);
+    }
+
+    @Override
+    public void onFragmentInteraction(int i, Timestamp iniTime, Timestamp endTime) {
+        historicType = i;
+        if(i==0) {
+            pagAdapt.showAllHistoric();
+        }
+        else if (i==1) {
+            pagAdapt.showTodayHistoric();
+        }
+        else {
+            pagAdapt.showHistoBetween(iniTime,endTime);
+            tini=iniTime;
+            tend = endTime;
+        }
 
     }
 }

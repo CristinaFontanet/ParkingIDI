@@ -12,19 +12,24 @@
         android:id="@+id/sf"
         android:minHeight="20dp">
     <TextView
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:text="@string/historicRecaud"
     android:id="@+id/textRecapt"
-        android:layout_weight="5"
-        android:gravity="right" />
+        android:gravity="center|right"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/historicRecaud"
-        android:id="@+id/textView16"
-        android:layout_weight="5" />
+        android:id="@+id/textMoney"
+        android:layout_marginLeft="16dp"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:layout_gravity="center"
+        android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout

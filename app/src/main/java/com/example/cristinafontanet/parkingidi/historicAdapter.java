@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -19,33 +20,28 @@ import java.util.ArrayList;
  * Created by CristinaFontanet on 16/12/2015.
  */
 public class historicAdapter extends RecyclerView.Adapter<historicAdapter.AdapterViewHolder>{
+    private Controller bigControl;
     ArrayList<Parking> contactos;// = new ArrayList<>();
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy\nHH:mm:ss");
     private AdapterViewCompat.OnClickListener mListener;
-    private TextView recaptText;
 
 
-    historicAdapter(Controller bigControl, AdapterViewCompat.OnClickListener listener){
-        contactos = new ArrayList<>();
-        Log.i("HISTORY","He creat l'adaptador i vaig a cridar a la bd per omplir");
-        bigControl.bdHistoricStatus(contactos);
-        Log.i("HISTORY", "Ja he cridat a la bd i tinc " + contactos.size());
+    historicAdapter(Controller control, AdapterViewCompat.OnClickListener listener){
+        bigControl = control;
         mListener = listener;
-
+        contactos = new ArrayList<>();
     }
 
     @Override
     public historicAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.row_layout, viewGroup, false);
+
         return new AdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final historicAdapter.AdapterViewHolder adapterViewholder, final int position) {
-       // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-      //  params.height=80;
-     //   adapterViewholder.itemView.setLayoutParams(params);
         adapterViewholder.entryD.setText(logAux.format(contactos.get(position).getEntryDay()));
         adapterViewholder.exitD.setText(logAux.format(contactos.get(position).getExitDay()));
         adapterViewholder.matr.setText(contactos.get(position).getMatricula());
@@ -61,6 +57,27 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
     @Override
     public int getItemCount() {
         return contactos.size();
+    }
+
+    public Double showAllHistoric() {
+        contactos = new ArrayList<>();
+        Double money = bigControl.bdHistoricStatus(contactos);
+        notifyDataSetChanged();
+        return money;
+    }
+
+    public Double showTodayHistoric() {
+        contactos = new ArrayList<>();
+        Double money = bigControl.bdHistoricToday(contactos);
+        notifyDataSetChanged();
+        return money;
+    }
+
+    public Double showHistoricBetween(Timestamp iniTime, Timestamp endTime) {
+        contactos = new ArrayList<>();
+        Double money = bigControl.bdHistoricBetween(contactos,iniTime,endTime);
+        notifyDataSetChanged();
+        return money;
     }
 
     public class AdapterViewHolder extends RecyclerView.ViewHolder {

@@ -28,5 +28,9 @@
         <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
     </style>
 
+    <style name="DialogsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@drawable/botons4</item>
+    </style>
+
 
 </resources>

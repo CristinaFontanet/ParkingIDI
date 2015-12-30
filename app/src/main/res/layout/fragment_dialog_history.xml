@@ -2,7 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cristinafontanet.parkingidi.DialogHistory">
+    tools:context="com.example.cristinafontanet.parkingidi.DialogHistory"
+    android:animateLayoutChanges="true"
+    style="@style/DialogsTheme"
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,7 +15,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/historicDialog" />
+            android:text="@string/historicDialog"
+            android:layout_marginLeft="5dp" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -23,13 +27,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hdRecaptTotal"
-                android:id="@+id/radioButton2"
+                android:id="@+id/rbAll"
                 android:checked="true" />
 
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/radioButton"
+                android:id="@+id/rbDay"
                 android:checked="false"
                 android:text="@string/hdRecaptDiaria" />
 
@@ -37,14 +41,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/hdRecaptDates"
-                android:id="@+id/radioButton3"
+                android:id="@+id/rbDates"
                 android:checked="false" />
         </RadioGroup>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,12 +60,34 @@
                 android:text="@string/hdInici"
                 android:id="@+id/textView14" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="iniDate"
+                android:id="@+id/tiniDate"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="iniHour"
+                android:id="@+id/tiniHour"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal" />
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,10 +96,25 @@
                 android:text="@string/hdFinal"
                 android:id="@+id/textView17" />
 
-            <Spinner
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/spinner" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="fiDate"
+                android:id="@+id/fiDate"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="fiHour"
+                android:id="@+id/fiHour"
+                android:layout_weight="5"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal" />
 
         </LinearLayout>
 
@@ -79,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/hdMostra"
-            android:id="@+id/button2"
+            android:id="@+id/bShow"
             android:layout_gravity="center_vertical|right" />
 
     </LinearLayout>

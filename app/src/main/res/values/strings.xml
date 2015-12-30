@@ -24,7 +24,10 @@
     <string name="edmDies">dies i </string>
     <string name="edmMoneda">€</string>
 
-    <string name="historicRecaud">Recaudament diari: </string>
+    <string name="historicRecaud">Recaudament: </string>
+    <string name="historicRecaudDay">Recaudament diari </string>
+    <string name="historicRecaudBet">Recaudament entre </string>
+
     <string name="historicDialog">Mostrar historial de: </string>
     <string name="hdRecaptDiaria">Recaptació diària</string>
     <string name="hdRecaptTotal">Recaptació total</string>
@@ -32,6 +35,14 @@
     <string name="hdMostra">Mostra</string>
     <string name="hdInici">Inici:</string>
     <string name="hdFinal">Final:</string>
+    <string name="hdTriaHora">Tria una hora</string>
+    <string name="hdTriaData">Tria una data</string>
+    <string name="hderrorNoDIni">Error: Tria una data d\'inici</string>
+    <string name="hderrorNoHIni">Error: Tria una hora d\'inici</string>
+    <string name="hderrorNoDFi">Error: Tria una data de fi</string>
+    <string name="hderrorNoHFi">Error: Tria una hora de fi</string>
+    <string name="hderrorIniciPosteriorFi">Error: Les dades d\'inici han de ser anteriors a les de fi</string>
+    <string name="hderrorDesconegut">Error: Hi ha hagut un error amb les dates</string>
 
     <string name="edcTitle">Dades nou cotxe: </string>
     <string name="escTitle">Dades de sortida del cotxe: </string>
