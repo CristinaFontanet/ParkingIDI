@@ -1,43 +1,48 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cristinafontanet.parkingidi.NewCar">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".DialogNewCar">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-            android:text="Dades nou cotxe:"
-            android:layout_weight="10"
-            android:id="@+id/txtnou" />
+        <TextView android:text="@string/edcTitle"
+            android:id="@+id/entryTitle"
+            style="@style/TitlesTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="10">
+            android:layout_weight="10"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Matricula:"
                 android:id="@+id/textView"
                 android:layout_weight="10"
                 android:singleLine="true"
-                android:minWidth="200dp" />
+                android:minWidth="220dp"
+                android:layout_gravity="center_vertical" />
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:id="@+id/editText"
                 android:layout_weight="10"
                 android:editable="true"
-                android:minWidth="500dp" />
+                android:nestedScrollingEnabled="false"
+                android:layout_gravity="bottom" />
         </LinearLayout>
 
         <Button

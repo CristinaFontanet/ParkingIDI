@@ -9,14 +9,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class NewCar extends android.app.DialogFragment implements View.OnClickListener {
+public class DialogNewCar extends android.app.DialogFragment implements View.OnClickListener {
 
     EditText matr;
     Button enter;
 
-    public static NewCar newInstance() {return new NewCar();}
+    public static DialogNewCar newInstance() {return new DialogNewCar();}
 
-    public NewCar() {
+    public DialogNewCar() {
         // Required empty public constructor
     }
 
@@ -29,6 +29,7 @@ public class NewCar extends android.app.DialogFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_new_car, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getDialog().setTitle(getString(R.string.edcTitle));
         matr = (EditText) v.findViewById(R.id.editText);
         enter = (Button) v.findViewById(R.id.button);
         enter.setOnClickListener(this);

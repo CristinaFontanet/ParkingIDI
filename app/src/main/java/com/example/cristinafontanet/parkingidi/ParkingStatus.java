@@ -6,23 +6,18 @@ import android.app.FragmentTransaction;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import java.util.ArrayList;
 
 
-public class ParkingStatus extends android.support.v4.app.Fragment implements View.OnClickListener, NewCar.OnCompleteListener, ExitCar.OnFragmentInteractionListener {
+public class ParkingStatus extends android.support.v4.app.Fragment implements View.OnClickListener, DialogNewCar.OnCompleteListener, DialogExitCar.OnFragmentInteractionListener {
 
     private static RecyclerView mRecyclerViewx;
     public static ParkingAdapter parkAdapter;
@@ -30,7 +25,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     static private Controller bigControl;
     int actualCar;
     static Drawable freeImage, busyImage;
-    static private PagerAdapter pare;
+    static private TabPagerAdapter pare;
     View parentView;
     private static Activity father;
 
@@ -61,7 +56,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         return parentView;
     }
 
-    public void sendFather(PagerAdapter pareAd, Controller am, Activity fatherAct){
+    public void sendFather(TabPagerAdapter pareAd, Controller am, Activity fatherAct){
         bigControl = am;
         father =fatherAct;
         pare = pareAd;
@@ -85,11 +80,11 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         if(!bigControl.isFree(i)) {
             actualCar = i;
             FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = ExitCar.newInstance(i,bigControl);
+            DialogFragment dialogFragment = DialogExitCar.newInstance(i, bigControl);
             dialogFragment.show(frag,"ExitRegistre");
         }
         else {
-            showFastToast("Plaça lliure");
+            bigControl.showFastToast("Plaça lliure",father);
         }
     }
 
@@ -136,7 +131,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     @Override
     public void onFragmentInteraction(Boolean uri) {
-        Log.i("MATRRRR", "ParkingStatus rep onFragmentInteraction de ExitCar, FALTA IMPLEMENTAR!!");
+        Log.i("MATRRRR", "ParkingStatus rep onFragmentInteraction de DialogExitCar, FALTA IMPLEMENTAR!!");
         if(uri){
             View itemPosition = mRecyclerViewx.getChildAt(actualCar);
             Log.i("ENTRY","id: "+parkAdapter.getItemId(actualCar));//.setEmpty(actualCar);

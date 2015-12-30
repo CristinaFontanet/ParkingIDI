@@ -4,17 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class BasicDialog  extends android.app.DialogFragment implements View.OnClickListener{
+public class DialogBasic extends android.app.DialogFragment implements View.OnClickListener{
 
     Button b1;
     TextView tex;
     static Bundle args;
 
-    static BasicDialog newInstance(String text, String boto) {
-        BasicDialog f = new BasicDialog();
+    static DialogBasic newInstance(String text, String boto) {
+        DialogBasic f = new DialogBasic();
         args = new Bundle();
         args.putString("text",text);
         args.putString("boto", boto);
@@ -25,7 +26,7 @@ public class BasicDialog  extends android.app.DialogFragment implements View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_basic_dialog, container, false);
-
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         tex = (TextView) v.findViewById(R.id.textView2);
         tex.setText(args.getString("text","ErrorBundle"));
         b1 = (Button) v.findViewById(R.id.but1);

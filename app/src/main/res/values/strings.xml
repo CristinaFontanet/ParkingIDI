@@ -9,17 +9,35 @@
     <string name="introdueix_matricula">Introdueix una matricula si us plau.</string>
     <string name="busyParking">El parking està ple, no pot entrar cap més cotxe.</string>
 
-    <string name="ok">Ok</string>
-    <string name="exitDialogMessage">Dades de sortida del cotxe: </string>
-    <string name="edmMatr">Matricula: </string>
-    <string name="edmDia">El dia: </string>
-    <string name="edmHoraEntrada">Hora d\'entrada:   </string>
-    <string name="edmHoraSortida">Hora de sortida: </string>
-    <string name="edmCalculPreu1">Amb un preu de 0,02 cènt/min i una estada de </string>
-    <string name="edmPreu">El preu a pagar és</string>
+    <string name="tabParking">Parking</string>
+    <string name="tabHisto">History</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="menu_undo">Desfer</string>
+
+    <string name="ok">Ok</string>
+    <string name="edmMatr">Matricula: </string>
+    <string name="edmDia">Entrada</string>
+    <string name="edmDiaS">Sortida</string>
+    <string name="edmCalculPreu1">Preu de 0,02 cènt/min</string>
+    <string name="edmTemps">Temps: </string>
+    <string name="edmPreu">Preu total: </string>
+    <string name="edmDies">dies i </string>
+    <string name="edmMoneda">€</string>
+
+    <string name="historicRecaud">Recaudament diari: </string>
+    <string name="historicDialog">Mostrar historial de: </string>
+    <string name="hdRecaptDiaria">Recaptació diària</string>
+    <string name="hdRecaptTotal">Recaptació total</string>
+    <string name="hdRecaptDates">Recaptació entre dues dates</string>
+    <string name="hdMostra">Mostra</string>
+    <string name="hdInici">Inici:</string>
+    <string name="hdFinal">Final:</string>
+
+    <string name="edcTitle">Dades nou cotxe: </string>
+    <string name="escTitle">Dades de sortida del cotxe: </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="titleBasicDialog">MainActivity</string>
 
 </resources>

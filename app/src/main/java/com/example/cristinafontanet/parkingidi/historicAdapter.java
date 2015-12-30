@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -20,6 +22,7 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
     ArrayList<Parking> contactos;// = new ArrayList<>();
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy\nHH:mm:ss");
     private AdapterViewCompat.OnClickListener mListener;
+    private TextView recaptText;
 
 
     historicAdapter(Controller bigControl, AdapterViewCompat.OnClickListener listener){
@@ -35,7 +38,6 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
     public historicAdapter.AdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View view = inflater.inflate(R.layout.row_layout, viewGroup, false);
-        //view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT,RecyclerView.LayoutParams.MATCH_PARENT));
         return new AdapterViewHolder(view);
     }
 

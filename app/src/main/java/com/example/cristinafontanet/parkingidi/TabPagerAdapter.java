@@ -1,7 +1,6 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
-import android.service.notification.NotificationListenerService;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
@@ -9,21 +8,23 @@ import android.util.Log;
 /*
  * Created by CristinaFontanet on 20/12/2015.
  */
-public class PagerAdapter extends FragmentPagerAdapter{
+public class TabPagerAdapter extends FragmentPagerAdapter  {
 
     public static ParkingStatus ajudaParking;
     public static historicFragment ajudaHisto;
     public Controller bigControl;
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Parking", "History" };
+    private static String tabTitles[];
     android.support.v4.app.Fragment tab = null;
     private static Activity father;
 
-    public PagerAdapter(FragmentManager fm,Activity fatherAct, Controller contr) {
+    public TabPagerAdapter(FragmentManager fm, Activity fatherAct, Controller contr) {
         super(fm);
         father = fatherAct;
         bigControl = contr;
+        tabTitles = new String[] {father.getString(R.string.tabParking) ,father.getString(R.string.tabHisto) };
     }
+
     @Override
     public int getCount() {
         return PAGE_COUNT;
@@ -53,13 +54,10 @@ public class PagerAdapter extends FragmentPagerAdapter{
         return tabTitles[position];
     }
 
-    public void updateHistory() {
-        notifyDataSetChanged();
-    }
-
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
     }
+
 }
 

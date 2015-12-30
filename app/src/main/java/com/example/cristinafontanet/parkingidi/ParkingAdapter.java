@@ -1,7 +1,5 @@
 package com.example.cristinafontanet.parkingidi;
 
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +15,7 @@ import java.text.SimpleDateFormat;
  * Created by CristinaFontanet on 16/12/2015.
  */
 public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlotViewHolder>{
+
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
     private AdapterViewCompat.OnClickListener mListener;
     private Controller bigControl;
@@ -47,12 +46,14 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
         if(bigControl.isFree(position)) {
             adapterViewholder.matr.setText("LLiure");
             adapterViewholder.entryD.setText(" ");
-            adapterViewholder.layout.setBackgroundColor(Color.parseColor("#b6fcd5"));
+            adapterViewholder.layout.setBackgroundResource(R.drawable.free_peach);
+         //   adapterViewholder.layout.setBackgroundColor(Color.parseColor("#b6fcd5"));
         }
         else {
             adapterViewholder.entryD.setText(logAux.format(bigControl.getCarDayEntry(position)));
             adapterViewholder.matr.setText(bigControl.getCarReg(position));
-            adapterViewholder.layout.setBackgroundColor(Color.parseColor("#ff9898"));
+            adapterViewholder.layout.setBackgroundResource(R.drawable.busy_peach);
+          //  adapterViewholder.layout.setBackgroundColor(Color.parseColor("#ff9898"));
         }
         adapterViewholder.v.setOnClickListener(new View.OnClickListener() {
             @Override

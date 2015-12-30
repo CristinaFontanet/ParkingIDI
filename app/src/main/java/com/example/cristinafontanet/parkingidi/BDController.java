@@ -85,6 +85,22 @@ public class BDController {
         Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit");
     }
 
+    public void bdHistoricDay(ArrayList<Parking> contactos, Timestamp day) {
+        db = dades.getReadableDatabase();
+        Cursor curs = null;
+        if(db != null) {
+            String[] s = {};
+            curs = db.rawQuery("SELECT * FROM THistorial WHERE exitDay>="+day.getTime()+" ORDER BY entryDay ASC, exitDay ASC", s);
+        }
+        if(curs.moveToFirst()) {
+            do {
+                contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
+            } while(curs.moveToNext());
+        }
+        db.close();
+        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit el dia "+day);
+    }
+
     public void drainHistoric() {
         db = dades.getWritableDatabase();
         dades.resetHistoricState(db);

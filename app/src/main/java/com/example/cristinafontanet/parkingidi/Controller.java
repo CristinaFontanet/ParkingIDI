@@ -1,7 +1,11 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -16,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * Created by CristinaFontanet on 25/11/2015.
  */
 public final class Controller {
+
     static private int maxPlaces = 15;
     private static final double pricePerMinute = 0.02;
     private static final int segDay = 24*60*60;
@@ -32,15 +37,33 @@ public final class Controller {
         busyPlots = 0;
         bdContr = new BDController(vista);
     }
+
     public void BDPakingStaus() { busyPlots = bdContr.bDParkingStatus(plots);}
 
-    public void bdHistoricStatus(ArrayList<Parking> contactos) {bdContr.bdHistoricStatus(contactos);}
+    public void bdHistoricStatus(ArrayList<Parking> contactos) {
+        bdContr.bdHistoricStatus(contactos);
+    }
+
+    public void bdHistoricToday(ArrayList<Parking> contactos) {bdContr.bdHistoricStatus(contactos);}
 
     public void saveActualState() { bdContr.saveActualState(plots);}
 
     public int getNumFreePeaches() {
         Log.i("Park", "Hi ha " + (maxPlaces - busyPlots) + " plases lliures");
         return maxPlaces- busyPlots; //plots.size();
+    }
+
+    public void showFastToast(String message, Activity father) {
+        final Toast toast = Toast.makeText(father,message , Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 500);
     }
 
     public void newBusyPlot(String matr) {
@@ -50,7 +73,7 @@ public final class Controller {
         Random r = new Random();
         int where = r.nextInt(maxPlaces);
         boolean found = false;
-        Log.i("Random","where: "+where);
+        Log.i("Random", "where: " + where);
         for(int i =0; i < plots.size() && !found; ++i) {
             if(plots.get((where+i)%maxPlaces)==null) {
                 Log.i("Random","a la i: " + i +", on la suma es: "+(where+i)+", on el modul passa a donar: "+ (where+i)%maxPlaces);

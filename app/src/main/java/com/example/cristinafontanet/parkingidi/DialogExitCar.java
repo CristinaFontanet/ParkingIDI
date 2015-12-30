@@ -17,7 +17,7 @@ import java.util.Calendar;
 /*
  * Created by CristinaFontanet on 25/11/2015.
  */
-public class ExitCar extends android.app.DialogFragment implements View.OnClickListener {
+public class DialogExitCar extends android.app.DialogFragment implements View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static Controller bigControl;
@@ -26,12 +26,12 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
     private int car;
 
     Button canc,pay;
-    TextView matr,day, hourEntry,minutes,price, hourExit;
+    TextView matr,day,day2, hourEntry,minutes,price, hourExit;
 
     private OnFragmentInteractionListener mListener;
 
-    public static ExitCar newInstance(Integer numCar, Controller controller) {
-        ExitCar fragment = new ExitCar();
+    public static DialogExitCar newInstance(Integer numCar, Controller controller) {
+        DialogExitCar fragment = new DialogExitCar();
         Bundle args = new Bundle();
         args.putInt(ARG_PARAM1, numCar);
         fragment.setArguments(args);
@@ -39,7 +39,8 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
         return fragment;
     }
 
-    public ExitCar() {}
+    public DialogExitCar() {}
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
         pay.setOnClickListener(this);
 
         matr = (TextView) v.findViewById(R.id.matricula);
-        matr.setText(getString(R.string.edmMatr) + mMatr);
+        matr.setText(mMatr);
 
         SimpleDateFormat diaF = new SimpleDateFormat("dd/MM/yyy");
         SimpleDateFormat horaF = new SimpleDateFormat("HH:mm:ss");
@@ -72,26 +73,32 @@ public class ExitCar extends android.app.DialogFragment implements View.OnClickL
         int days = bigControl.difDays(mDay);
 
         day = (TextView) v.findViewById(R.id.dia);
+        day2 = (TextView) v.findViewById(R.id.dia2);
         Log.i("Calc","Hi ha estat "+ days+" dies");
-        if(days==0) day.setText(getString(R.string.edmDia)+" "+diaF.format(mDay));
-        else day.setText("Dia entrada: "+diaF.format(mDay)+", dia sortida: "+diaF.format(actualT));
 
-        hourEntry = (TextView) v.findViewById(R.id.hora);
-        hourEntry.setText(getString(R.string.edmHoraEntrada) + horaF.format(mDay));
+            day.setText(diaF.format(mDay));
+            day2.setText(diaF.format(actualT));
 
-        hourExit = (TextView) v.findViewById(R.id.horaSort);
-        hourExit.setText(getString(R.string.edmHoraSortida) + horaF.format(actualT));
+        hourEntry = (TextView) v.findViewById(R.id.horaE);
+        hourEntry.setText(horaF.format(mDay));
+
+        hourExit = (TextView) v.findViewById(R.id.horaS);
+        hourExit.setText(horaF.format(actualT));
 
         double min = bigControl.minsCalcul(car); //Math.rint(min*100)/100+" minuts"
         String minuts = (int)(min/60)+":"+(int)(min%60)+":"+(int)((min*60)%60);
 
-        minutes = (TextView) v.findViewById(R.id.calculPreu);
-        if(days==0)minutes.setText(getString(R.string.edmCalculPreu1) + " " + minuts);
-        else minutes.setText(getString(R.string.edmCalculPreu1) +days+ " dies i " + minuts);
+        minutes = (TextView) v.findViewById(R.id.minutsPassats);
+        if(days==0)minutes.setText(minuts);
+        else {
+            min-=days*24*60;
+            minuts = (int)(min/60)+":"+(int)(min%60)+":"+(int)((min*60)%60);
+            minutes.setText(days+ getString(R.string.edmDies)+"\n" + minuts);
+        }
       //Log.i("COBRAR", "Ha estat " + Math.rint(min * 100) / 100 + " minuts, q son: " + (Math.rint(min * 100) / 100) / 60 +" hores i "+ (Math.rint(min * 100) / 100)%60+" minuts");
-        price = (TextView)v.findViewById(R.id.preu);
+        price = (TextView)v.findViewById(R.id.calculPreu);
 
-        price.setText(getString(R.string.edmPreu)+" "+bigControl.priceCalcul(min)+"€");
+        price.setText(bigControl.priceCalcul(min)+getString(R.string.edmMoneda));
         return v;
     }
     @Override

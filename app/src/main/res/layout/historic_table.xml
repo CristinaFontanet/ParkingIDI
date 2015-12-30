@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/botons"
     style="@style/HistoricTheme">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:id="@+id/sf"
+        android:minHeight="20dp">
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:text="@string/historicRecaud"
+    android:id="@+id/textRecapt"
+        android:layout_weight="5"
+        android:gravity="right" />
 
-        <LinearLayout
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/historicRecaud"
+        android:id="@+id/textView16"
+        android:layout_weight="5" />
+    </LinearLayout>
+
+    <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -21,12 +44,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView8"
                     android:phoneNumber="false"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
+                    android:layout_gravity="left|center_vertical"
+                    android:gravity="left|center_vertical"
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Data\nEntrada"
-                    android:layout_weight="10.5" />
+                    android:layout_weight="10.5"
+                    android:layout_marginLeft="3dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -34,8 +58,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView10"
                     android:phoneNumber="false"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
+                    android:layout_gravity="left|center_vertical"
+                    android:gravity="left|center_vertical"
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Data\nSortida"
@@ -48,11 +72,11 @@
                     android:id="@+id/textView11"
                     android:layout_weight="10"
                     android:phoneNumber="false"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="left|center_vertical"
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Matricula"
-                    android:gravity="center" />
+                    android:gravity="left|center_vertical" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -72,8 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
-                android:background="@drawable/botons"
                 android:id="@+id/mRecyclerView" android:layout_gravity="center_horizontal|top" />
         </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

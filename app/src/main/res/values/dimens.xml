@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">8dp</dimen>
     <dimen name="activity_vertical_margin">8dp</dimen>
     <dimen name="activity_vertical_margin_small">3dp</dimen>
+    <dimen name="fragment_heigh">3000dp</dimen>
+    <dimen name="fragment_wight">3000dp</dimen>
 </resources>
