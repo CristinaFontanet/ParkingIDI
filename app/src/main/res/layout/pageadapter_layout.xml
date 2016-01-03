@@ -29,4 +29,3 @@ android:layout_height="match_parent"    android:orientation="vertical" tools:con
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>
-
