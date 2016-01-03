@@ -1,6 +1,8 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,6 +30,7 @@ public final class Controller {
     private ArrayList<Parking> plots;
     private BDController bdContr;
     private Parking lastMoved;
+    private ParkingActivity father;
 
     private Timestamp actualT;
     private double price;
@@ -37,7 +40,9 @@ public final class Controller {
         busyPlots = 0;
         pricePerMinute = price;
         bdContr = new BDController(vista);
+        father = vista;
     }
+
 /** BD  */
     public void BDPakingStaus() { busyPlots = bdContr.bDParkingStatus(plots);}
 
@@ -52,6 +57,8 @@ public final class Controller {
     public void saveActualState() { bdContr.saveActualState(plots);}
 
     public void saveNewEntry(int where, Parking car) { bdContr.saveNewEntry(where, car); }
+
+    public void bdChangeViewOrder() {bdContr.changeOrder(); }
 
 /** Consultes */
     public int getNumFreePeaches() {
@@ -76,6 +83,20 @@ public final class Controller {
         }
     }
 
+    public String getCarReg(int i) { return plots.get(i).getMatricula(); }
+
+    public Timestamp getCarDayEntry(int i) { return plots.get(i).getEntryDay();  }
+
+    public int getLastMoveType() {
+        if (lastMoved == null) return -1;
+        else if(lastMoved.getExitDay()==null) return 1;
+        else return 0;
+    }
+
+    public String getLastMoveMatr() { return lastMoved.getMatricula(); }
+
+    public Double getPrice() {  return pricePerMinute; }
+
 /** Notifications */
     public void showNormalToast(String message, ParkingActivity father) {
         Toast toast = Toast.makeText(father, message, Toast.LENGTH_LONG);
@@ -97,25 +118,35 @@ public final class Controller {
     }
 
 /** New Car */
-    public int newBusyPlot(String matr) {
+    public int newBusyPlot(String matr, int pos) {
         Calendar cal = Calendar.getInstance();
         Random r = new Random();
-        int where = r.nextInt(maxPlaces);
+        Parking nou;
         int definitive = -1;
-        boolean found = false;
-        Log.i("Random", "where: " + where);
-        for(int i =0; i < plots.size() && !found; ++i) {
-            if(plots.get((where+i)%maxPlaces)==null) {
-                definitive =(where+i)%maxPlaces;
-                Log.i("Random", "a la i: " + i + ", on la suma es: " + (where + i) + ", on el modul passa a donar: " + definitive);
-                Parking nou = new Parking(matr,new Timestamp(cal.getTime().getTime()),definitive);
-                plots.set(definitive, nou);
-                ++busyPlots;
-                found = true;
-                saveNewEntry(definitive,nou);
-                lastMoved = nou;
+        if(pos>=0) {
+            nou = new Parking(matr,new Timestamp(cal.getTime().getTime()),pos);
+            definitive = pos;
+            plots.set(definitive, nou);
+            ++busyPlots;
+            saveNewEntry(definitive, nou);
+            lastMoved = nou;
+        }
+        else {
+            int where = r.nextInt(maxPlaces);
+            boolean found = false;
+            Log.i("Random", "where: " + where);
+            for (int i = 0; i < plots.size() && !found; ++i) {
+                if (plots.get((where + i) % maxPlaces) == null) {
+                    definitive = (where + i) % maxPlaces;
+                    Log.i("Random", "a la i: " + i + ", on la suma es: " + (where + i) + ", on el modul passa a donar: " + definitive);
+                    nou = new Parking(matr, new Timestamp(cal.getTime().getTime()), definitive);
+                    plots.set(definitive, nou);
+                    ++busyPlots;
+                    found = true;
+                    saveNewEntry(definitive, nou);
+                    lastMoved = nou;
+                }
             }
-            else Log.i("ENTRY","a la i "+i+", la plasa "+(where+i)%maxPlaces +" esta ocupada");
         }
         return definitive;
     }
@@ -125,22 +156,6 @@ public final class Controller {
         lastMoved = plots.get(num);
         --busyPlots;
         plots.set(num, null);
-    }
-
-
-
-    public String getCarReg(int i) {
-        return plots.get(i).getMatricula();
-    }
-
-    public Timestamp getCarDayEntry(int i) {
-        return plots.get(i).getEntryDay();
-    }
-
-    public void drainParking() {
-        plots.clear();
-        plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
-        busyPlots = 0;
     }
 
     public int difDays(Timestamp mDay) { //Els dies que ha passat el parking, es 0 si entra i surt el mateix dia.
@@ -194,14 +209,20 @@ public final class Controller {
         return price;
     }
 
+
+/** Drains */
+    public void drainParking() {
+        plots.clear();
+        plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
+        busyPlots = 0;
+        bdContr.drainActualStatus();
+    }
+
     public void drainHistoric() {
         bdContr.drainHistoric();
     }
 
-    public void bdChangeViewOrder() {
-        bdContr.changeOrder();
-    }
-
+/** Undo */
     public void undoLastMove() {
         int plot = lastMoved.getPlot();
         Parking last = null;
@@ -220,22 +241,12 @@ public final class Controller {
         lastMoved = null;
     }
 
-    public int getLastMoveType() {
-        if (lastMoved == null) return -1;
-        else if(lastMoved.getExitDay()==null) return 1;
-        else return 0;
-    }
-
-    public String getLastMoveMatr() {
-        return lastMoved.getMatricula();
-    }
-
-
     public void changePrice(Double newPrice) {
         pricePerMinute = newPrice;
+        SharedPreferences settings = father.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("Price", newPrice.toString());
+        editor.apply();
     }
 
-    public Double getPrice() {
-        return pricePerMinute;
-    }
 }

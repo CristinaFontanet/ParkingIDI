@@ -16,12 +16,14 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
     EditText matr;
     Button enter;
     private static ParkingActivity father;
+    private static int position;
     private OnCompleteListener mListener;
 
 
-    public static DialogNewCar newInstance(ParkingActivity parent) {
+    public static DialogNewCar newInstance(ParkingActivity parent, int pos) {
         DialogNewCar aux = new DialogNewCar();
         father = parent;
+        position = pos;
         return aux;}
 
     public DialogNewCar() {
@@ -70,7 +72,7 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
     public void onClick(View view) {
         if (view.getId()== R.id.button &&mListener != null) {
             if(!matr.getText().toString().isEmpty()) {
-                mListener.onComplete(matr.getText().toString());
+                mListener.onComplete(matr.getText().toString(),position);
                 dismiss();
             }
             else {
@@ -81,7 +83,7 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
         }
     }
 
-    public interface OnCompleteListener { int onComplete(String res); }
+    public interface OnCompleteListener { int onComplete(String res, int pos); }
 
 
 }

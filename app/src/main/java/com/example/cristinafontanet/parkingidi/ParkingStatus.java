@@ -70,16 +70,16 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         }
         else {
             FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = DialogNewCar.newInstance(father);
+            DialogFragment dialogFragment = DialogNewCar.newInstance(father,i);
             dialogFragment.show(frag, "AskRegistration");
         }
     }
 
     @Override
-    public int onComplete(String res) {
+    public int onComplete(String res, int pos) {
         int where = -1;
         if(!res.isEmpty()) {
-            where = bigControl.newBusyPlot(res);
+            where = bigControl.newBusyPlot(res,pos);
         }
         return where;
     }

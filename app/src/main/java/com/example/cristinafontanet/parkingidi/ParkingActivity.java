@@ -40,6 +40,19 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         fab.show();
     }
 
+    private void showHistoric(){
+        if(historicType==0) pagAdapt.showAllHistoric();
+        else if(historicType==1)pagAdapt.showTodayHistoric();
+        else if(historicType==2)pagAdapt.showHistoBetween(tini,tend);
+        else if(historicType==3)pagAdapt.showMonthHistoric();
+    }
+
+    public void changeViewOrder() {
+        bigControl.bdChangeViewOrder();
+        showHistoric();
+        bigControl.showNormalToast(getString(R.string.toastOrderChanges),this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +83,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void changePrice(Double newPrice) {
-        SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("Price", newPrice.toString());
-        editor.apply();
-        bigControl.changePrice(newPrice);
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
        switch (item.getItemId()){
@@ -131,23 +137,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
-    @Override   //en ocupar una nova plasa
-    public int onComplete(String res) {
-        int where = pagAdapt.forceOnComplete(res);
-        pagAdapt.forceParkingNotifyDataSetChanged();
-        FragmentTransaction frag = getFragmentManager().beginTransaction();
-        DialogFragment dialogFragment = DialogPlot.newInstance(where+1);
-        dialogFragment.show(frag, "ShowOKMessage");
-
-        return where;
-    }
-
-    @Override   //en clicar a pagar o cancelar de DialogExitCar
-    public void onFragmentInteraction() {
-        showHistoric();
-        pagAdapt.forceOnFragmentInteraction();
-    }
-
     @Override
     public void onClick(View view) {
         Log.i("PARKACT", "ON CLICK!!!!!!!!!!!!!! de ParkingActivity");
@@ -157,7 +146,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         if(tabPosition==0) {
             if (bigControl.getNumFreePeaches() > 0) {
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
-                DialogFragment dialogFragment = DialogNewCar.newInstance(this);
+                DialogFragment dialogFragment = DialogNewCar.newInstance(this,-1);
                 dialogFragment.show(frag, "AskRegistration");
             } else {
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
@@ -170,6 +159,23 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
             dialogHistoryFragment = DialogHistory.newInstance(historicType,tini,tend);
             dialogHistoryFragment.show(frag,"DialogHistory");
         }
+    }
+
+    @Override   //en ocupar una nova plasa
+    public int onComplete(String res, int pos) {
+        int where = pagAdapt.forceOnComplete(res,pos);
+        pagAdapt.forceParkingNotifyDataSetChanged();
+        FragmentTransaction frag = getFragmentManager().beginTransaction();
+        DialogFragment dialogFragment = DialogPlot.newInstance(where+1);
+        dialogFragment.show(frag, "ShowOKMessage");
+
+        return where;
+    }
+
+    @Override   //en clicar a pagar o cancelar de DialogExitCar
+    public void onFragmentInteraction() {
+        showHistoric();
+        pagAdapt.forceOnFragmentInteraction();
     }
 
     @Override
@@ -228,19 +234,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         snackbar.show();
     }
 
-    public void changeViewOrder() {
-        bigControl.bdChangeViewOrder();
-        showHistoric();
-        bigControl.showNormalToast(getString(R.string.toastOrderChanges),this);
-    }
-
-    private void showHistoric(){
-        if(historicType==0) pagAdapt.showAllHistoric();
-        else if(historicType==1)pagAdapt.showTodayHistoric();
-        else if(historicType==2)pagAdapt.showHistoBetween(tini,tend);
-        else if(historicType==3)pagAdapt.showMonthHistoric();
-    }
-
     @Override   //en clicar yes del Dialog2But
     public void onComplete() {
         bigControl.undoLastMove();
@@ -248,7 +241,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         showHistoric();
     }
 
-    @Override
+    @Override       //en canviar el preu
     public void onFragmentInteraction(Double price) {
         Log.i("PRICE","Price changed to "+price);
         bigControl.changePrice(price);

@@ -1,6 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-android:layout_height="match_parent"    android:orientation="vertical" tools:context="com.example.cristinafontanet.parkingidi.ParkingActivity">
+android:layout_height="match_parent"    android:orientation="vertical"
+    tools:context="com.example.cristinafontanet.parkingidi.ParkingActivity"
+    android:id="@+id/pageadapter_layout">
 
     <LinearLayout
         android:orientation="vertical"
@@ -11,7 +13,7 @@ android:layout_height="match_parent"    android:orientation="vertical" tools:con
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/botons1"/>
+        android:background="@drawable/main_background"/>
 
         <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

@@ -59,8 +59,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
         super.notifyDataSetChanged();
     }
 
-    public static int forceOnComplete(String res) {
-        return ajudaParking.onComplete(res);
+    public static int forceOnComplete(String res, int pos) {
+        return ajudaParking.onComplete(res,pos);
     }
 
     public static void forceOnFragmentInteraction() {
@@ -76,7 +76,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     public void showHistoBetween(Timestamp iniTime, Timestamp endTime) { ajudaHisto.showHistoBetween(iniTime, endTime); }
 
     public void forceParkingNotifyDataSetChanged() {ajudaParking.forceNotifyDataSetChanged(); }
-
 
     public void forceHistoricNotifyRemoved() {
         ajudaHisto.forceNotifyRemoved();
