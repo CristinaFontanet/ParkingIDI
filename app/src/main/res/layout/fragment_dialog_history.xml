@@ -1,27 +1,35 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.example.cristinafontanet.parkingidi.DialogHistory"
     android:animateLayoutChanges="true"
     style="@style/DialogsTheme"
     >
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/historicDialog"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginStart="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:id="@+id/textView3"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="26dp">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="33dp"
+            android:layout_toEndOf="@id/textView3"
+            android:id="@+id/radioGroup">
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -40,82 +48,107 @@
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/hdRecaptMens"
+                android:id="@+id/rbMonth"
+                android:checked="false" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/hdRecaptDates"
                 android:id="@+id/rbDates"
                 android:checked="false" />
         </RadioGroup>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="8dp">
+            android:divider="@drawable/divider_horitzontal_black"
+            android:showDividers="middle|beginning|end"
+            android:id="@+id/linlay1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_below="@id/radioGroup">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/hdInici"
-                android:id="@+id/textView14" />
-
-            <TextView
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="iniDate"
-                android:id="@+id/tiniDate"
-                android:layout_weight="5"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal" />
+                android:divider="@drawable/divider_vertical_black"
+                android:showDividers="middle|end|beginning">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/hdInici"
+                    android:id="@+id/textView14"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="iniDate"
+                        android:id="@+id/tiniDate"
+                        android:layout_weight="5"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="iniHour"
+                        android:id="@+id/tiniHour"
+                        android:layout_weight="5"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="iniHour"
-                android:id="@+id/tiniHour"
-                android:layout_weight="5"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal" />
+                android:divider="@drawable/divider_vertical_black"
+                android:showDividers="middle|end|beginning"
+                android:id="@+id/linlay2"
+                >
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/hdFinal"
+                    android:id="@+id/textView17"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="1dp"
+                    android:gravity="center" />
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="8dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="fiDate"
+                        android:id="@+id/fiDate"
+                        android:layout_weight="5"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/hdFinal"
-                android:id="@+id/textView17" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="fiHour"
+                        android:id="@+id/fiHour"
+                        android:layout_weight="5"
+                        android:layout_gravity="center"
+                        android:gravity="center" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="fiDate"
-                android:id="@+id/fiDate"
-                android:layout_weight="5"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="fiHour"
-                android:id="@+id/fiHour"
-                android:layout_weight="5"
-                android:layout_gravity="center"
-                android:gravity="center_horizontal" />
-
+            </LinearLayout>
         </LinearLayout>
 
         <Button
@@ -124,8 +157,9 @@
             android:layout_height="wrap_content"
             android:text="@string/hdMostra"
             android:id="@+id/bShow"
-            android:layout_gravity="center_vertical|right" />
+            android:layout_marginStart="0dp"
+            android:layout_below="@id/linlay1"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </FrameLayout>

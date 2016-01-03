@@ -1,5 +1,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DialogExitCar"
     style="@style/DialogsTheme">
@@ -14,179 +15,217 @@
             style="@style/TitlesTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10" />
+            android:layout_weight="1" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:gravity="center">
+            android:divider="@drawable/divider_horitzontal_black">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/edmMatr"
+                    android:id="@+id/textView6"
+                    android:layout_weight="10"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edmMatr"
+                    android:textAppearance="?android:attr/textAppearanceMediumInverse"
+                    android:id="@+id/matricula"
+                    android:layout_weight="10"
+                    android:gravity="center" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/edmMatr"
-                android:id="@+id/textView6"
-                android:layout_weight="10"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edmMatr"
-                android:textAppearance="?android:attr/textAppearanceMediumInverse"
-                android:id="@+id/matricula"
-                android:layout_weight="10"
-                android:gravity="center" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView9"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_weight="10"
-            android:text="@string/edmCalculPreu1"
-            android:gravity="center" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edmDia"
-                android:id="@+id/textView7"
-                android:layout_weight="10"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceListItem" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edmDiaS"
-                android:id="@+id/textView16"
-                android:layout_weight="10"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceListItem" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:gravity="center">
-
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:id="@+id/dia"
-                android:textAppearance="?android:attr/textAppearanceInverse"
-                android:text="diaX"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="diaX"
-                android:id="@+id/dia2"
-                android:textAppearance="?android:attr/textAppearanceInverse"
-                android:layout_weight="10"
-                android:gravity="center" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="horaX"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:id="@+id/horaE"
-                android:layout_weight="10"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="horaX"
-                android:id="@+id/horaS"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:layout_weight="10"
-                android:gravity="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edmTemps"
-                android:id="@+id/textView12"
-                android:layout_weight="10"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="minuts"
-                android:id="@+id/minutsPassats"
+                android:id="@+id/textView9"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_weight="10"
+                android:text="@string/edmCalculPreu1"
                 android:gravity="center" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:showDividers="middle|beginning|end"
+                android:divider="@drawable/divider_horitzontal_black"
+                android:layout_margin="2dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:divider="@drawable/divider_vertical_black"
+                    android:showDividers="middle|beginning|end">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/edmDia"
+                        android:id="@+id/textView7"
+                        android:layout_weight="10"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/edmDiaS"
+                        android:id="@+id/textView16"
+                        android:layout_weight="10"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceListItem" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:showDividers="middle|beginning|end"
+                    android:divider="@drawable/divider_vertical_black">
+
+                    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:id="@+id/dia"
+                        android:textAppearance="?android:attr/textAppearanceInverse"
+                        android:text="diaX"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="diaX"
+                        android:id="@+id/dia2"
+                        android:textAppearance="?android:attr/textAppearanceInverse"
+                        android:layout_weight="10"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:showDividers="middle|beginning|end"
+                    android:divider="@drawable/divider_vertical_black">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="horaX"
+                        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                        android:id="@+id/horaE"
+                        android:layout_weight="10"
+                        android:gravity="center" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="horaX"
+                        android:id="@+id/horaS"
+                        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                        android:layout_weight="10"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/edmTemps"
+                    android:id="@+id/textView12"
+                    android:layout_weight="10"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="minuts"
+                    android:id="@+id/minutsPassats"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_weight="10"
+                    android:gravity="center"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edmPreu"
+                    android:id="@+id/textView13"
+                    android:layout_weight="10"
+                    android:gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="10"
+                    android:divider="@drawable/divider_vertical_price"
+                    android:orientation="horizontal"
+                    android:showDividers="beginning|end"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="10"
+                        android:divider="@drawable/divider_horitzontal_price"
+                        android:orientation="vertical"
+                        android:showDividers="beginning|end">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="preeeu"
+                        android:id="@+id/calculPreu"
+                        android:layout_weight="10"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                        android:elegantTextHeight="true"
+                        android:accessibilityLiveRegion="polite"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/edmPreu"
-                android:id="@+id/textView13"
-                android:layout_weight="10"
-                android:gravity="center" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="preeeu"
-                android:id="@+id/calculPreu"
-                android:layout_weight="10"
-                android:gravity="center"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="10">
+            android:layout_weight="1">
 
             <Button
                 android:layout_width="match_parent"

@@ -2,35 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/botons"
-    style="@style/HistoricTheme">
-    <LinearLayout
+    android:background="@drawable/main_background"
+    style="@style/HistoricTheme"
+    >
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="false"
         android:id="@+id/sf"
         android:minHeight="20dp">
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:text="@string/historicRecaud"
-    android:id="@+id/textRecapt"
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/historicRecaud"
+        android:id="@+id/textRecapt"
         android:gravity="center|right"
         android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/historicRecaud"
         android:id="@+id/textMoney"
-        android:layout_marginLeft="16dp"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:layout_gravity="center"
-        android:gravity="center" />
-    </LinearLayout>
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/textRecapt" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderButton"
+            android:src="@android:drawable/ic_menu_sort_alphabetically"
+            android:layout_gravity="right"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
     <LinearLayout
             android:orientation="vertical"
@@ -41,7 +53,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/botons1">
+                android:background="@drawable/historic_titles">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -49,12 +61,12 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textView8"
                     android:phoneNumber="false"
-                    android:layout_gravity="left|center_vertical"
-                    android:gravity="left|center_vertical"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Data\nEntrada"
-                    android:layout_weight="10.5"
+                    android:layout_weight="11"
                     android:layout_marginLeft="3dp" />
 
                 <TextView
@@ -64,11 +76,11 @@
                     android:id="@+id/textView10"
                     android:phoneNumber="false"
                     android:layout_gravity="left|center_vertical"
-                    android:gravity="left|center_vertical"
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Data\nSortida"
-                    android:layout_weight="10.5" />
+                    android:layout_weight="10.5"
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="match_parent"

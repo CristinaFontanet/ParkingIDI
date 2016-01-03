@@ -1,36 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--  Manifest -->
     <string name="app_name">ParkingIDI</string>
-    <string name="action_settings">Settings</string>
+
+    <!-- Menu -->
     <string name="menu_drain">Buida el Parking</string>
     <string name="menu_historicDrain">Buida tot l\'historic</string>
-    <string name="hey">Hey! </string>
-    <string name="introdueix_matricula">Introdueix una matricula si us plau.</string>
-    <string name="busyParking">El parking està ple, no pot entrar cap més cotxe.</string>
-
-    <string name="tabParking">Parking</string>
-    <string name="tabHisto">History</string>
-
     <string name="menu_undo">Desfer</string>
+    <string name="menu_about">About</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_price">Canvia el preu </string>
 
-    <string name="ok">Ok</string>
+    <!-- Help -->
+    <string name="help_title">Help:</string>
+    <string name="help_button">Tanca</string>
+
+    <!--About -->
+    <string name="text_about">Aplicació desenvolupada per: \n \n
+                Cristina Fontanet Albinyana \n \n
+                estudiant d\'enginyeria informàtica de la FIB \n
+                en l\'assignatura d\'Introducció al Disseny d\'Interfícies</string>
+
+    <!-- Dialog New Car -->
+    <string name="introdueix_matricula">Error: Introdueix una matricula si us plau.</string>
+    <string name="edcTitle">Dades nou cotxe: </string>
+
+    <!--  Exit Car-->
     <string name="edmMatr">Matricula: </string>
     <string name="edmDia">Entrada</string>
     <string name="edmDiaS">Sortida</string>
-    <string name="edmCalculPreu1">Preu de 0,02 cènt/min</string>
+    <string name="edmCalculPreu1"> Euros/min</string>
     <string name="edmTemps">Temps: </string>
     <string name="edmPreu">Preu total: </string>
     <string name="edmDies">dies i </string>
     <string name="edmMoneda">€</string>
+    <string name="escTitle">Dades de sortida del cotxe: </string>
 
+    <!--  ParkingActivity -->
+    <string name="busyParking">El parking està ple, no pot entrar cap més cotxe.</string>
+    <string name="snackAssigna">Plaça assignada:</string>
+    <string name="toastOrderChanges">Ordre de visualització canviat</string>
+
+    <!-- TabPagerAdapter -->
+    <string name="tabParking">Estat places</string>
+    <string name="tabHisto">Recaudament</string>
+
+    <!--  HistoricFragment -->
     <string name="historicRecaud">Recaudament: </string>
     <string name="historicRecaudDay">Recaudament diari </string>
     <string name="historicRecaudBet">Recaudament entre </string>
+    <string name="historicRecaudMensual">Recaudament mensual </string>
 
+    <!-- DialogHistory -->
     <string name="historicDialog">Mostrar historial de: </string>
     <string name="hdRecaptDiaria">Recaptació diària</string>
     <string name="hdRecaptTotal">Recaptació total</string>
+    <string name="hdRecaptMens">Recaptació mensual</string>
     <string name="hdRecaptDates">Recaptació entre dues dates</string>
     <string name="hdMostra">Mostra</string>
     <string name="hdInici">Inici:</string>
@@ -44,11 +70,24 @@
     <string name="hderrorIniciPosteriorFi">Error: Les dades d\'inici han de ser anteriors a les de fi</string>
     <string name="hderrorDesconegut">Error: Hi ha hagut un error amb les dates</string>
 
-    <string name="edcTitle">Dades nou cotxe: </string>
-    <string name="escTitle">Dades de sortida del cotxe: </string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main">MainActivity</string>
+    <!--  Undo -->
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="noPreviousAction">Encara no s\'ha fet cap moviment</string>
+    <string name="undoEntry">Segur que vols desfer l\'entrada del cotxe </string>
+    <string name="undoExit">Segur que vols desfer la sortida del cotxe </string>
 
-    <string name="titleBasicDialog">MainActivity</string>
+    <!--  Everywhere -->
+    <string name="ok">Ok</string>
+    <string name="Cancel">Cancela</string>
+    <string name="Accept">Accepta</string>
+
+    <string name="resetHistory">Historial buidat</string>
+    <string name="resetParkingStatus">Places buidades</string>
+    <string name="priceText">Preu per minut: </string>
+    <string name="priceTitle">Canvi de preu </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

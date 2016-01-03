@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Date;
@@ -22,88 +21,45 @@ import java.util.concurrent.TimeUnit;
 public final class Controller {
 
     static private int maxPlaces = 15;
-    private static final double pricePerMinute = 0.02;
+    private static double pricePerMinute = 0.02;
     private static final int segDay = 24*60*60;
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
     private int busyPlots;
     private ArrayList<Parking> plots;
     private BDController bdContr;
+    private Parking lastMoved;
 
     private Timestamp actualT;
     private double price;
 
-    public Controller(Activity vista) {
+    public Controller(ParkingActivity vista, Double price) {
         plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
         busyPlots = 0;
+        pricePerMinute = price;
         bdContr = new BDController(vista);
     }
-
+/** BD  */
     public void BDPakingStaus() { busyPlots = bdContr.bDParkingStatus(plots);}
 
-    public Double bdHistoricStatus(ArrayList<Parking> contactos) {
-        return bdContr.bdHistoricStatus(contactos);
-    }
+    public Double bdHistoricStatus(ArrayList<Parking> contactos) { return bdContr.bdHistoricStatus(contactos); }
 
-    public Double bdHistoricToday(ArrayList<Parking> contactos) {
-        return bdContr.bdHistoricToday(contactos);
-    }
+    public Double bdHistoricToday(ArrayList<Parking> contactos) { return bdContr.bdHistoricToday(contactos); }
 
-    public Double bdHistoricBetween(ArrayList<Parking> contactos, Timestamp iniTime, Timestamp endTime) {
-        return bdContr.bdHistoricBetween(contactos,iniTime,endTime);
-    }
+    public Double bdHistoricBetween(ArrayList<Parking> contactos, Timestamp iniTime, Timestamp endTime) { return bdContr.bdHistoricBetween(contactos, iniTime, endTime); }
+
+    public Double bdHistoricMonth(ArrayList<Parking> contactos) { return bdContr.bdHistoricMonth(contactos); }
 
     public void saveActualState() { bdContr.saveActualState(plots);}
 
+    public void saveNewEntry(int where, Parking car) { bdContr.saveNewEntry(where, car); }
+
+/** Consultes */
     public int getNumFreePeaches() {
         Log.i("Park", "Hi ha " + (maxPlaces - busyPlots) + " plases lliures");
-        return maxPlaces- busyPlots; //plots.size();
-    }
-
-    public void showFastToast(String message, Activity father) {
-        final Toast toast = Toast.makeText(father, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                toast.cancel();
-            }
-        }, 500);
-    }
-
-    public void newBusyPlot(String matr) {
-        Calendar cal = Calendar.getInstance();
-        Date aux = new Date(cal.getTime().getTime());
-        Parking nou = new Parking(matr,new Timestamp(cal.getTime().getTime()));
-        Random r = new Random();
-        int where = r.nextInt(maxPlaces);
-        boolean found = false;
-        Log.i("Random", "where: " + where);
-        for(int i =0; i < plots.size() && !found; ++i) {
-            if(plots.get((where+i)%maxPlaces)==null) {
-                Log.i("Random","a la i: " + i +", on la suma es: "+(where+i)+", on el modul passa a donar: "+ (where+i)%maxPlaces);
-                plots.set((where + i) % maxPlaces, nou);
-                ++busyPlots;
-              //  Log.i("ENTRY","places: "+ParkingStatus.buttonPlots.size());
-            //    ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setBackground(ParkingStatus.busyImage);
-             //   ParkingStatus.buttonPlots.get((where+i)%maxPlaces).setText(matr);
-                Log.i("ENTRY", "Ocupem plasa el dia " + aux + "a la plasa " + (where + i) % maxPlaces);
-                found = true;
-                saveActualState();
-            }
-            else Log.i("ENTRY","a la i "+i+", la plasa "+(where+i)%maxPlaces +" esta ocupada");
-        }
-        if(!found) Log.i("ENTRY", "Ha passat algo i no s'ha ocupat cap plasa");
-    }
-
-    public void newFreePlot(int num) {
-        --busyPlots;
-        plots.set(num, null);
+        return maxPlaces- busyPlots;
     }
 
     public boolean isFree(int num) {
-        Log.i("LOAD", "num: " + num + " i size: " + plots.size());
         if(num+1> plots.size()) {
             Log.i("LOAD", "la plasa num: " + num + " està buida, el parking encara no s'ha omplert fins aqui");
             return true;
@@ -119,6 +75,59 @@ public final class Controller {
             }
         }
     }
+
+/** Notifications */
+    public void showNormalToast(String message, ParkingActivity father) {
+        Toast toast = Toast.makeText(father, message, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
+    public void showFastToast(String message, Activity father) {
+        final Toast toast = Toast.makeText(father, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast.cancel();
+            }
+        }, 500);
+    }
+
+/** New Car */
+    public int newBusyPlot(String matr) {
+        Calendar cal = Calendar.getInstance();
+        Random r = new Random();
+        int where = r.nextInt(maxPlaces);
+        int definitive = -1;
+        boolean found = false;
+        Log.i("Random", "where: " + where);
+        for(int i =0; i < plots.size() && !found; ++i) {
+            if(plots.get((where+i)%maxPlaces)==null) {
+                definitive =(where+i)%maxPlaces;
+                Log.i("Random", "a la i: " + i + ", on la suma es: " + (where + i) + ", on el modul passa a donar: " + definitive);
+                Parking nou = new Parking(matr,new Timestamp(cal.getTime().getTime()),definitive);
+                plots.set(definitive, nou);
+                ++busyPlots;
+                found = true;
+                saveNewEntry(definitive,nou);
+                lastMoved = nou;
+            }
+            else Log.i("ENTRY","a la i "+i+", la plasa "+(where+i)%maxPlaces +" esta ocupada");
+        }
+        return definitive;
+    }
+
+/** Exit car */
+    public void newFreePlot(int num) {
+        lastMoved = plots.get(num);
+        --busyPlots;
+        plots.set(num, null);
+    }
+
+
 
     public String getCarReg(int i) {
         return plots.get(i).getMatricula();
@@ -177,7 +186,7 @@ public final class Controller {
     public void registerCarExit(int num) {
         plots.get(num).setExitDay(actualT);
         plots.get(num).setPricePayed(price);
-        bdContr.registerCarExit(plots.get(num));
+        bdContr.registerCarExit(num, plots.get(num));
     }
 
     public Double priceCalcul(double min) {
@@ -189,5 +198,44 @@ public final class Controller {
         bdContr.drainHistoric();
     }
 
+    public void bdChangeViewOrder() {
+        bdContr.changeOrder();
+    }
 
+    public void undoLastMove() {
+        int plot = lastMoved.getPlot();
+        Parking last = null;
+        Log.i("UNDO","Desfaig el moviment de la plasa "+plot+", on hi havia el cotxe "+lastMoved.getMatricula());
+        if(lastMoved.getExitDay()==null) {  //undoEntry
+            newFreePlot(plot);
+            bdContr.removeFromStatus(plot);
+        }
+        else {      //undoExit
+            last = bdContr.removeFromHistory(lastMoved.getMatricula());
+            last.setPlot(plot);
+            bdContr.saveNewEntry(plot,last);
+            plots.set(plot,last);
+            ++busyPlots;
+        }
+        lastMoved = null;
+    }
+
+    public int getLastMoveType() {
+        if (lastMoved == null) return -1;
+        else if(lastMoved.getExitDay()==null) return 1;
+        else return 0;
+    }
+
+    public String getLastMoveMatr() {
+        return lastMoved.getMatricula();
+    }
+
+
+    public void changePrice(Double newPrice) {
+        pricePerMinute = newPrice;
+    }
+
+    public Double getPrice() {
+        return pricePerMinute;
+    }
 }

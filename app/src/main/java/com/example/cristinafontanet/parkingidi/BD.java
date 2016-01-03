@@ -29,7 +29,6 @@ public class BD extends SQLiteOpenHelper {
         db.execSQL(STATISTICS_TABLE_CREATE_Actual);
     }
 
-
     public void resetActualState(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS " + Actual_TABLE_NAME);
         db.execSQL(STATISTICS_TABLE_CREATE_Actual) ;

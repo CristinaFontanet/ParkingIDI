@@ -36,13 +36,10 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
 
     @Override
     public void onBindViewHolder(final BusyPlotViewHolder adapterViewholder, final int position) {
-        // LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        //  params.height=80;
-        //   adapterViewholder.itemView.setLayoutParams(params);
 
         adapterViewholder.id=position;
         adapterViewholder.idCar.setText(position+1 + ".");
-        Log.i("NEW","VAig a fer Bind del num: "+position+ " a la pos: "+position);
+        Log.i("NEW","VAig a fer Bind (ParkingAdapter) del num: "+position+ " a la pos: "+position);
         if(bigControl.isFree(position)) {
             adapterViewholder.matr.setText("LLiure");
             adapterViewholder.entryD.setText(" ");

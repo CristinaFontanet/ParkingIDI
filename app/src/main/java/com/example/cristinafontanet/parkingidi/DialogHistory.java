@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -23,7 +24,8 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
     private OnFragmentInteractionListener mListener;
     private TextView tiniDate,tIniHour,fiDate,tFiHour,tIni,tEnd;
     private int dateChoose,hourChoose;
-    private RadioButton rbAll,rbDay,rbDates;
+    private RadioButton rbAll,rbDay,rbDates, rbMonth;
+    private LinearLayout linlay1;
     private static Timestamp iniTime, endTime;
     SimpleDateFormat hourF = new SimpleDateFormat("HH:mm");
     SimpleDateFormat dayF = new SimpleDateFormat("dd/MM/yyy");
@@ -60,9 +62,13 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
         rbDay.setOnClickListener(this);
         rbDates = (RadioButton) v.findViewById(R.id.rbDates);
         rbDates.setOnClickListener(this);
+        rbMonth = (RadioButton) v.findViewById(R.id.rbMonth);
+        rbMonth.setOnClickListener(this);
 
         Button show = (Button) v.findViewById(R.id.bShow);
         show.setOnClickListener(this);
+
+        linlay1 = (LinearLayout) v.findViewById(R.id.linlay1);
 
         tIni = (TextView) v.findViewById(R.id.textView14);
         tEnd = (TextView) v.findViewById(R.id.textView17);
@@ -85,13 +91,14 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
 
         if(histType==0)rbAll.setChecked(true);
         else if(histType==1)rbDay.setChecked(true);
-        else {
+        else if(histType==2){
             rbDates.setChecked(true);
             tiniDate.setText(dayF.format(iniTime.getTime()));
             tIniHour.setText(hourF.format(iniTime.getTime()));
             fiDate.setText(dayF.format(endTime.getTime()));
             tFiHour.setText(hourF.format(endTime.getTime()));
         }
+        else rbMonth.setChecked(true);
 
         if(rbDates.isChecked()) showExtras();
         else hideExtras();
@@ -100,6 +107,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
     }
 
     private void hideExtras(){
+        linlay1.setVisibility(View.INVISIBLE);
         tFiHour.setVisibility(View.INVISIBLE);
         tiniDate.setVisibility(View.INVISIBLE);
         tIniHour.setVisibility(View.INVISIBLE);
@@ -109,6 +117,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
     }
 
     private void showExtras() {
+        linlay1.setVisibility(View.VISIBLE);
         tFiHour.setVisibility(View.VISIBLE);
         tiniDate.setVisibility(View.VISIBLE);
         tIniHour.setVisibility(View.VISIBLE);
@@ -181,6 +190,9 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
             case R.id.rbDates:
                 showExtras();
                 break;
+            case R.id.rbMonth:
+                hideExtras();
+                break;
             default:
                 break;
         }
@@ -191,6 +203,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
         DialogFragment dialogFragment = DialogBasic.newInstance(message, getString(R.string.ok));
         dialogFragment.show(frag, "ShowErrorMessage");
     }
+
     private void showClicked() {
         if(mListener!=null) {
             if(rbAll.isChecked()) {
@@ -201,49 +214,51 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 mListener.onFragmentInteraction(1, null, null);
                 dismiss();
             }
+            else if(rbMonth.isChecked()) {
+                mListener.onFragmentInteraction(3,null,null);
+                dismiss();
+            }
             else {
-                boolean inc = false;
-                String message = null;
-                if(tiniDate.getText().equals(getResources().getString(R.string.hdTriaData))) {
-                    inc = true;
-                    message = getResources().getString(R.string.hderrorNoDIni);
-                }
-                else if(fiDate.getText().equals(getResources().getString(R.string.hdTriaData))) {
-                    inc = true;
-                    message =getResources().getString(R.string.hderrorNoDFi);
-                }
-                else if (tIniHour.getText().equals(getResources().getString(R.string.hdTriaHora))) {
-                    inc = true;
-                    message =getResources().getString(R.string.hderrorNoHIni);
-                }
-                else if (tFiHour.getText().equals(getResources().getString(R.string.hdTriaHora))) {
-                    inc = true;
-                    message =getResources().getString(R.string.hderrorNoHFi);
-                }
-
-                if(inc) showErrorMessage(message);
-                else {
-                    try {
-                        String newdate = tiniDate.getText() + " " + tIniHour.getText();
-                        Date aux = diaF.parse(newdate);
-                        iniTime = new Timestamp(aux.getTime());
-                        newdate = fiDate.getText() + " " + tFiHour.getText();
-                        aux = diaF.parse(newdate);
-                        endTime = new Timestamp(aux.getTime());
-
-                    } catch (ParseException e) {
-                        showErrorMessage(getString(R.string.hderrorDesconegut));
-                        e.printStackTrace();
-                        dismiss();
+                    boolean inc = false;
+                    String message = null;
+                    if(tiniDate.getText().equals(getResources().getString(R.string.hdTriaData))) {
+                        inc = true;
+                        message = getResources().getString(R.string.hderrorNoDIni);
                     }
-
-                    if(iniTime.getTime()<endTime.getTime()) {
-                        Log.i("DATE", "Ini: " + iniTime + ", endTime: " + endTime);
-                        mListener.onFragmentInteraction(2, iniTime, endTime);
-                        dismiss();
+                    else if(fiDate.getText().equals(getResources().getString(R.string.hdTriaData))) {
+                        inc = true;
+                        message =getResources().getString(R.string.hderrorNoDFi);
                     }
-                    else showErrorMessage(getString(R.string.hderrorIniciPosteriorFi));
-                }
+                    else if (tIniHour.getText().equals(getResources().getString(R.string.hdTriaHora))) {
+                        inc = true;
+                        message =getResources().getString(R.string.hderrorNoHIni);
+                    }
+                    else if (tFiHour.getText().equals(getResources().getString(R.string.hdTriaHora))) {
+                        inc = true;
+                        message =getResources().getString(R.string.hderrorNoHFi);
+                    }
+                    if(inc) showErrorMessage(message);
+                    else {
+                        try {
+                            String newdate = tiniDate.getText() + " " + tIniHour.getText();
+                            Date aux = diaF.parse(newdate);
+                            iniTime = new Timestamp(aux.getTime());
+                            newdate = fiDate.getText() + " " + tFiHour.getText();
+                            aux = diaF.parse(newdate);
+                            endTime = new Timestamp(aux.getTime());
+
+                        } catch (ParseException e) {
+                            showErrorMessage(getString(R.string.hderrorDesconegut));
+                            e.printStackTrace();
+                            dismiss();
+                        }
+                        if(iniTime.getTime()<endTime.getTime()) {
+                            Log.i("DATE", "Ini: " + iniTime + ", endTime: " + endTime);
+                            mListener.onFragmentInteraction(2, iniTime, endTime);
+                            dismiss();
+                        }
+                        else showErrorMessage(getString(R.string.hderrorIniciPosteriorFi));
+                    }
             }
         }
     }

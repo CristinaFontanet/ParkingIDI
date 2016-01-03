@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.sql.Timestamp;
@@ -22,7 +24,7 @@ public class historicFragment extends android.support.v4.app.Fragment implements
     public static historicAdapter hisAdapter;
     private static Controller bigControl;
     static private TabPagerAdapter pare;
-    private static Activity father;
+    private static ParkingActivity father;
     private TextView recaptText, recaptMoney;
     private SimpleDateFormat diaF = new SimpleDateFormat(" dd/MM/yyy HH:mm:ss");
     private SimpleDateFormat diaOnlyF = new SimpleDateFormat(" dd/MM/yyy");
@@ -55,19 +57,24 @@ public class historicFragment extends android.support.v4.app.Fragment implements
 
         recaptMoney = (TextView) v.findViewById(R.id.textMoney);
         showAllHistoric();
+
+        ImageButton order = (ImageButton) v.findViewById(R.id.orderButton);
+        order.setOnClickListener(this);
         return v;
     }
 
     @Override
     public void onClick(View view) {
         Log.i("HISTO", "He clicat alguna cosaaaa a historicFragment");
+        if(view.getId()==R.id.orderButton) {
+            father.changeViewOrder();
+        }
     }
 
-    public void sendFather(TabPagerAdapter tabPagerAdapter, Controller control,Activity fatherAct) {
+    public void sendFather(TabPagerAdapter tabPagerAdapter, Controller control,ParkingActivity fatherAct) {
         bigControl = control;
         father = fatherAct;
         pare = tabPagerAdapter;
-
     }
 
     public void showAllHistoric() {
@@ -78,7 +85,14 @@ public class historicFragment extends android.support.v4.app.Fragment implements
 
     public void showTodayHistoric() {
         Calendar cal =Calendar.getInstance();
-        recaptText.setText(getString(R.string.historicRecaudDay) + diaOnlyF.format(cal.getTime())+": ");
+        recaptText.setText(getString(R.string.historicRecaudDay) +diaOnlyF.format(cal.getTime())+ ": ");
+        Double price = Math.rint(hisAdapter.showMonthHistoric()*100)/100;
+        recaptMoney.setText(price.toString()+getString(R.string.edmMoneda));
+    }
+
+    public void showMonthHistoric() {
+        Calendar cal =Calendar.getInstance();
+        recaptText.setText(getString(R.string.historicRecaudMensual) +" "+(cal.getTime().getMonth()+1)+": ");
         Double price = Math.rint(hisAdapter.showTodayHistoric()*100)/100;
         recaptMoney.setText(price.toString()+getString(R.string.edmMoneda));
     }
@@ -86,6 +100,18 @@ public class historicFragment extends android.support.v4.app.Fragment implements
     public void showHistoBetween(Timestamp iniTime, Timestamp endTime) {
         recaptText.setText(getString(R.string.historicRecaudBet) + diaF.format(iniTime.getTime())+"\n i "+diaF.format(endTime.getTime())+": ");
         Double price = Math.rint(hisAdapter.showHistoricBetween(iniTime, endTime)*100)/100;
-        recaptMoney.setText(price.toString()+getString(R.string.edmMoneda));
+        recaptMoney.setText(price.toString() + getString(R.string.edmMoneda));
     }
+
+    public void forceNotifyDataSetChanged() {
+        hisAdapter.notifyItemRangeChanged(0, hisAdapter.getItemCount() + 1);
+    }
+    public void forceNotifyItemChanged(Parking last) {
+        hisAdapter = new historicAdapter(bigControl,this);
+        mRecyclerViewx.setAdapter(hisAdapter);
+    }
+    public void forceNotifyRemoved() {
+        hisAdapter.removeAll();
+    }
+
 }

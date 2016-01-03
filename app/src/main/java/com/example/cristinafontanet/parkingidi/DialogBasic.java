@@ -25,10 +25,12 @@ public class DialogBasic extends android.app.DialogFragment implements View.OnCl
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_basic_dialog, container, false);
+        View v = inflater.inflate(R.layout.fragment_basic_dialog, container,false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         tex = (TextView) v.findViewById(R.id.textView2);
         tex.setText(args.getString("text","ErrorBundle"));
+        //if(bigLetter)tex.setTextAppearance(getActivity(),setStyle(R.style.BigLetters,getTheme()));
         b1 = (Button) v.findViewById(R.id.but1);
         b1.setOnClickListener(this);
         b1.setText(args.getString("boto", "OK"));

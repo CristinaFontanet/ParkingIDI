@@ -18,9 +18,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     private final int PAGE_COUNT = 2;
     private static String tabTitles[];
     private android.support.v4.app.Fragment tab = null;
-    private static Activity father;
+    private static ParkingActivity father;
 
-    public TabPagerAdapter(FragmentManager fm, Activity fatherAct, Controller contr) {
+    public TabPagerAdapter(FragmentManager fm, ParkingActivity fatherAct, Controller contr) {
         super(fm);
         father = fatherAct;
         bigControl = contr;
@@ -36,9 +36,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     public android.support.v4.app.Fragment getItem(int position) {
         switch(position) {
             case 0:
-                Log.i("OPEN","ENCARA NOOOOO HE CREAT EL PARKINGSTATUS");
                 ajudaParking = new ParkingStatus();
-                Log.i("OPEN","JA HE CREAT EL PARKINGSTATUS");
                 ajudaParking.sendFather(this, bigControl,father);
                 tab = ajudaParking;
                 break;
@@ -61,25 +59,33 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
         super.notifyDataSetChanged();
     }
 
-    public static void forceOnComplete(String res) {
-        ajudaParking.onComplete(res);
+    public static int forceOnComplete(String res) {
+        return ajudaParking.onComplete(res);
     }
 
-    public static void forceOnFragmentInteraction(Boolean uri) {
-        ajudaParking.onFragmentInteraction(uri);
+    public static void forceOnFragmentInteraction() {
+            ajudaParking.onFragmentInteraction();
     }
 
-    public void showAllHistoric() {
-        ajudaHisto.showAllHistoric();
+    public void showAllHistoric() {ajudaHisto.showAllHistoric(); }
+
+    public void showTodayHistoric() { ajudaHisto.showTodayHistoric(); }
+
+    public void showMonthHistoric() { ajudaHisto.showMonthHistoric();  }
+
+    public void showHistoBetween(Timestamp iniTime, Timestamp endTime) { ajudaHisto.showHistoBetween(iniTime, endTime); }
+
+    public void forceParkingNotifyDataSetChanged() {ajudaParking.forceNotifyDataSetChanged(); }
+
+
+    public void forceHistoricNotifyRemoved() {
+        ajudaHisto.forceNotifyRemoved();
     }
 
-    public void showTodayHistoric() {
-        ajudaHisto.showTodayHistoric();
+    public void forceParkingRemoved() {
+        ajudaParking.forceNotifyRemoved();
     }
 
 
-    public void showHistoBetween(Timestamp iniTime, Timestamp endTime) {
-        ajudaHisto.showHistoBetween(iniTime,endTime);
-    }
 }
 

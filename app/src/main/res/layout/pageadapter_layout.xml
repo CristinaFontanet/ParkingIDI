@@ -1,32 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-android:layout_height="match_parent"    android:orientation="vertical" tools:context="com.example.cristinafontanet.parkingidi.ParkingActivity">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cristinafontanet.parkingidi.ParkingActivity"
+    android:id="@+id/pageadapter_layout">
 
         <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/botons1"/>
+        android:background="@drawable/botons"
+            android:layout_alignParentStart="true"/>
+
 
         <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="0px"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/botons"/>
-    </LinearLayout>
-
+        android:background="@drawable/main_background"
+            android:layout_below="@id/sliding_tabs"
+            />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:src="@android:drawable/ic_menu_month"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignBottom="@id/viewpager"
+        android:layout_alignEnd="@id/viewpager"
+        android:visibility="visible"
+        android:layout_margin="16dp"
+        />
+
 </RelativeLayout>
 

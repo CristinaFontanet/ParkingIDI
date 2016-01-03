@@ -75,9 +75,20 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
 
     public Double showHistoricBetween(Timestamp iniTime, Timestamp endTime) {
         contactos = new ArrayList<>();
-        Double money = bigControl.bdHistoricBetween(contactos,iniTime,endTime);
+        Double money = bigControl.bdHistoricBetween(contactos, iniTime, endTime);
         notifyDataSetChanged();
         return money;
+    }
+
+    public double showMonthHistoric() {
+        contactos = new ArrayList<>();
+        Double money = bigControl.bdHistoricMonth(contactos);
+        notifyDataSetChanged();
+        return money;
+    }
+
+    public void removeCar() {
+        contactos = new ArrayList<>();
     }
 
     public class AdapterViewHolder extends RecyclerView.ViewHolder {
@@ -96,4 +107,8 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
         }
     }
 
+    public void removeAll(){
+        contactos = new ArrayList<>();
+        notifyDataSetChanged();
+    }
 }

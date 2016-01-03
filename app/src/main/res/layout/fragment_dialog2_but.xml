@@ -1,0 +1,47 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DialogBasic"
+    style="@style/DialogsTheme">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Missatge"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_weight="1"
+            android:layout_margin="8dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no"
+                android:id="@+id/bno"
+                android:layout_gravity="center"
+                android:layout_weight="5" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/yes"
+                android:id="@+id/byes"
+                android:layout_gravity="center"
+                android:layout_weight="5" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

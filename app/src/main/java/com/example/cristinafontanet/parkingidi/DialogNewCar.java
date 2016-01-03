@@ -1,6 +1,8 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +15,14 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
 
     EditText matr;
     Button enter;
+    private static ParkingActivity father;
+    private OnCompleteListener mListener;
 
-    public static DialogNewCar newInstance() {return new DialogNewCar();}
+
+    public static DialogNewCar newInstance(ParkingActivity parent) {
+        DialogNewCar aux = new DialogNewCar();
+        father = parent;
+        return aux;}
 
     public DialogNewCar() {
         // Required empty public constructor
@@ -33,15 +41,16 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
         matr = (EditText) v.findViewById(R.id.editText);
         enter = (Button) v.findViewById(R.id.button);
         enter.setOnClickListener(this);
+
         return v;
     }
 
-    private OnCompleteListener mListener;
 
     // Xq l'Activity faci de listener
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        father.hideFloatingActionButton();
         try {
             mListener = (OnCompleteListener) activity;
         } catch (ClassCastException e) {
@@ -53,18 +62,26 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
     @Override
     public void onDetach() {
         super.onDetach();
+        father.showFloatingActionButton();
         mListener = null;
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId()== R.id.button &&mListener != null) {
-            mListener.onComplete(matr.getText().toString());
+            if(!matr.getText().toString().isEmpty()) {
+                mListener.onComplete(matr.getText().toString());
+                dismiss();
+            }
+            else {
+                FragmentTransaction frag = getFragmentManager().beginTransaction();
+                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.introdueix_matricula), getString(R.string.ok));
+                dialogFragment.show(frag, "ShowErrorMessage");
+            }
         }
-        dismiss();
     }
 
-    public interface OnCompleteListener { void onComplete(String res); }
+    public interface OnCompleteListener { int onComplete(String res); }
 
 
 }
