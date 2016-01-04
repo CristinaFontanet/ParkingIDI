@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /*
  * Created by CristinaFontanet on 15/12/2015.
@@ -18,6 +24,7 @@ public class BDController {
     SQLiteDatabase db;
     SimpleDateFormat diaOnlyF = new SimpleDateFormat("yyy-MM-dd 00:00:00.0");
     SimpleDateFormat monthOnlyF = new SimpleDateFormat("yyy-MM-01 00:00:00.0");
+    private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
     String orderASC ="exitDay ASC, entryDay ASC";
     String orderDESC ="exitDay DESC, entryDay DESC";
     String order;
@@ -217,4 +224,48 @@ public void saveActualState(ArrayList<Parking> plots) {
         db.close();
     }
 
+    public boolean exportToCSV(File file) {
+        PrintWriter printWriter = null;
+        try {
+            file.createNewFile();
+            printWriter = new PrintWriter(new FileWriter(file));
+
+            db = dades.getReadableDatabase();
+            printWriter.println("FIRST TABLE OF THE DATABASE");
+            printWriter.println("Matricula,diaEntrada,diaSortida,Preu");
+
+            Cursor curCSV = null;
+            if(db != null) {
+                String[] s = {};
+                curCSV = db.rawQuery("SELECT * FROM THistorial; ", s);
+            }
+            if(curCSV.moveToFirst()) {
+                do {
+                    //matricula TEXT, entryDay TIMESTAMP , exitDay TIMESTAMP , pricePayed DOUBLE, PRIMARY KEY(matricula,entryDay)
+ //contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
+                    String matr = curCSV.getString(0);
+                    Long entryDate = curCSV.getLong(1);
+                    Long exitDate = curCSV.getLong(2);
+                    Double price = curCSV.getDouble(3);
+                    Log.i("EXPORT","Exportem el cotxe "+matr);
+
+                    String record = matr + ", " + logAux.format(entryDate) + ", " + logAux.format(exitDate) + ", " + price;
+                    printWriter.println(record); //write the record in the .csv file
+                } while(curCSV.moveToNext());
+            }
+            curCSV.close();
+            db.close();
+        }
+        catch(Exception exc) {
+            //if there are any exceptions
+            Log.i("EXPORT","EXCEPCIOOOOOOOOOOOOOOOOOOOOOOO");
+
+            exc.printStackTrace();
+            return false;
+        }
+        finally {
+            if(printWriter != null) printWriter.close();
+        }
+        return true;
+    }
 }

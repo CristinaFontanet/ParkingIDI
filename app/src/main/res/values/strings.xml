@@ -11,6 +11,7 @@
     <string name="menu_about">About</string>
     <string name="menu_help">Help</string>
     <string name="menu_price">Canvia el preu </string>
+    <string name="menu_export">Exporta a Csv</string>
 
     <!-- Help -->
     <string name="help_title">Help:</string>
@@ -87,7 +88,7 @@
     <string name="priceText">Preu per minut: </string>
     <string name="priceTitle">Canvi de preu </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="exportOk">S\'ha creat un arxiu a la carpeta de Documents. Vols obrir-lo?</string>
+    <string name="exportNo">Hi ha hagut algun problema a l\'hora de crear el fitxer</string>
 </resources>

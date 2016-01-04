@@ -13,10 +13,12 @@ public class Dialog2But extends android.app.DialogFragment implements View.OnCli
 
     private static String text;
     private OnCompleteListener mListener;
+    private static int id;
 
-    static Dialog2But newInstance(String textm) {
+    static Dialog2But newInstance(String textm, int ident) {
         Dialog2But f = new Dialog2But();
         text = textm;
+        id = ident;
         return f;
     }
 
@@ -53,9 +55,9 @@ public class Dialog2But extends android.app.DialogFragment implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.byes) mListener.onComplete();
+        if(view.getId()==R.id.byes) mListener.onComplete(id);
         dismiss();
     }
 
-    public interface OnCompleteListener { void onComplete(); }
+    public interface OnCompleteListener { void onComplete(int who); }
 }

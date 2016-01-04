@@ -2,9 +2,12 @@ package com.example.cristinafontanet.parkingidi;
 
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Timestamp;
 
@@ -31,6 +35,9 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     private int tabPosition;
     private int historicType;
     private Timestamp tini,tend;
+
+    private static final int idUndo = 0;
+    private static final int idFile = 1;
 
     public void hideFloatingActionButton() {
         fab.hide();
@@ -50,7 +57,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     public void changeViewOrder() {
         bigControl.bdChangeViewOrder();
         showHistoric();
-        bigControl.showNormalToast(getString(R.string.toastOrderChanges),this);
+        bigControl.showNormalToast(getString(R.string.toastOrderChanges), this);
     }
 
     @Override
@@ -119,14 +126,24 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                if(moveType==-1) dialogFragment3 = DialogBasic.newInstance(getString(R.string.noPreviousAction),getString(R.string.ok));
                else {
                    String matr = bigControl.getLastMoveMatr();
-                   if(moveType==0) dialogFragment3 = Dialog2But.newInstance(getString(R.string.undoEntry)+" "+matr+"?");
-                   else dialogFragment3 = Dialog2But.newInstance(getString(R.string.undoExit)+" "+matr+"?");
+                   if(moveType==0) dialogFragment3 = Dialog2But.newInstance(getString(R.string.undoEntry)+" "+matr+"?",idUndo);
+                   else dialogFragment3 = Dialog2But.newInstance(getString(R.string.undoExit)+" "+matr+"?",idUndo);
                }
                dialogFragment3.show(frag3, "ShowErrorMessage");
                break;
+           case R.id.menu_export:
+               if(bigControl.exportHistorialState()) {
+                   FragmentTransaction frag5 = getFragmentManager().beginTransaction();
+                   DialogFragment dialogFragment5 = Dialog2But.newInstance(getString(R.string.exportOk),idFile);
+                   dialogFragment5.show(frag5, "ShowExportDialog");
+               }
+               else {
+                   FragmentTransaction frag5 = getFragmentManager().beginTransaction();
+                   DialogFragment dialogFragment5 = DialogBasic.newInstance(getString(R.string.exportNo),getString(R.string.ok));
+                   dialogFragment5.show(frag5, "ShowExportDialog");
+               }
            default:
                break;
-
        }
         return super.onOptionsItemSelected(item);
     }
@@ -235,15 +252,28 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override   //en clicar yes del Dialog2But
-    public void onComplete() {
-        bigControl.undoLastMove();
-        pagAdapt.forceParkingNotifyDataSetChanged();
-        showHistoric();
+    public void onComplete(int who) {
+        if(who==idUndo) {
+            bigControl.undoLastMove();
+            pagAdapt.forceParkingNotifyDataSetChanged();
+            showHistoric();
+        }
+        else if (who==idFile) {
+            Intent newIntent = new Intent(Intent.ACTION_VIEW);
+            newIntent.setDataAndType(Uri.fromFile(bigControl.getFilePath()),"text/csv");
+            newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            try {
+                startActivity(newIntent);
+            } catch (ActivityNotFoundException e) {
+               // Toast.makeText(context, "No handler for this type of file.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override       //en canviar el preu
     public void onFragmentInteraction(Double price) {
-        Log.i("PRICE","Price changed to "+price);
+        Log.i("PRICE", "Price changed to " + price);
         bigControl.changePrice(price);
     }
+
 }

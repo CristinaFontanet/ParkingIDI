@@ -3,17 +3,25 @@ package com.example.cristinafontanet.parkingidi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +42,7 @@ public final class Controller {
 
     private Timestamp actualT;
     private double price;
+    private static File exportFile;
 
     public Controller(ParkingActivity vista, Double price) {
         plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
@@ -249,4 +258,20 @@ public final class Controller {
         editor.apply();
     }
 
+
+    public boolean exportHistorialState() {
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state))  return false;
+        else {
+            File exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (!exportDir.exists())exportDir.mkdirs();
+            Calendar cal =Calendar.getInstance();
+            exportFile = new File(exportDir, "FontanetCristinaParking.csv");
+            return bdContr.exportToCSV(exportFile);
+        }
+    }
+
+    public File getFilePath() {
+        return exportFile;
+    }
 }
