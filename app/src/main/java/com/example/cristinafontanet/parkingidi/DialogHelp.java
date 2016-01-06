@@ -90,7 +90,7 @@ public class DialogHelp extends android.app.DialogFragment implements View.OnCli
 
         listDataHeader.add("Ordre de visualització");
         List<String> order = new ArrayList<>();
-        order.add("La recaptació es pot mostrar tant en ordre ascendent com ascendent a partir de la data de sortida i canviar-se a partir del botó 'a>z' ");
+        order.add("La recaptació es pot mostrar tant en ordre ascendent com ascendent a partir de la data de sortida i canviar-se a partir del botó '1>9' ");
         listDataChild.put(listDataHeader.get(5), order);
     }
 

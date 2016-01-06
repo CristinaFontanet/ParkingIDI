@@ -231,7 +231,6 @@ public void saveActualState(ArrayList<Parking> plots) {
             printWriter = new PrintWriter(new FileWriter(file));
 
             db = dades.getReadableDatabase();
-            printWriter.println("FIRST TABLE OF THE DATABASE");
             printWriter.println("Matricula,diaEntrada,diaSortida,Preu");
 
             Cursor curCSV = null;
