@@ -60,6 +60,9 @@ public class historicFragment extends android.support.v4.app.Fragment implements
 
         ImageButton order = (ImageButton) v.findViewById(R.id.orderButton);
         order.setOnClickListener(this);
+
+        ImageButton recaud = (ImageButton) v.findViewById(R.id.button5);
+        recaud.setOnClickListener(this);
         return v;
     }
 
@@ -68,6 +71,9 @@ public class historicFragment extends android.support.v4.app.Fragment implements
         Log.i("HISTO", "He clicat alguna cosaaaa a historicFragment");
         if(view.getId()==R.id.orderButton) {
             father.changeViewOrder();
+        }
+        else if(view.getId()==R.id.button5) {
+            father.historicButtonClicked();
         }
     }
 

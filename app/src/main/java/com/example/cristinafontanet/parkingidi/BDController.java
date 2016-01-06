@@ -224,7 +224,7 @@ public void saveActualState(ArrayList<Parking> plots) {
         db.close();
     }
 
-    public boolean exportToCSV(File file) {
+    public int exportToCSV(File file) {
         PrintWriter printWriter = null;
         try {
             file.createNewFile();
@@ -247,8 +247,6 @@ public void saveActualState(ArrayList<Parking> plots) {
                     Long entryDate = curCSV.getLong(1);
                     Long exitDate = curCSV.getLong(2);
                     Double price = curCSV.getDouble(3);
-                    Log.i("EXPORT","Exportem el cotxe "+matr);
-
                     String record = matr + ", " + logAux.format(entryDate) + ", " + logAux.format(exitDate) + ", " + price;
                     printWriter.println(record); //write the record in the .csv file
                 } while(curCSV.moveToNext());
@@ -257,15 +255,13 @@ public void saveActualState(ArrayList<Parking> plots) {
             db.close();
         }
         catch(Exception exc) {
-            //if there are any exceptions
             Log.i("EXPORT","EXCEPCIOOOOOOOOOOOOOOOOOOOOOOO");
-
-            exc.printStackTrace();
-            return false;
+         //   exc.printStackTrace();
+            return -2;
         }
         finally {
             if(printWriter != null) printWriter.close();
         }
-        return true;
+        return 0;
     }
 }

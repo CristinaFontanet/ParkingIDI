@@ -14,11 +14,12 @@ public class DialogBasic extends android.app.DialogFragment implements View.OnCl
     TextView tex;
     static Bundle args;
 
-    static DialogBasic newInstance(String text, String boto) {
+    static DialogBasic newInstance(String text, String boto, String titol) {
         DialogBasic f = new DialogBasic();
         args = new Bundle();
         args.putString("text",text);
         args.putString("boto", boto);
+        args.putString("titol", titol);
         f.setArguments(args);
         return f;
     }
@@ -27,6 +28,10 @@ public class DialogBasic extends android.app.DialogFragment implements View.OnCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_basic_dialog, container,false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
+
+        tex = (TextView) v.findViewById(R.id.helpTitle2);
+        tex.setText(args.getString("titol", "ErrorBundle"));
 
         tex = (TextView) v.findViewById(R.id.textView2);
         tex.setText(args.getString("text","ErrorBundle"));

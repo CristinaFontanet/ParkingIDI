@@ -200,7 +200,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
 
     private void showErrorMessage(String message) {
         FragmentTransaction frag = getFragmentManager().beginTransaction();
-        DialogFragment dialogFragment = DialogBasic.newInstance(message, getString(R.string.ok));
+        DialogFragment dialogFragment = DialogBasic.newInstance(message, getString(R.string.ok),getString(R.string.title_error));
         dialogFragment.show(frag, "ShowErrorMessage");
     }
 

@@ -2,5 +2,9 @@
 <resources>
 
     <color name="exitCarSeparator">@android:color/black</color>
+    <color name="busyStateText">#FFDBDBDB</color>
+    <color name="freeStateText">#000000</color>
+    <color name="tabHistoricText">#FFFFFF</color>
+    <color name="circleButton">@color/link_text_material_light</color>
 
 </resources>

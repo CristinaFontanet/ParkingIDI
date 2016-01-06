@@ -1,5 +1,6 @@
 package com.example.cristinafontanet.parkingidi;
 
+import android.app.Activity;
 import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 
+
 /*
  * Created by CristinaFontanet on 16/12/2015.
  */
@@ -19,11 +21,13 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
     private AdapterViewCompat.OnClickListener mListener;
     private Controller bigControl;
+    private Activity father;
 
 
-    ParkingAdapter(Controller control, AdapterViewCompat.OnClickListener listener){
+    ParkingAdapter(Controller control, AdapterViewCompat.OnClickListener listener,Activity fat){
         mListener = listener;
         bigControl = control;
+        father = fat;
     }
 
     @Override
@@ -38,17 +42,22 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
     public void onBindViewHolder(final BusyPlotViewHolder adapterViewholder, final int position) {
 
         adapterViewholder.id=position;
-        adapterViewholder.idCar.setText(position+1 + ".");
+        adapterViewholder.idCar.setText(position+1 + ". ");
         Log.i("NEW","VAig a fer Bind (ParkingAdapter) del num: "+position+ " a la pos: "+position);
         if(bigControl.isFree(position)) {
             adapterViewholder.matr.setText("LLiure");
+            adapterViewholder.matr.setTextColor(father.getResources().getColor(R.color.freeStateText));
             adapterViewholder.entryD.setText(" ");
+            adapterViewholder.idCar.setTextColor(father.getResources().getColor(R.color.freeStateText));
             adapterViewholder.layout.setBackgroundResource(R.drawable.free_peach);
          //   adapterViewholder.layout.setBackgroundColor(Color.parseColor("#b6fcd5"));
         }
         else {
             adapterViewholder.entryD.setText(logAux.format(bigControl.getCarDayEntry(position)));
+            adapterViewholder.entryD.setTextColor(father.getResources().getColor(R.color.busyStateText));
+            adapterViewholder.idCar.setTextColor(father.getResources().getColor(R.color.busyStateText));
             adapterViewholder.matr.setText(bigControl.getCarReg(position));
+            adapterViewholder.matr.setTextColor(father.getResources().getColor(R.color.busyStateText));
             adapterViewholder.layout.setBackgroundResource(R.drawable.busy_peach);
           //  adapterViewholder.layout.setBackgroundColor(Color.parseColor("#ff9898"));
         }

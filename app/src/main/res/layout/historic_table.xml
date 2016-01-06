@@ -37,10 +37,18 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/orderButton"
-            android:src="@android:drawable/ic_menu_sort_alphabetically"
-            android:layout_gravity="right"
+            android:src="@drawable/recaud"
+            android:id="@+id/button5"
             android:layout_alignParentEnd="true" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/orderButton"
+            android:src="@drawable/sort"
+            android:layout_gravity="right"
+            android:layout_toStartOf="@+id/button5"/>
+
 
     </RelativeLayout>
 
@@ -67,7 +75,8 @@
                     android:typeface="monospace"
                     android:text="Data\nEntrada"
                     android:layout_weight="11"
-                    android:layout_marginLeft="3dp" />
+                    android:layout_marginLeft="3dp"
+                    android:textColor="@color/tabHistoricText"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -80,7 +89,8 @@
                     android:typeface="monospace"
                     android:text="Data\nSortida"
                     android:layout_weight="10.5"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="@color/tabHistoricText"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -93,7 +103,8 @@
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Matricula"
-                    android:gravity="left|center_vertical" />
+                    android:gravity="left|center_vertical"
+                    android:textColor="@color/tabHistoricText" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -106,7 +117,8 @@
                     android:textStyle="bold"
                     android:typeface="monospace"
                     android:text="Pagat"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:textColor="@color/tabHistoricText"/>
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView

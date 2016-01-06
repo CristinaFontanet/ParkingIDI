@@ -18,7 +18,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     public static ParkingAdapter parkAdapter;
     static private Controller bigControl;
     int actualCar;
-    static Drawable freeImage, busyImage;
     static private TabPagerAdapter pare;
     View parentView;
     private static ParkingActivity father;
@@ -33,11 +32,9 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
         mRecyclerViewx = (RecyclerView) parentView.findViewById(R.id.rv);
         mRecyclerViewx.setLayoutManager(manager);
-        freeImage = getResources().getDrawable(R.drawable.simplegreencartopviewsquare);
-        busyImage = getResources().getDrawable(R.drawable.simpleredquare);
         Log.i("ENTRY","OnCreteView ParkingStatus");
 
-        parkAdapter = new ParkingAdapter(bigControl,this);
+        parkAdapter = new ParkingAdapter(bigControl,this,father);
         mRecyclerViewx.setAdapter(parkAdapter);
         mRecyclerViewx.setHasFixedSize(true);
         return parentView;

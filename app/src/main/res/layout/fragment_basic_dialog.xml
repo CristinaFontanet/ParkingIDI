@@ -11,6 +11,13 @@
         android:layout_gravity="center">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/helpTitle2"
+            android:text="@string/help_title"
+            style="@style/TitlesTheme"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Missatge"
@@ -20,6 +27,7 @@
             android:layout_margin="8dp" />
 
         <Button
+            style="@style/ButtonTheme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ok"

@@ -16,18 +16,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/historicDialog"
-            android:layout_marginStart="10dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
-            android:id="@+id/textView3"/>
+            android:id="@+id/textView3"
+            style="@style/TitlesTheme"/>
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="53dp"
             android:layout_toEndOf="@id/textView3"
             android:id="@+id/radioGroup">
 
@@ -152,7 +152,7 @@
         </LinearLayout>
 
         <Button
-            style="?android:attr/buttonStyleSmall"
+            style="@style/ButtonTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/hdMostra"

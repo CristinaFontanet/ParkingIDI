@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,6 +39,12 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
 
     private static final int idUndo = 0;
     private static final int idFile = 1;
+    private static final int idDrainParking = 2;
+    private static final int idDrainStatus = 3;
+
+    private static final int undoExit = 1;
+    private static final int undoError = -1;
+    private static final int undoEntry = 0;
 
     public void hideFloatingActionButton() {
         fab.hide();
@@ -58,6 +65,21 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         bigControl.bdChangeViewOrder();
         showHistoric();
         bigControl.showNormalToast(getString(R.string.toastOrderChanges), this);
+    }
+
+    private void showSnackBarNoti(String message, String buttonMessage) {
+        View.OnClickListener snackClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {}
+        };
+        //Length: short:2s , long:3,5s & indefinite: until dismissed or another snackbar
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.pageadapter_layout), message, Snackbar.LENGTH_LONG)
+                .setAction(buttonMessage, snackClickListener);
+        snackbar.setActionTextColor(Color.GREEN);
+        View sbView = snackbar.getView();
+        TextView tView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        tView.setTextColor(Color.YELLOW);
+        snackbar.show();
     }
 
     @Override
@@ -87,6 +109,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                 onClickFloatingActionButton();
             }
         });
+        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.circleButton)));
 
     }
 
@@ -96,51 +119,56 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
            case R.id.menu_help:
                FragmentTransaction frag = getFragmentManager().beginTransaction();
                DialogFragment dialogFragment = DialogHelp.newInstance();
-               dialogFragment.show(frag, "ShowErrorMessage");
+               dialogFragment.show(frag, "ShowHelpDialog");
                break;
            case R.id.menu_about:
                FragmentTransaction frag2 = getFragmentManager().beginTransaction();
                DialogFragment dialogFragment2 = DialogAbout.newInstance();
-               dialogFragment2.show(frag2, "ShowErrorMessage");
+               dialogFragment2.show(frag2, "ShowAboutDialog");
                break;
            case R.id.menu_drain:
-               bigControl.drainParking();
-               pagAdapt.forceParkingRemoved();
-               showSnackBarNoti(getString(R.string.resetParkingStatus), getString(R.string.ok));
+               FragmentTransaction frag3 = getFragmentManager().beginTransaction();
+               DialogFragment dialogFragment3 = Dialog2But.newInstance(getString(R.string.alertResetStatus),idDrainParking);
+               dialogFragment3.show(frag3, "ShowDrainParkingDialog");
                break;
            case R.id.menu_historicDrain:
-               bigControl.drainHistoric();
-               showSnackBarNoti(getString(R.string.resetHistory), getString(R.string.ok));
-               pagAdapt.forceHistoricNotifyRemoved();
+               FragmentTransaction frag4 = getFragmentManager().beginTransaction();
+               DialogFragment dialogFragment4 = Dialog2But.newInstance(getString(R.string.alertResetHistorial),idDrainStatus);
+               dialogFragment4.show(frag4, "ShowDrainHistoricDialog");
                break;
            case R.id.menu_price:
-               FragmentTransaction frag4 = getFragmentManager().beginTransaction();
-               DialogFragment dialogFragment4 = DialogPriceChanger.newInstance(bigControl.getPrice());
-               dialogFragment4.show(frag4, "ShowPriceChangeDialog");
+               FragmentTransaction frag5 = getFragmentManager().beginTransaction();
+               DialogFragment dialogFragment5 = DialogPriceChanger.newInstance(bigControl.getPrice());
+               dialogFragment5.show(frag5, "ShowPriceChangeDialog");
                break;
            case R.id.menu_desfer:
-               FragmentTransaction frag3 = getFragmentManager().beginTransaction();
+               FragmentTransaction frag6 = getFragmentManager().beginTransaction();
                int moveType = bigControl.getLastMoveType();
-               Log.i("UNDO","lastMoveType: "+ moveType);
-               DialogFragment dialogFragment3;
-               if(moveType==-1) dialogFragment3 = DialogBasic.newInstance(getString(R.string.noPreviousAction),getString(R.string.ok));
+               DialogFragment dialogFragment6;
+               if(moveType==undoError) dialogFragment6 = DialogBasic.newInstance(getString(R.string.noPreviousAction),getString(R.string.ok),getString(R.string.title_error));
                else {
                    String matr = bigControl.getLastMoveMatr();
-                   if(moveType==0) dialogFragment3 = Dialog2But.newInstance(getString(R.string.undoEntry)+" "+matr+"?",idUndo);
-                   else dialogFragment3 = Dialog2But.newInstance(getString(R.string.undoExit)+" "+matr+"?",idUndo);
+                   if(moveType==undoEntry) dialogFragment6 = Dialog2But.newInstance(getString(R.string.undoEntry)+" "+matr+"?",idUndo);
+                   else dialogFragment6 = Dialog2But.newInstance(getString(R.string.undoExit)+" "+matr+"?",idUndo);
                }
-               dialogFragment3.show(frag3, "ShowErrorMessage");
+               dialogFragment6.show(frag6, "ShowUndoMessage");
                break;
            case R.id.menu_export:
-               if(bigControl.exportHistorialState()) {
-                   FragmentTransaction frag5 = getFragmentManager().beginTransaction();
-                   DialogFragment dialogFragment5 = Dialog2But.newInstance(getString(R.string.exportOk),idFile);
-                   dialogFragment5.show(frag5, "ShowExportDialog");
+               int result = bigControl.exportHistorialState();
+               if(result==0) {
+                   FragmentTransaction frag7 = getFragmentManager().beginTransaction();
+                   DialogFragment dialogFragment7 = Dialog2But.newInstance(getString(R.string.exportOk),idFile);
+                   dialogFragment7.show(frag7, "ShowExportDialog");
                }
-               else {
-                   FragmentTransaction frag5 = getFragmentManager().beginTransaction();
-                   DialogFragment dialogFragment5 = DialogBasic.newInstance(getString(R.string.exportNo),getString(R.string.ok));
-                   dialogFragment5.show(frag5, "ShowExportDialog");
+               else if(result==-1){
+                   FragmentTransaction frag7 = getFragmentManager().beginTransaction();
+                   DialogFragment dialogFragment7 = DialogBasic.newInstance(getString(R.string.exportNoWrite),getString(R.string.ok),getString(R.string.title_error));
+                   dialogFragment7.show(frag7, "ShowError1ExportDialog");
+               }
+               else if (result==-2) {
+                   FragmentTransaction frag7 = getFragmentManager().beginTransaction();
+                   DialogFragment dialogFragment7 = DialogBasic.newInstance(getString(R.string.exportNo),getString(R.string.ok),getString(R.string.title_error));
+                   dialogFragment7.show(frag7, "ShowError2ExportDialog");
                }
            default:
                break;
@@ -155,9 +183,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View view) {
-        Log.i("PARKACT", "ON CLICK!!!!!!!!!!!!!! de ParkingActivity");
-    }
+    public void onClick(View view) {  }
 
     private void onClickFloatingActionButton() {
         if(tabPosition==0) {
@@ -167,15 +193,16 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                 dialogFragment.show(frag, "AskRegistration");
             } else {
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
-                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.busyParking), getString(R.string.ok));
-                dialogFragment.show(frag, "ShowMessage");
+                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.busyParking), getString(R.string.ok),getString(R.string.title_error));
+                dialogFragment.show(frag, "ShowBusyMessage");
             }
         }
-        else {
-            FragmentTransaction frag = getFragmentManager().beginTransaction();
-            dialogHistoryFragment = DialogHistory.newInstance(historicType,tini,tend);
-            dialogHistoryFragment.show(frag,"DialogHistory");
-        }
+    }
+
+    public void historicButtonClicked(){
+        FragmentTransaction frag = getFragmentManager().beginTransaction();
+        dialogHistoryFragment = DialogHistory.newInstance(historicType,tini,tend);
+        dialogHistoryFragment.show(frag,"DialogHistory");
     }
 
     @Override   //en ocupar una nova plasa
@@ -185,7 +212,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         FragmentTransaction frag = getFragmentManager().beginTransaction();
         DialogFragment dialogFragment = DialogPlot.newInstance(where+1);
         dialogFragment.show(frag, "ShowOKMessage");
-
         return where;
     }
 
@@ -208,8 +234,8 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     public void onPageScrollStateChanged(int state) {
         if(tabPosition!=viewPager.getCurrentItem()) {
             tabPosition = viewPager.getCurrentItem();
-            if(tabPosition==0)fab.setImageDrawable(getResources().getDrawable(R.drawable.androidadd512));
-            else fab.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_month));
+            if(tabPosition==0)fab.show();
+            else fab.hide();
         }
     }
 
@@ -236,21 +262,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         showHistoric();
     }
 
-    private void showSnackBarNoti(String message, String buttonMessage) {
-        View.OnClickListener snackClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {}
-        };
-        //Length: short:2s , long:3,5s & indefinite: until dismissed or another snackbar
-        Snackbar snackbar = Snackbar.make(findViewById(R.id.pageadapter_layout), message, Snackbar.LENGTH_LONG)
-                .setAction(buttonMessage, snackClickListener);
-        snackbar.setActionTextColor(Color.GREEN);
-        View sbView = snackbar.getView();
-        TextView tView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        tView.setTextColor(Color.YELLOW);
-        snackbar.show();
-    }
-
     @Override   //en clicar yes del Dialog2But
     public void onComplete(int who) {
         if(who==idUndo) {
@@ -265,8 +276,20 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
             try {
                 startActivity(newIntent);
             } catch (ActivityNotFoundException e) {
-               // Toast.makeText(context, "No handler for this type of file.", Toast.LENGTH_LONG).show();
+                FragmentTransaction frag = getFragmentManager().beginTransaction();
+                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.exportNoWrite),getString(R.string.ok),getString(R.string.title_error));
+                dialogFragment.show(frag, "ShowError1ExportDialog");
             }
+        }
+        else if(who==idDrainParking) {
+            bigControl.drainParking();
+            pagAdapt.forceParkingRemoved();
+            showSnackBarNoti(getString(R.string.resetParkingStatus), getString(R.string.ok));
+        }
+        else if(who==idDrainStatus){
+            bigControl.drainHistoric();
+            showSnackBarNoti(getString(R.string.resetHistory), getString(R.string.ok));
+            pagAdapt.forceHistoricNotifyRemoved();
         }
     }
 

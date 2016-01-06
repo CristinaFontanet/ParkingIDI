@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cristinafontanet.parkingidi.DialogPriceChanger">
+    tools:context="com.example.cristinafontanet.parkingidi.DialogPriceChanger"
+    style="@style/DialogsTheme">
 
     <LinearLayout
         android:orientation="vertical"
@@ -44,7 +45,7 @@
             android:layout_height="match_parent">
 
             <Button
-                style="?android:attr/buttonStyleSmall"
+                style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/Cancel"
@@ -52,7 +53,7 @@
                 android:layout_weight="5" />
 
             <Button
-                style="?android:attr/buttonStyleSmall"
+                style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/Accept"

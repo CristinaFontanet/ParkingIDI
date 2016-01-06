@@ -13,8 +13,12 @@
     <string name="menu_price">Canvia el preu </string>
     <string name="menu_export">Exporta a Csv</string>
 
-    <!-- Help -->
+    <!--Titles -->
     <string name="help_title">Help:</string>
+    <string name="title_error">Error</string>
+
+
+    <!-- Help -->
     <string name="help_button">Tanca</string>
 
     <!--About -->
@@ -54,7 +58,7 @@
     <string name="historicRecaudMensual">Recaudament mensual </string>
 
     <!-- DialogHistory -->
-    <string name="historicDialog">Mostrar historial de: </string>
+    <string name="historicDialog">Mostrar historial</string>
     <string name="hdRecaptDiaria">Recaptació diària</string>
     <string name="hdRecaptTotal">Recaptació total</string>
     <string name="hdRecaptMens">Recaptació mensual</string>
@@ -84,11 +88,14 @@
     <string name="Accept">Accepta</string>
 
     <string name="resetHistory">Historial buidat</string>
+    <string name="alertResetHistorial">Segur que vols buidar l\'historial? Recorda que questa acció no es podrà desfer </string>
     <string name="resetParkingStatus">Places buidades</string>
+    <string name="alertResetStatus">Segur que vols buidar les places del parking? Recorda que questa acció no es podrà desfer </string>
     <string name="priceText">Preu per minut: </string>
     <string name="priceTitle">Canvi de preu </string>
 
 
-    <string name="exportOk">S\'ha creat un arxiu a la carpeta de Documents. Vols obrir-lo?</string>
-    <string name="exportNo">Hi ha hagut algun problema a l\'hora de crear el fitxer</string>
+    <string name="exportOk">S\'ha creat un arxiu a la carpeta de Downloads. Vols obrir-lo?</string>
+    <string name="exportNo">Hi ha hagut algun problema a l\'hora de crear el fitxer. El teu dispositiu fa servir algun format concret?</string>
+    <string name="exportNoWrite">No hi ha permisos per escriure a la memoria del dispositiu. Tens carpeta de Downloads?</string>
 </resources>

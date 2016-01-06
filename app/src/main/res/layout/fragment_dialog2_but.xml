@@ -25,7 +25,7 @@
             android:layout_height="match_parent">
 
             <Button
-                style="?android:attr/buttonStyleSmall"
+                style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no"
@@ -34,13 +34,14 @@
                 android:layout_weight="5" />
 
             <Button
-                style="?android:attr/buttonStyleSmall"
+                style="@style/ButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/yes"
                 android:id="@+id/byes"
                 android:layout_gravity="center"
-                android:layout_weight="5" />
+                android:layout_weight="5"
+                />
         </LinearLayout>
 
     </LinearLayout>

@@ -77,7 +77,7 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
             }
             else {
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
-                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.introdueix_matricula), getString(R.string.ok));
+                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.introdueix_matricula), getString(R.string.ok),getString(R.string.title_error));
                 dialogFragment.show(frag, "ShowErrorMessage");
             }
         }

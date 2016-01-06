@@ -3,7 +3,6 @@ package com.example.cristinafontanet.parkingidi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
@@ -11,17 +10,12 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +27,7 @@ public final class Controller {
     static private int maxPlaces = 15;
     private static double pricePerMinute = 0.02;
     private static final int segDay = 24*60*60;
-    private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+    private SimpleDateFormat logAux = new SimpleDateFormat("yyyMMdd-HH.mm");
     private int busyPlots;
     private ArrayList<Parking> plots;
     private BDController bdContr;
@@ -105,6 +99,8 @@ public final class Controller {
     public String getLastMoveMatr() { return lastMoved.getMatricula(); }
 
     public Double getPrice() {  return pricePerMinute; }
+
+    public File getFilePath() { return exportFile; }
 
 /** Notifications */
     public void showNormalToast(String message, ParkingActivity father) {
@@ -235,7 +231,7 @@ public final class Controller {
     public void undoLastMove() {
         int plot = lastMoved.getPlot();
         Parking last = null;
-        Log.i("UNDO","Desfaig el moviment de la plasa "+plot+", on hi havia el cotxe "+lastMoved.getMatricula());
+        Log.i("UNDO", "Desfaig el moviment de la plasa " + plot + ", on hi havia el cotxe " + lastMoved.getMatricula());
         if(lastMoved.getExitDay()==null) {  //undoEntry
             newFreePlot(plot);
             bdContr.removeFromStatus(plot);
@@ -258,20 +254,17 @@ public final class Controller {
         editor.apply();
     }
 
-
-    public boolean exportHistorialState() {
+    public int exportHistorialState() {
         String state = Environment.getExternalStorageState();
-        if (!Environment.MEDIA_MOUNTED.equals(state))  return false;
+        if (!Environment.MEDIA_MOUNTED.equals(state))  return -1;
         else {
             File exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             if (!exportDir.exists())exportDir.mkdirs();
             Calendar cal =Calendar.getInstance();
-            exportFile = new File(exportDir, "FontanetCristinaParking.csv");
+            String name = logAux.format(cal.getTime()).concat("FontanetCristinaParking.csv");
+            exportFile = new File(exportDir, name);
             return bdContr.exportToCSV(exportFile);
         }
     }
 
-    public File getFilePath() {
-        return exportFile;
-    }
 }
