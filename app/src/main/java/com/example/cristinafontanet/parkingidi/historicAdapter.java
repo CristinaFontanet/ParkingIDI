@@ -2,15 +2,10 @@ package com.example.cristinafontanet.parkingidi;
 
 import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -43,9 +38,11 @@ public class historicAdapter extends RecyclerView.Adapter<historicAdapter.Adapte
     @Override
     public void onBindViewHolder(final historicAdapter.AdapterViewHolder adapterViewholder, final int position) {
         adapterViewholder.entryD.setText(logAux.format(contactos.get(position).getEntryDay()));
-        adapterViewholder.exitD.setText(logAux.format(contactos.get(position).getExitDay()));
+        if(contactos.get(position).getExitDay()!=null)adapterViewholder.exitD.setText(logAux.format(contactos.get(position).getExitDay()));
+        else adapterViewholder.exitD.setText("-");
         adapterViewholder.matr.setText(contactos.get(position).getMatricula());
-        adapterViewholder.price.setText(String.valueOf(contactos.get(position).getPricePayed()));
+        if(contactos.get(position).getExitDay()!=null)adapterViewholder.price.setText(String.valueOf(contactos.get(position).getPricePayed()));
+        else adapterViewholder.price.setText("-");
         adapterViewholder.v.setOnClickListener(new View.OnClickListener() {
             @Override
         public void onClick(View v) {

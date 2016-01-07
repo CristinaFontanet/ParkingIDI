@@ -1,7 +1,6 @@
 package com.example.cristinafontanet.parkingidi;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 /*
  * Created by CristinaFontanet on 25/11/2015.

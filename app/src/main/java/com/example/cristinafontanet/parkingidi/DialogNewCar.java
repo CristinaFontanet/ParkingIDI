@@ -18,12 +18,14 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
     private static ParkingActivity father;
     private static int position;
     private OnCompleteListener mListener;
+    private static Controller bigControl;
 
 
-    public static DialogNewCar newInstance(ParkingActivity parent, int pos) {
+    public static DialogNewCar newInstance(ParkingActivity parent, int pos, Controller contr) {
         DialogNewCar aux = new DialogNewCar();
         father = parent;
         position = pos;
+        bigControl = contr;
         return aux;}
 
     public DialogNewCar() {
@@ -71,14 +73,19 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
     @Override
     public void onClick(View view) {
         if (view.getId()== R.id.button &&mListener != null) {
-            if(!matr.getText().toString().isEmpty()) {
-                mListener.onComplete(matr.getText().toString(),position);
-                dismiss();
-            }
-            else {
+            if(matr.getText().toString().isEmpty() || matr.getText().toString().trim().isEmpty()){
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.introdueix_matricula), getString(R.string.ok),getString(R.string.title_error));
                 dialogFragment.show(frag, "ShowErrorMessage");
+            }
+            else if(bigControl.existsCar(matr.getText().toString().trim())) {
+                FragmentTransaction frag = getFragmentManager().beginTransaction();
+                DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.matriculaJaDins), getString(R.string.ok), getString(R.string.title_error));
+                dialogFragment.show(frag, "ShowErrorMessage");
+            }
+            else {
+                mListener.onComplete(matr.getText().toString(),position);
+                dismiss();
             }
         }
     }

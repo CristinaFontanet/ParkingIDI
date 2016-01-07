@@ -3,18 +3,15 @@ package com.example.cristinafontanet.parkingidi;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 /*
  * Created by CristinaFontanet on 15/12/2015.
@@ -25,38 +22,46 @@ public class BDController {
     SimpleDateFormat diaOnlyF = new SimpleDateFormat("yyy-MM-dd 00:00:00.0");
     SimpleDateFormat monthOnlyF = new SimpleDateFormat("yyy-MM-01 00:00:00.0");
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
-    String orderASC ="exitDay ASC, entryDay ASC";
-    String orderDESC ="exitDay DESC, entryDay DESC";
-    String order;
+    String orderASCH ="exitDay ASC, entryDay ASC";
+    String orderDESCH ="exitDay DESC, entryDay DESC";
+    String orderASCP ="entryDay ASC";
+    String orderDESCP ="entryDay DESC";
+    String order,orderP;
 
     BDController(Activity vista) {
         dades = new BD(vista);
-        order = orderDESC;
+        order = orderDESCH;
     }
 /** INSERTS*/
-public void saveActualState(ArrayList<Parking> plots) {
+    public void saveActualState(ArrayList<Parking> plots) {
     db = dades.getWritableDatabase();
     dades.resetActualState(db);
+        try {
     for(Integer i = 0; i < plots.size(); ++i) {
         if(plots.get(i)!=null) {
-            String[] s = {};
-            Log.i("SAVE", "Guardo a la pos " + i + " el cotxe amb matricula " + plots.get(i).getMatricula() + " el dia " + plots.get(i).getEntryDay() );
-            db.execSQL("INSERT INTO TActual (plot,matricula,entryDay) VALUES ('" + i.toString() + "','" + plots.get(i).getMatricula() + "','" + plots.get(i).getEntryDay().getTime()+ "')", s);
+            String[] s = {i.toString(),plots.get(i).getMatricula()};
+            db.execSQL("INSERT INTO TActual (plot,matricula,entryDay) VALUES (?,?,'" + plots.get(i).getEntryDay().getTime()+ "')", s);
         }
-        else Log.i("SAVE", "NOO guardo la plasa "+i+" ja que està lliure");
     }
     db.close();
-    Log.i("SAVE", "Ja he acabat de guardar les places");
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+        }
 }
 
     public void saveNewEntry(int where, Parking car) {
-        db = dades.getWritableDatabase();
-        if(car!=null) {
-            String[] s = {};
-            Log.i("SAVE", "Guardo a la pos " + where + " el cotxe amb matricula " + car.getMatricula() + " el dia " + car.getEntryDay());
-            db.execSQL("INSERT INTO TActual (plot,matricula,entryDay) VALUES ('" + where + "','" + car.getMatricula() + "','" + car.getEntryDay().getTime() + "')", s);
+        try {
+            db = dades.getWritableDatabase();
+            if (car != null) {
+                String[] s = {car.getMatricula()};
+                db.execSQL("INSERT INTO TActual (plot,matricula,entryDay) VALUES ('" + where + "',?,'" + car.getEntryDay().getTime() + "')", s);
+            }
+            db.close();
         }
-        db.close();
+        catch (Exception exc) {
+
+        }
     }
 
 
@@ -75,7 +80,12 @@ public void saveActualState(ArrayList<Parking> plots) {
 
     public void removeFromStatus(int plot) {
         db = dades.getWritableDatabase();
+        try {
         db.execSQL("DELETE FROM TActual WHERE plot= " + plot + " ;");
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+        }
         db.close();
     }
 
@@ -83,19 +93,23 @@ public void saveActualState(ArrayList<Parking> plots) {
         Parking res = null;
         db = dades.getReadableDatabase();
         Cursor curs = null;
+        try {
         if(db != null) {
-            String[] s = {};
-            curs = db.rawQuery("SELECT * FROM THistorial WHERE matricula='"+matricula+ "' ORDER BY exitDay DESC ;", s);
+            String[] s = {matricula};
+            curs = db.rawQuery("SELECT * FROM THistorial WHERE matricula=? ORDER BY exitDay DESC ;", s);
         }
         if(curs.moveToFirst()) {
             res = new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3));
         }
-        else Log.i("UNDOBD", "NOOOO he trobat el cotxe a l'historial");
         if(db != null && res!=null) {
-            String[] s = {};
-            db.execSQL("DELETE FROM THistorial WHERE matricula='"+matricula+ "' and exitDay="+res.getExitDay().getTime()+" ;", s);
+            String[] s = {matricula};
+            db.execSQL("DELETE FROM THistorial WHERE matricula=? and exitDay="+res.getExitDay().getTime()+" ;", s);
         }
         db.close();
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+        }
         return res;
     }
 
@@ -104,6 +118,7 @@ public void saveActualState(ArrayList<Parking> plots) {
     int busyPlots = 0;
     db = dades.getReadableDatabase();
     Cursor curs;
+        try {
     if(db != null) {
         String[] s = {};
         curs = db.rawQuery("SELECT * FROM TActual", s);
@@ -113,13 +128,15 @@ public void saveActualState(ArrayList<Parking> plots) {
                 Parking nou = new Parking(curs.getString(1),auxi,curs.getInt(0));
                 plots.set(curs.getInt(0), nou);
                 ++busyPlots;
-                Log.i("LOADBD", "Carrego a la pos " + curs.getInt(0) + " el cotxe amb matricula " + plots.get(curs.getInt(0)).getMatricula() + " el dia " + auxi );
             } while(curs.moveToNext());
         }
         curs.close();
         db.close();
     }
-    Log.i("LOAD", "Despres de carregar el parking, tenim " + busyPlots + " places ocupades");
+        }
+            catch(Exception exc) {
+                //   exc.printStackTrace();
+            }
     return busyPlots;
 }
 
@@ -127,6 +144,7 @@ public void saveActualState(ArrayList<Parking> plots) {
         Double payed = 0.0;
         db = dades.getReadableDatabase();
         Cursor curs = null;
+        try {
         if(db != null) {
             String[] s = {};
             curs = db.rawQuery("SELECT * FROM THistorial ORDER BY "+order, s);
@@ -138,7 +156,11 @@ public void saveActualState(ArrayList<Parking> plots) {
             } while(curs.moveToNext());
         }
         db.close();
-        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit");
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+            return payed;
+        }
         return payed;
     }
 
@@ -149,6 +171,7 @@ public void saveActualState(ArrayList<Parking> plots) {
         Double money = 0.0;
         db = dades.getReadableDatabase();
         Cursor curs = null;
+        try {
         if(db != null) {
             String[] s = {};
             curs = db.rawQuery("SELECT * FROM THistorial WHERE exitDay>="+day.getTime()+" ORDER BY "+order, s);
@@ -159,8 +182,22 @@ public void saveActualState(ArrayList<Parking> plots) {
                 contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
             } while(curs.moveToNext());
         }
+        curs = null;
+        if(db != null) {
+            String[] s = {};
+            curs = db.rawQuery("SELECT * FROM TActual WHERE entryDay>="+day.getTime()+" ORDER BY "+orderP, s);
+        }
+        if(curs.moveToFirst()) {
+            do {
+                contactos.add(new Parking(curs.getString(1), new Timestamp(curs.getLong(2)),curs.getInt(0)));
+            } while(curs.moveToNext());
+        }
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+            return money;
+        }
         db.close();
-        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit el dia " + day);
         return money;
     }
 
@@ -171,6 +208,7 @@ public void saveActualState(ArrayList<Parking> plots) {
         Double money = 0.0;
         db = dades.getReadableDatabase();
         Cursor curs = null;
+        try {
         if(db != null) {
             String[] s = {};
             curs = db.rawQuery("SELECT * FROM THistorial WHERE exitDay>="+day.getTime()+" ORDER BY "+order, s);
@@ -181,8 +219,22 @@ public void saveActualState(ArrayList<Parking> plots) {
                 contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
             } while(curs.moveToNext());
         }
+        curs = null;
+        if(db != null) {
+            String[] s = {};
+            curs = db.rawQuery("SELECT * FROM TActual WHERE entryDay>="+day.getTime()+" ORDER BY "+orderP, s);
+        }
+        if(curs.moveToFirst()) {
+            do {
+                contactos.add(new Parking(curs.getString(1), new Timestamp(curs.getLong(2)),curs.getInt(0)));
+            } while(curs.moveToNext());
+        }
         db.close();
-        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit el mes " + day);
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+            return money;
+        }
         return money;
     }
 
@@ -190,9 +242,10 @@ public void saveActualState(ArrayList<Parking> plots) {
         Double money = 0.0;
         db = dades.getReadableDatabase();
         Cursor curs = null;
+        try {
         if(db != null) {
             String[] s = {};
-            curs = db.rawQuery("SELECT * FROM THistorial WHERE exitDay>="+iniTime.getTime()+" and exitDay<="+endTime.getTime()+" ORDER BY "+order, s);
+            curs = db.rawQuery("SELECT * FROM THistorial WHERE (exitDay>="+iniTime.getTime()+" and exitDay<="+endTime.getTime()+") or (entryDay>="+iniTime.getTime()+" and entryDay<="+endTime.getTime()+") ORDER BY "+order, s);
         }
         if(curs.moveToFirst()) {
             do {
@@ -200,28 +253,50 @@ public void saveActualState(ArrayList<Parking> plots) {
                 contactos.add(new Parking(curs.getString(0), new Timestamp(curs.getLong(1)), new Timestamp(curs.getLong(2)),curs.getDouble(3)));
             } while(curs.moveToNext());
         }
+        curs = null;
+        if(db != null) {
+            String[] s = {};
+            curs = db.rawQuery("SELECT * FROM TActual WHERE entryDay>="+iniTime.getTime()+" and entryDay<="+endTime.getTime()+" ORDER BY "+orderP, s);
+        }
+        if(curs.moveToFirst()) {
+            do {
+                contactos.add(new Parking(curs.getString(1), new Timestamp(curs.getLong(2)),curs.getInt(0)));
+            } while(curs.moveToNext());
+        }
         db.close();
-        Log.i("HISTORY", "He carregat " + contactos.size() + " cotxes q ja han sortit entre el dia " + iniTime + " i el dia " + endTime);
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+            return money;
+        }
         return money;
     }
 
 /** Others*/
     public void changeOrder(){
-        if(order.equals(orderDESC)) order = orderASC;
-        else order= orderDESC;
+        if(order.equals(orderDESCH)) {
+            order = orderASCH;
+            orderP = orderASCP;
+        }
+        else {
+            order= orderDESCH;
+            orderP=orderDESCP;
+        }
     }
 
     public void registerCarExit(int num, Parking car) {
         db = dades.getWritableDatabase();
-      //  dades.resetActualState(db);
+        try{
         if(car!=null) {
-            String[] s = {};
-            Log.i("SAVE","Arxivo el cotxe de la plasa "+num+", amb matr: "+car.getMatricula()+" amb sortida del dia "+ car.getExitDay()+ " i preu pagat de "+car.getPricePayed());
-            db.execSQL("INSERT INTO THistorial (matricula, entryDay, exitDay, pricePayed) VALUES ('" + car.getMatricula() + "','" + car.getEntryDay().getTime() + "','" + car.getExitDay().getTime() + "','" + car.getPricePayed() + "')", s);
+            String[] s = {car.getMatricula()};
+            db.execSQL("INSERT INTO THistorial (matricula, entryDay, exitDay, pricePayed) VALUES (?,'" + car.getEntryDay().getTime() + "','" + car.getExitDay().getTime() + "','" + car.getPricePayed() + "')", s);
             db.execSQL("DELETE FROM TActual WHERE plot= "+num+" ;");
         }
-        else Log.e("SAVE", "Error al guardar la sortida del cotxe, el la plasa està lliure");
-        db.close();
+         db.close();
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+        }
     }
 
     public int exportToCSV(File file) {
@@ -247,14 +322,13 @@ public void saveActualState(ArrayList<Parking> plots) {
                     Long exitDate = curCSV.getLong(2);
                     Double price = curCSV.getDouble(3);
                     String record = matr + ", " + logAux.format(entryDate) + ", " + logAux.format(exitDate) + ", " + price;
-                    printWriter.println(record); //write the record in the .csv file
+                    printWriter.println(record);
                 } while(curCSV.moveToNext());
             }
             curCSV.close();
             db.close();
         }
         catch(Exception exc) {
-            Log.i("EXPORT","EXCEPCIOOOOOOOOOOOOOOOOOOOOOOO");
          //   exc.printStackTrace();
             return -2;
         }

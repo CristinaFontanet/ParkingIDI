@@ -38,6 +38,10 @@ public final class Controller {
     private double price;
     private static File exportFile;
 
+    protected static final int undoExit = 0;
+    protected static final int undoError = -1;
+    protected static final int undoEntry = 1;
+
     public Controller(ParkingActivity vista, Double price) {
         plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
         busyPlots = 0;
@@ -91,9 +95,9 @@ public final class Controller {
     public Timestamp getCarDayEntry(int i) { return plots.get(i).getEntryDay();  }
 
     public int getLastMoveType() {
-        if (lastMoved == null) return -1;
-        else if(lastMoved.getExitDay()==null) return 1;
-        else return 0;
+        if (lastMoved == null) return undoError;
+        else if(lastMoved.getExitDay()==null) return undoEntry;
+        else return undoExit;
     }
 
     public String getLastMoveMatr() { return lastMoved.getMatricula(); }
@@ -267,4 +271,10 @@ public final class Controller {
         }
     }
 
+    public boolean existsCar(String s) {
+        for(Parking i : plots) {
+            if(i!=null && i.getMatricula().trim().equals(s))return true;
+        }
+        return false;
+    }
 }

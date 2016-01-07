@@ -45,7 +45,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
         adapterViewholder.idCar.setText(position+1 + ". ");
         Log.i("NEW","VAig a fer Bind (ParkingAdapter) del num: "+position+ " a la pos: "+position);
         if(bigControl.isFree(position)) {
-            adapterViewholder.matr.setText("LLiure");
+            adapterViewholder.matr.setText(father.getResources().getString(R.string.freePeach));
             adapterViewholder.matr.setTextColor(father.getResources().getColor(R.color.freeStateText));
             adapterViewholder.entryD.setText(" ");
             adapterViewholder.idCar.setTextColor(father.getResources().getColor(R.color.freeStateText));

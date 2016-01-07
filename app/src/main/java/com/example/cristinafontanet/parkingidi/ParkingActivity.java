@@ -20,10 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Timestamp;
-
 /*
  * Created by CristinaFontanet on 20/12/2015.
  */
@@ -42,9 +40,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     private static final int idDrainParking = 2;
     private static final int idDrainStatus = 3;
 
-    private static final int undoExit = 1;
-    private static final int undoError = -1;
-    private static final int undoEntry = 0;
 
     public void hideFloatingActionButton() {
         fab.hide();
@@ -145,10 +140,10 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                FragmentTransaction frag6 = getFragmentManager().beginTransaction();
                int moveType = bigControl.getLastMoveType();
                DialogFragment dialogFragment6;
-               if(moveType==undoError) dialogFragment6 = DialogBasic.newInstance(getString(R.string.noPreviousAction),getString(R.string.ok),getString(R.string.title_error));
+               if(moveType==com.example.cristinafontanet.parkingidi.Controller.undoError) dialogFragment6 = DialogBasic.newInstance(getString(R.string.noPreviousAction),getString(R.string.ok),getString(R.string.title_error));
                else {
                    String matr = bigControl.getLastMoveMatr();
-                   if(moveType==undoEntry) dialogFragment6 = Dialog2But.newInstance(getString(R.string.undoEntry)+" "+matr+"?",idUndo);
+                   if(moveType==com.example.cristinafontanet.parkingidi.Controller.undoEntry) dialogFragment6 = Dialog2But.newInstance(getString(R.string.undoEntry)+" "+matr+"?",idUndo);
                    else dialogFragment6 = Dialog2But.newInstance(getString(R.string.undoExit)+" "+matr+"?",idUndo);
                }
                dialogFragment6.show(frag6, "ShowUndoMessage");
@@ -189,7 +184,7 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         if(tabPosition==0) {
             if (bigControl.getNumFreePeaches() > 0) {
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
-                DialogFragment dialogFragment = DialogNewCar.newInstance(this,-1);
+                DialogFragment dialogFragment = DialogNewCar.newInstance(this,-1,bigControl);
                 dialogFragment.show(frag, "AskRegistration");
             } else {
                 FragmentTransaction frag = getFragmentManager().beginTransaction();

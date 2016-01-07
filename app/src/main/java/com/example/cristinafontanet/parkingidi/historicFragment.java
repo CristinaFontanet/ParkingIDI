@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -109,15 +108,9 @@ public class historicFragment extends android.support.v4.app.Fragment implements
         recaptMoney.setText(price.toString() + getString(R.string.edmMoneda));
     }
 
-    public void forceNotifyDataSetChanged() {
-        hisAdapter.notifyItemRangeChanged(0, hisAdapter.getItemCount() + 1);
-    }
-    public void forceNotifyItemChanged(Parking last) {
-        hisAdapter = new historicAdapter(bigControl,this);
-        mRecyclerViewx.setAdapter(hisAdapter);
-    }
     public void forceNotifyRemoved() {
         hisAdapter.removeAll();
+        recaptMoney.setText("0"+ getString(R.string.edmMoneda));
     }
 
 }

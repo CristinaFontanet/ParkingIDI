@@ -14,7 +14,7 @@
     <string name="menu_export">Exporta a Csv</string>
 
     <!--Titles -->
-    <string name="help_title">Help:</string>
+    <string name="help_title">Help</string>
     <string name="title_error">Error</string>
 
 
@@ -28,8 +28,9 @@
                 en l\'assignatura d\'Introducció al Disseny d\'Interfícies</string>
 
     <!-- Dialog New Car -->
-    <string name="introdueix_matricula">Error: Introdueix una matricula si us plau.</string>
-    <string name="edcTitle">Dades nou cotxe: </string>
+    <string name="introdueix_matricula">Introdueix una matricula si us plau</string>
+    <string name="edcTitle">Dades nou cotxe </string>
+    <string name="matriculaJaDins">Ja hi ha un cotxe amb aquesta matricula ara mateix</string>
 
     <!--  Exit Car-->
     <string name="edmMatr">Matricula: </string>
@@ -49,13 +50,13 @@
 
     <!-- TabPagerAdapter -->
     <string name="tabParking">Estat places</string>
-    <string name="tabHisto">Recaudament</string>
+    <string name="tabHisto">Recaptament</string>
 
     <!--  HistoricFragment -->
     <string name="historicRecaud">Recaudament: </string>
     <string name="historicRecaudDay">Recaudament diari </string>
     <string name="historicRecaudBet">Recaudament entre </string>
-    <string name="historicRecaudMensual">Recaudament mensual </string>
+    <string name="historicRecaudMensual">Recaudament mes </string>
 
     <!-- DialogHistory -->
     <string name="historicDialog">Mostrar historial</string>
@@ -65,15 +66,15 @@
     <string name="hdRecaptDates">Recaptació entre dues dates</string>
     <string name="hdMostra">Mostra</string>
     <string name="hdInici">Inici:</string>
-    <string name="hdFinal">Final:</string>
+    <string name="hdFinal">Final:</string>z
     <string name="hdTriaHora">Tria una hora</string>
     <string name="hdTriaData">Tria una data</string>
-    <string name="hderrorNoDIni">Error: Tria una data d\'inici</string>
-    <string name="hderrorNoHIni">Error: Tria una hora d\'inici</string>
-    <string name="hderrorNoDFi">Error: Tria una data de fi</string>
-    <string name="hderrorNoHFi">Error: Tria una hora de fi</string>
-    <string name="hderrorIniciPosteriorFi">Error: Les dades d\'inici han de ser anteriors a les de fi</string>
-    <string name="hderrorDesconegut">Error: Hi ha hagut un error amb les dates</string>
+    <string name="hderrorNoDIni">Tria una data d\'inici</string>
+    <string name="hderrorNoHIni">Tria una hora d\'inici</string>
+    <string name="hderrorNoDFi">Tria una data de fi</string>
+    <string name="hderrorNoHFi">Tria una hora de fi</string>
+    <string name="hderrorIniciPosteriorFi">Les dades d\'inici han de ser anteriors a les de fi</string>
+    <string name="hderrorDesconegut">Hi ha hagut un error amb les dates</string>
 
     <!--  Undo -->
     <string name="yes">Sí</string>
@@ -93,6 +94,7 @@
     <string name="alertResetStatus">Segur que vols buidar les places del parking? Recorda que questa acció no es podrà desfer </string>
     <string name="priceText">Preu per minut: </string>
     <string name="priceTitle">Canvi de preu </string>
+    <string name="freePeach">Lliure</string>
 
 
     <string name="exportOk">S\'ha creat un arxiu a la carpeta de Downloads. Vols obrir-lo?</string>

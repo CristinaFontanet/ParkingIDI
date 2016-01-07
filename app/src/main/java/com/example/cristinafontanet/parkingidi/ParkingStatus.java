@@ -2,7 +2,6 @@ package com.example.cristinafontanet.parkingidi;
 
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -67,7 +66,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
         }
         else {
             FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = DialogNewCar.newInstance(father,i);
+            DialogFragment dialogFragment = DialogNewCar.newInstance(father,i,bigControl);
             dialogFragment.show(frag, "AskRegistration");
         }
     }
