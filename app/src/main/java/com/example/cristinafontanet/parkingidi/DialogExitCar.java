@@ -2,7 +2,6 @@ package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +70,6 @@ public class DialogExitCar extends android.app.DialogFragment implements View.On
 
         day = (TextView) v.findViewById(R.id.dia);
         day2 = (TextView) v.findViewById(R.id.dia2);
-        Log.i("Calc","Hi ha estat "+ days+" dies");
 
             day.setText(diaF.format(mDay));
             day2.setText(diaF.format(actualT));

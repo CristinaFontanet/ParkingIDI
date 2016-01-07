@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,6 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
 
         adapterViewholder.id=position;
         adapterViewholder.idCar.setText(position+1 + ". ");
-        Log.i("NEW","VAig a fer Bind (ParkingAdapter) del num: "+position+ " a la pos: "+position);
         if(bigControl.isFree(position)) {
             adapterViewholder.matr.setText(father.getResources().getString(R.string.freePeach));
             adapterViewholder.matr.setTextColor(father.getResources().getColor(R.color.freeStateText));

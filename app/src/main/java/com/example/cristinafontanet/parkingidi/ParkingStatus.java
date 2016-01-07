@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
         mRecyclerViewx = (RecyclerView) parentView.findViewById(R.id.rv);
         mRecyclerViewx.setLayoutManager(manager);
-        Log.i("ENTRY","OnCreteView ParkingStatus");
 
         parkAdapter = new ParkingAdapter(bigControl,this,father);
         mRecyclerViewx.setAdapter(parkAdapter);
@@ -51,7 +49,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
             switch (view.getId()){
                 default:
                     int clicked = mRecyclerViewx.getChildPosition(view);
-                    Log.i("CLICK", "Vaig a mirar el cotxe: "+clicked);
                     carClicked(clicked);
                     break;
             }
@@ -83,28 +80,19 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Log.i("SAVE", "entro a onDestroy");
         bigControl.saveActualState();
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        Log.i("SAVE","entro a onPause");
         bigControl.saveActualState();
     }
 
     @Override
-    public void onFragmentInteraction() {
-            Log.i("ENTRY","id: "+parkAdapter.getItemId(actualCar));
-            parkAdapter.notifyItemChanged(actualCar);
-    }
+    public void onFragmentInteraction() { parkAdapter.notifyItemChanged(actualCar); }
 
-    public void forceNotifyDataSetChanged() {
-        parkAdapter.notifyItemRangeChanged(0, mRecyclerViewx.getChildCount());
-    }
+    public void forceNotifyDataSetChanged() { parkAdapter.notifyItemRangeChanged(0, mRecyclerViewx.getChildCount());}
 
-    public void forceNotifyRemoved() {
-        parkAdapter.notifyItemRangeChanged(0,parkAdapter.getItemCount());
-    }
+    public void forceNotifyRemoved() {parkAdapter.notifyItemRangeChanged(0,parkAdapter.getItemCount()); }
 }

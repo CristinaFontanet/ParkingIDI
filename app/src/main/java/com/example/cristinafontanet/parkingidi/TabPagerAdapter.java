@@ -1,9 +1,7 @@
 package com.example.cristinafontanet.parkingidi;
 
-import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import java.sql.Timestamp;
 
@@ -28,9 +26,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     }
 
     @Override
-    public int getCount() {
-        return PAGE_COUNT;
-    }
+    public int getCount() {  return PAGE_COUNT;}
 
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
@@ -50,22 +46,14 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        return tabTitles[position];
-    }
+    public CharSequence getPageTitle(int position) { return tabTitles[position]; }
 
     @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-    }
+    public void notifyDataSetChanged() {  super.notifyDataSetChanged(); }
 
-    public static int forceOnComplete(String res, int pos) {
-        return ajudaParking.onComplete(res,pos);
-    }
+    public static int forceOnComplete(String res, int pos) {return ajudaParking.onComplete(res,pos);  }
 
-    public static void forceOnFragmentInteraction() {
-            ajudaParking.onFragmentInteraction();
-    }
+    public static void forceOnFragmentInteraction() {ajudaParking.onFragmentInteraction(); }
 
     public void showAllHistoric() {ajudaHisto.showAllHistoric(); }
 
@@ -77,13 +65,9 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
 
     public void forceParkingNotifyDataSetChanged() {ajudaParking.forceNotifyDataSetChanged(); }
 
-    public void forceHistoricNotifyRemoved() {
-        ajudaHisto.forceNotifyRemoved();
-    }
+    public void forceHistoricNotifyRemoved() {ajudaHisto.forceNotifyRemoved(); }
 
-    public void forceParkingRemoved() {
-        ajudaParking.forceNotifyRemoved();
-    }
+    public void forceParkingRemoved() {ajudaParking.forceNotifyRemoved();}
 
 
 }

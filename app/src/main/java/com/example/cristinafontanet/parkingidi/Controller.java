@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -68,25 +67,13 @@ public final class Controller {
     public void bdChangeViewOrder() {bdContr.changeOrder(); }
 
 /** Consultes */
-    public int getNumFreePeaches() {
-        Log.i("Park", "Hi ha " + (maxPlaces - busyPlots) + " plases lliures");
-        return maxPlaces- busyPlots;
-    }
+    public int getNumFreePeaches() {return maxPlaces- busyPlots; }
 
     public boolean isFree(int num) {
-        if(num+1> plots.size()) {
-            Log.i("LOAD", "la plasa num: " + num + " està buida, el parking encara no s'ha omplert fins aqui");
-            return true;
-        }
+        if(num+1> plots.size()) return true;
         else {
-            if( plots.get(num)==null) {
-                Log.i("LOAD", "la plasa num: " + num + " està buida");
-                return true;
-            }
-            else {
-                Log.i("LOAD", "la plasa num: " + num + " està ocupada pel cotxe "+ plots.get(num).getMatricula());
-                return false;
-            }
+            if( plots.get(num)==null)return true;
+            else return false;
         }
     }
 
@@ -143,11 +130,9 @@ public final class Controller {
         else {
             int where = r.nextInt(maxPlaces);
             boolean found = false;
-            Log.i("Random", "where: " + where);
             for (int i = 0; i < plots.size() && !found; ++i) {
                 if (plots.get((where + i) % maxPlaces) == null) {
                     definitive = (where + i) % maxPlaces;
-                    Log.i("Random", "a la i: " + i + ", on la suma es: " + (where + i) + ", on el modul passa a donar: " + definitive);
                     nou = new Parking(matr, new Timestamp(cal.getTime().getTime()), definitive);
                     plots.set(definitive, nou);
                     ++busyPlots;
@@ -177,8 +162,6 @@ public final class Controller {
         Timestamp mDay = plots.get(i).getEntryDay();
         Calendar cal = Calendar.getInstance();
         actualT = new Timestamp(cal.getTime().getTime());
-        Log.i("HoraEntrada", "mDay: " + logAux.format(mDay) + ", el q implica: " + TimeUnit.MILLISECONDS.toSeconds(mDay.getTime()) / 60 + " minuts");
-        Log.i("HoraSortida", "Actual: " + actualT + ", el q implica: " + TimeUnit.MILLISECONDS.toSeconds(actualT.getTime()) / 60 + " minuts");
 
         int days = difDays(mDay);
 
@@ -192,18 +175,14 @@ public final class Controller {
             long midnight = cal.getTimeInMillis();  //Mitjanit del dia seguent, per poder saber quants minuts hi ha estat aquell dia
 
             min = (double)(TimeUnit.MILLISECONDS.toSeconds(midnight - mDay.getTime()))/60; //mins des de l'hora d'entrada fins a les 12 d'aquell mateix dia
-            Log.i("Hores","De l'entrada a "+mDay+" fins les 12 de la nit d'aquell dia, serien "+ min+" minuts, q son "+min/60+" hores i "+min%60 +" minuts");
             min +=(segDay*days)/60;
-            Log.i("Hores","I tenint en compte que hi ha estat "+days+" dies, sumem"+(segDay*days)/60+" minuts-> "+(segDay*days)/(60*60)+" hores i " +(segDay*days)%(60*60)+" min en total");
             cal.add(Calendar.DATE, -1);
             double  min2 = (double)(TimeUnit.MILLISECONDS.toSeconds(actualT.getTime()-cal.getTimeInMillis()))/60;
-            Log.i("Hores","I que surt a les "+actualT+" aixo son "+min2+" minuts, q son->"+min2/60+" hores i "+ min2%60+" minuts");
         }
         else {
             long diffT = actualT.getTime() - mDay.getTime();
             min = (double)TimeUnit.MILLISECONDS.toSeconds(diffT)/60;
         }
-        Log.i("Calc", "s'ha estat al parking " + min + " min");
         return min;
     }
 
@@ -235,7 +214,6 @@ public final class Controller {
     public void undoLastMove() {
         int plot = lastMoved.getPlot();
         Parking last = null;
-        Log.i("UNDO", "Desfaig el moviment de la plasa " + plot + ", on hi havia el cotxe " + lastMoved.getMatricula());
         if(lastMoved.getExitDay()==null) {  //undoEntry
             newFreePlot(plot);
             bdContr.removeFromStatus(plot);

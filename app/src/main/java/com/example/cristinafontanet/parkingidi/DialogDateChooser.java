@@ -1,9 +1,7 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,7 @@ public class DialogDateChooser extends android.app.DialogFragment implements Vie
 
     private OnFragmentInteractionListener mListener;
     private DatePicker datePicker;
-    private static CharSequence date=null;
+    private static int[] date=null;
 
     public DialogDateChooser() {
         // Required empty public constructor
@@ -26,7 +24,7 @@ public class DialogDateChooser extends android.app.DialogFragment implements Vie
         return fragment;
     }
 
-    public static DialogFragment newInstance(CharSequence text) {
+    public static DialogDateChooser newInstance(int[] text) {
         DialogDateChooser fragment = new DialogDateChooser();
         date = text;
         return fragment;
@@ -43,11 +41,8 @@ public class DialogDateChooser extends android.app.DialogFragment implements Vie
         View v =inflater.inflate(R.layout.fragment_dialog_date_chooser, container, false);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         datePicker = (DatePicker) v.findViewById(R.id.datePicker);
-//        Log.i("DATE","Posem:"+date.subSequence(0,1)+"/"+date.subSequence(2,3)+"/"+date.subSequence(4,date.length()-1));
         if(date!=null){
-            Log.i("DATE","DE la data "+date);
-            Log.i("DATE", "Posem:" + date.subSequence(0, 2) + "/" + date.subSequence(3, 5) + "/" + date.subSequence(6, date.length()));
-            datePicker.updateDate(Integer.valueOf(date.subSequence(6,date.length()).toString()),Integer.valueOf(date.subSequence(3, 5).toString()), Integer.valueOf(date.subSequence(0,2).toString()));
+            datePicker.updateDate(date[2],date[1]-1,date[0]);
         }
         Button but = (Button) v.findViewById(R.id.bAccepta);
         but.setOnClickListener(this);
@@ -85,7 +80,6 @@ public class DialogDateChooser extends android.app.DialogFragment implements Vie
                 dismiss();
                 break;
             default:
-                Log.i("DATE","Entro en el default");
                 break;
         }
     }

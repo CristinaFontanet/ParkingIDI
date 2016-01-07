@@ -1,16 +1,11 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Selection;
 import android.text.Spanned;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +57,6 @@ public class DialogPriceChanger extends android.app.DialogFragment implements Vi
                 if(s.toString().length()==1 && !s.toString().contains(".")) {
                     editText.setText(editText.getText().toString()+".");
                     editText.setSelection(editText.getText().toString().length());
-                    Log.i("DEC"," estic al textWatcher");
                 }
                 if(s.toString().length()==1 && s.toString().equals(".")) editText.setText("");
             }

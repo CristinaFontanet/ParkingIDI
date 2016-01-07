@@ -1,12 +1,7 @@
 package com.example.cristinafontanet.parkingidi;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +10,11 @@ import android.widget.Button;
 import android.widget.TimePicker;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DialogHourChoose.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DialogHourChoose#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DialogHourChoose extends  android.app.DialogFragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     private TimePicker timePicker;
-    private static CharSequence hour=null;
+    private static int[] hour=null;
 
     public DialogHourChoose() {
         // Required empty public constructor
@@ -38,7 +25,7 @@ public class DialogHourChoose extends  android.app.DialogFragment implements Vie
         return fragment;
     }
 
-    public static DialogFragment newInstance(CharSequence text) {
+    public static DialogHourChoose newInstance(int[] text) {
         DialogHourChoose fragment = new DialogHourChoose();
         hour = text;
         return fragment;
@@ -58,9 +45,8 @@ public class DialogHourChoose extends  android.app.DialogFragment implements Vie
         timePicker = (TimePicker) v.findViewById(R.id.timePicker);
         timePicker.setIs24HourView(true);
         if(hour!=null){
-            Log.i("DATE","DE la hora "+hour);
-            timePicker.setCurrentHour(Integer.valueOf(hour.subSequence(0,2).toString()));
-            timePicker.setCurrentMinute(Integer.valueOf(hour.subSequence(3, 5).toString()));
+            timePicker.setCurrentHour(hour[0]);
+            timePicker.setCurrentMinute(hour[1]);
         }
         Button but = (Button) v.findViewById(R.id.bAccepta2);
         but.setOnClickListener(this);
@@ -98,7 +84,6 @@ public class DialogHourChoose extends  android.app.DialogFragment implements Vie
                 dismiss();
                 break;
             default:
-                Log.i("DATE", "Entro en el default del DialogHourChoose OnClick");
                 break;
         }
     }

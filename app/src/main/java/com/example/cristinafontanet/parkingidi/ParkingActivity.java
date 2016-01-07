@@ -15,7 +15,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -236,7 +235,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override   //en triar una data de DialogDateChooser
     public void onFragmentInteraction(int dayOfMonth, int month, int year) {
-        Log.i("DATE","onFragmentInteraction Del PARKING ACTIVITY");
         if(dialogHistoryFragment!=null) {
             dialogHistoryFragment.selectedDate(dayOfMonth, month, year);
         }
@@ -289,9 +287,6 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override       //en canviar el preu
-    public void onFragmentInteraction(Double price) {
-        Log.i("PRICE", "Price changed to " + price);
-        bigControl.changePrice(price);
-    }
+    public void onFragmentInteraction(Double price) { bigControl.changePrice(price); }
 
 }

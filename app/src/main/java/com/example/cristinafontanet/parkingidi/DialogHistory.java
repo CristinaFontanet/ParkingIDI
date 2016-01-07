@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
     private RadioButton rbAll,rbDay,rbDates, rbMonth;
     private LinearLayout linlay1;
     private static Timestamp iniTime, endTime;
+    private int[] iniDay,endDay,iniHour,endHour;
     SimpleDateFormat hourF = new SimpleDateFormat("HH:mm");
     SimpleDateFormat dayF = new SimpleDateFormat("dd/MM/yyy");
     SimpleDateFormat diaF = new SimpleDateFormat("dd/MM/yyy HH:mm");
@@ -154,7 +154,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment;
                 if(tiniDate.getText().equals(getString(R.string.hdTriaData))) dialogFragment = DialogDateChooser.newInstance();
-                else dialogFragment = DialogDateChooser.newInstance(tiniDate.getText());
+                else dialogFragment = DialogDateChooser.newInstance(iniDay);
                 dialogFragment.show(frag,"DialogDateIniChoose");
                 break;
             case R.id.tiniHour:
@@ -162,7 +162,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 FragmentTransaction frag2 = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment2;
                 if (tIniHour.getText().equals(getString(R.string.hdTriaHora)))dialogFragment2 = DialogHourChoose.newInstance();
-                else dialogFragment2 = DialogHourChoose.newInstance(tIniHour.getText());
+                else dialogFragment2 = DialogHourChoose.newInstance(iniHour);
                 dialogFragment2.show(frag2,"DialogHourIniChoose");
                 break;
             case R.id.fiDate:
@@ -170,7 +170,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 FragmentTransaction frag3 = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment3;
                 if(fiDate.getText().equals(getString(R.string.hdTriaData))) dialogFragment3 = DialogDateChooser.newInstance();
-                else dialogFragment3 = DialogDateChooser.newInstance(fiDate.getText());
+                else dialogFragment3 = DialogDateChooser.newInstance(endDay);
                 dialogFragment3.show(frag3,"DialogDateEndChoose");
                 break;
             case R.id.fiHour:
@@ -178,7 +178,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 FragmentTransaction frag4 = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment4;
                 if (tFiHour.getText().equals(getString(R.string.hdTriaHora)))dialogFragment4 = DialogHourChoose.newInstance();
-                else dialogFragment4 = DialogHourChoose.newInstance(tFiHour.getText());
+                else dialogFragment4 = DialogHourChoose.newInstance(endHour);
                 dialogFragment4.show(frag4,"DialogHourEndChoose");
                 break;
             case R.id.rbAll:
@@ -253,7 +253,6 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                             dismiss();
                         }
                         if(iniTime.getTime()<endTime.getTime()) {
-                            Log.i("DATE", "Ini: " + iniTime + ", endTime: " + endTime);
                             mListener.onFragmentInteraction(2, iniTime, endTime);
                             dismiss();
                         }
@@ -264,21 +263,24 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
     }
 
     public void selectedDate(int dayOfMonth, int month,int year) {
-        Log.i("DATE","Data seleccionada: "+dayOfMonth+"/"+month+"/"+year);
         if(dateChoose==0) {
             tiniDate.setText(dayOfMonth + "/" + month + "/" + year);
+            iniDay = new int[]{dayOfMonth, month, year};
         }
         else {
             fiDate.setText(dayOfMonth + "/" + month + "/" + year);
+            endDay = new int[]{dayOfMonth, month, year};
         }
     }
 
     public void selectedHour(int hour, int min) {
         if(hourChoose==0) {
             tIniHour.setText(hour + ":" + min);
+            iniHour = new int[]{hour,min};
         }
         else {
             tFiHour.setText(hour + ":" + min);
+            endHour = new int[]{hour,min};
         }
     }
 
