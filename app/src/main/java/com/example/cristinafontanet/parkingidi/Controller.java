@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -41,6 +40,8 @@ public final class Controller {
     protected static final int undoExit = 0;
     protected static final int undoError = -1;
     protected static final int undoEntry = 1;
+
+    protected static final int exportMediaError = -1;
 
     public Controller(ParkingActivity vista, Double price, int nplots) {
         maxPlaces = nplots;
@@ -248,7 +249,6 @@ public final class Controller {
         editor.putInt("numPlots", num);
         editor.apply();
         if(num<maxPlaces) {
-            Log.i("PLOTS", "Reduim el num de places ant: " + maxPlaces + " noves: " + num);
             for (int i = maxPlaces-1; i >= num; --i) {
                 if(!isFree(i)) {
                     --busyPlots;
@@ -258,24 +258,37 @@ public final class Controller {
             }
         }
         else if(num>maxPlaces) {
-            Log.i("PLOTS", "Augmentem el num de places ant: " + maxPlaces + " noves: " + num);
             for(int i = maxPlaces; i < num;++i) {
                 plots.add(null);
             }
         }
         maxPlaces = num;
+        lastMoved = null;
     }
 
     public int exportHistorialState() {
         String state = Environment.getExternalStorageState();
-        if (!Environment.MEDIA_MOUNTED.equals(state))  return -1;
+        if (!Environment.MEDIA_MOUNTED.equals(state))  return exportMediaError;
         else {
             File exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             if (!exportDir.exists())exportDir.mkdirs();
             Calendar cal =Calendar.getInstance();
-            String name = logAux.format(cal.getTime()).concat("FontanetCristinaParking.csv");
+            String name = logAux.format(cal.getTime()).concat("HistFontanetCristinaParking.csv");
             exportFile = new File(exportDir, name);
             return bdContr.exportToCSV(exportFile);
+        }
+    }
+
+    public int exportResumState() {
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state))  return exportMediaError;
+        else {
+            File exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            if (!exportDir.exists())exportDir.mkdirs();
+            Calendar cal =Calendar.getInstance();
+            String name = logAux.format(cal.getTime()).concat("ResumFontanetCristinaParking.csv");
+            exportFile = new File(exportDir, name);
+            return bdContr.exportResumToCSV(exportFile);
         }
     }
 

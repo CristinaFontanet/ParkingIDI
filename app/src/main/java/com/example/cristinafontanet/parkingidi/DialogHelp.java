@@ -62,7 +62,7 @@ public class DialogHelp extends android.app.DialogFragment implements View.OnCli
 
         listDataHeader.add("Registra l'entrada d'un cotxe");
         List<String> entry = new ArrayList<>();
-        entry.add("-   Clicant al botó amb el simbol '+' d'abaix a la dreta");
+        entry.add("-   Clicant al botó '+' d'abaix a la dreta");
         entry.add("-   Clicant sobre qualsevol plaça lliure");
         entry.add("Si hi ha places lliures, es demana la matricula del cotxe i se li assigna una plaça aleatòria");
         entry.add("Si no hi ha places lliures, es mostra un missatge d'error");
@@ -92,6 +92,24 @@ public class DialogHelp extends android.app.DialogFragment implements View.OnCli
         List<String> order = new ArrayList<>();
         order.add("La recaptació es pot mostrar tant en ordre ascendent com ascendent a partir de la data de sortida i canviar-se a partir del botó '1>9' ");
         listDataChild.put(listDataHeader.get(5), order);
+
+        listDataHeader.add("Exporta dades a format csv");
+        List<String> export = new ArrayList<>();
+        export.add("-   Es pot exportar l'historial de sortides del parking i el resum diari d'aquestes en el menú d'opcions de l'aplicació");
+        export.add("El fitxer es crea a la carpeta per defecte de Downloads. En cas de no tenir-ne, se'n pot crear una amb el mateix nom.");
+        listDataChild.put(listDataHeader.get(6), export);
+
+        listDataHeader.add("Canvia el preu");
+        List<String> price = new ArrayList<>();
+        price.add("-    Es pot canviar el preu per minut en el menú d'opcions de l'aplicació");
+        price.add("El nou preu s'aplicarà a les sortides que es realitzin a partir de realitzar el canvi");
+        listDataChild.put(listDataHeader.get(7), order);
+
+        listDataHeader.add("Canvia el nombre de places");
+        List<String> plots = new ArrayList<>();
+        plots.add("-    Es pot canviar el nombre de places disponibles al parking en el menú d'opcions de l'aplicació");
+        plots.add("Es recomana canviar el nombre de places amb les places buides ja que s'eliminaran els cotxes que ocupin les afectades.");
+        listDataChild.put(listDataHeader.get(8), order);
     }
 
     @Override

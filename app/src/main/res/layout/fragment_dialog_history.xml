@@ -64,8 +64,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@drawable/divider_horitzontal_black"
-            android:showDividers="middle|beginning|end"
             android:id="@+id/linlay1"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="5dp"
@@ -74,42 +72,28 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@drawable/divider_vertical_black"
-                android:showDividers="middle|end|beginning">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/hdInici"
-                    android:id="@+id/textView14"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="2dp"
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp" />
+                android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="iniDate"
+                        android:text="@string/hdTriaDataIn"
                         android:id="@+id/tiniDate"
                         android:layout_weight="5"
                         android:gravity="center"
-                        style="@android:style/Widget.Holo.Spinner"/>
+                        style="@android:style/Widget.Holo.Light.Spinner"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="iniHour"
+                        android:text="@string/hdTriaHoraIn"
                         android:id="@+id/tiniHour"
                         android:layout_weight="5"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        style="@android:style/Widget.DeviceDefault.Spinner" />
+                        style="@android:style/Widget.Holo.Light.Spinner" />
 
             </LinearLayout>
 
@@ -117,28 +101,14 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@drawable/divider_vertical_black"
-                android:showDividers="middle|end|beginning"
                 android:id="@+id/linlay2"
                 >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/hdFinal"
-                    android:id="@+id/textView17"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="1dp"
-                    android:gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="fiDate"
+                        android:text="@string/hdTriaDataF"
                         android:id="@+id/fiDate"
                         android:layout_weight="5"
                         android:layout_gravity="center"
@@ -149,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="fiHour"
+                        android:text="@string/hdTriaHoraFi"
                         android:id="@+id/fiHour"
                         android:layout_weight="5"
                         android:layout_gravity="center"

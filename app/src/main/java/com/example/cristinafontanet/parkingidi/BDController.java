@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 /*
  * Created by CristinaFontanet on 15/12/2015.
@@ -22,11 +23,15 @@ public class BDController {
     SimpleDateFormat diaOnlyF = new SimpleDateFormat("yyy-MM-dd 00:00:00.0");
     SimpleDateFormat monthOnlyF = new SimpleDateFormat("yyy-MM-01 00:00:00.0");
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+    private SimpleDateFormat export = new SimpleDateFormat("yyy/MM/dd");
     String orderASCH ="exitDay ASC, entryDay ASC";
     String orderDESCH ="exitDay DESC, entryDay DESC";
     String orderASCP ="entryDay ASC";
     String orderDESCP ="entryDay DESC";
     String order,orderP;
+
+    protected static final int exportExcError = -2;
+    protected static final int exportOk = 0;
 
     BDController(Activity vista) {
         dades = new BD(vista);
@@ -330,11 +335,58 @@ public class BDController {
         }
         catch(Exception exc) {
          //   exc.printStackTrace();
-            return -2;
+            return exportExcError;
         }
         finally {
             if(printWriter != null) printWriter.close();
         }
-        return 0;
+        return exportOk;
+    }
+
+    public int exportResumToCSV(File file) {
+        PrintWriter printWriter = null;
+        HashMap<String,SummaryDay> data = new HashMap<>();
+        try {
+            file.createNewFile();
+            printWriter = new PrintWriter(new FileWriter(file));
+
+            db = dades.getReadableDatabase();
+            printWriter.println("Any, Mes, Dia, Sortides, Recaptat, mitjaPerCotxe");
+
+            Cursor curCSV = null;
+            if(db != null) {
+                String[] s = {};
+                curCSV = db.rawQuery("SELECT exitDay, pricePayed FROM THistorial ORDER BY exitDay ASC; ", s);
+            }
+            if(curCSV.moveToFirst()) {
+                do {
+                    Date exitDate = new java.sql.Date(curCSV.getLong(0));
+                    Double price = curCSV.getDouble(1);
+                    String aux = export.format(exitDate);
+
+                    if(data.containsKey(aux)) data.get(aux).addExit(price);
+                    else {
+                        SummaryDay another = new SummaryDay(aux,price);
+                        data.put(aux,another);
+                    }
+                } while(curCSV.moveToNext());
+            }
+            curCSV.close();
+            db.close();
+        }
+        catch(Exception exc) {
+            //   exc.printStackTrace();
+            return exportExcError;
+        }
+        finally {
+            for(String i: data.keySet()){
+                String d[] = i.split("/");
+                String record = d[0] + ", " + d[1] + ", " + d[2] + ", " + data.get(i).getNumExits()+", "+data.get(i).getPrice()+", "+data.get(i).getAverage();
+                printWriter.println(record);
+            }
+            if(printWriter != null) printWriter.close();
+
+        }
+        return exportOk;
     }
 }

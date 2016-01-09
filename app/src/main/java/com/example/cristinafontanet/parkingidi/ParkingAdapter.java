@@ -18,7 +18,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
 
     private SimpleDateFormat logAux = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
     private AdapterViewCompat.OnClickListener mListener;
-    private Controller bigControl;
+    private static Controller bigControl;
     private Activity father;
 
 

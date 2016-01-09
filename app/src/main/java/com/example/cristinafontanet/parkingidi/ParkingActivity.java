@@ -155,25 +155,34 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                break;
            case R.id.menu_export:
                int result = bigControl.exportHistorialState();
-               if(result==0) {
-                   FragmentTransaction frag7 = getFragmentManager().beginTransaction();
-                   DialogFragment dialogFragment7 = Dialog2But.newInstance(getString(R.string.exportOk),idFile);
-                   dialogFragment7.show(frag7, "ShowExportDialog");
-               }
-               else if(result==-1){
-                   FragmentTransaction frag7 = getFragmentManager().beginTransaction();
-                   DialogFragment dialogFragment7 = DialogBasic.newInstance(getString(R.string.exportNoWrite),getString(R.string.ok),getString(R.string.title_error));
-                   dialogFragment7.show(frag7, "ShowError1ExportDialog");
-               }
-               else if (result==-2) {
-                   FragmentTransaction frag7 = getFragmentManager().beginTransaction();
-                   DialogFragment dialogFragment7 = DialogBasic.newInstance(getString(R.string.exportNo),getString(R.string.ok),getString(R.string.title_error));
-                   dialogFragment7.show(frag7, "ShowError2ExportDialog");
-               }
+               exportOptions(result);
+               break;
+           case R.id.menu_export_resum:
+               int result2 = bigControl.exportResumState();
+               exportOptions(result2);
+               break;
            default:
                break;
        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void exportOptions(int result) {
+        if(result==0) {
+            FragmentTransaction frag7 = getFragmentManager().beginTransaction();
+            DialogFragment dialogFragment7 = Dialog2But.newInstance(getString(R.string.exportOk),idFile);
+            dialogFragment7.show(frag7, "ShowExportDialog");
+        }
+        else if(result==-1){
+            FragmentTransaction frag7 = getFragmentManager().beginTransaction();
+            DialogFragment dialogFragment7 = DialogBasic.newInstance(getString(R.string.exportNoWrite),getString(R.string.ok),getString(R.string.title_error));
+            dialogFragment7.show(frag7, "ShowError1ExportDialog");
+        }
+        else if (result==-2) {
+            FragmentTransaction frag7 = getFragmentManager().beginTransaction();
+            DialogFragment dialogFragment7 = DialogBasic.newInstance(getString(R.string.exportNo),getString(R.string.ok),getString(R.string.title_error));
+            dialogFragment7.show(frag7, "ShowError2ExportDialog");
+        }
     }
 
     @Override
@@ -299,6 +308,5 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     public void onFragmentInteraction(int num) {
         bigControl.changeNumberPlots(num);
         pagAdapt.forceParkingPlotChange();
-     //   bigControl.resetStatus();
     }
 }

@@ -2,6 +2,7 @@ package com.example.cristinafontanet.parkingidi;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import java.sql.Timestamp;
 
@@ -33,7 +34,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
         switch(position) {
             case 0:
                 ajudaParking = new ParkingStatus();
-                ajudaParking.sendFather(this, bigControl,father);
+                ajudaParking.sendFather(bigControl,father);
                 tab = ajudaParking;
                 break;
             case 1:
@@ -70,10 +71,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     public void forceParkingRemoved() {ajudaParking.forceNotifyRemoved();}
 
     public void forceParkingPlotChange() {
-        ajudaParking = new ParkingStatus();
-        ajudaParking.sendFather(this, bigControl,father);
-        tab = ajudaParking;
-        ajudaParking.forceNotifyDataSetChanged();
+        Log.i("PLOTS","vaig a reiniciar el ParkingStatus");
+        ajudaParking.forceNotifyNumPlotsChanged();
     }
 }
 

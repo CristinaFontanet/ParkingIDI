@@ -12,7 +12,8 @@
     <string name="menu_help">Help</string>
     <string name="menu_price">Canvia el preu </string>
     <string name="menu_plots">Canvia el nombre de places </string>
-    <string name="menu_export">Exporta a Csv</string>
+    <string name="menu_export_hist">Exporta recaptament a Csv</string>
+    <string name="menu_export_resum">Exporta resum a Csv</string>
 
     <!--Titles -->
     <string name="help_title">Help</string>
@@ -67,10 +68,10 @@
     <string name="hdRecaptMens">Recaptació mensual</string>
     <string name="hdRecaptDates">Recaptació entre dues dates</string>
     <string name="hdMostra">Mostra</string>
-    <string name="hdInici">Inici:</string>
-    <string name="hdFinal">Final:</string>z
-    <string name="hdTriaHora">Tria una hora</string>
-    <string name="hdTriaData">Tria una data</string>
+    <string name="hdTriaHoraIn">Hora inici</string>
+    <string name="hdTriaDataIn">Data inici</string>
+    <string name="hdTriaHoraFi">Hora final</string>
+    <string name="hdTriaDataF">Data final</string>
     <string name="hderrorNoDIni">Tria una data d\'inici</string>
     <string name="hderrorNoHIni">Tria una hora d\'inici</string>
     <string name="hderrorNoDFi">Tria una data de fi</string>
@@ -91,7 +92,7 @@
     <string name="Accept">Accepta</string>
 
     <string name="resetHistory">Historial buidat</string>
-    <string name="alertResetHistorial">Segur que vols buidar l\'historial? Recorda que questa acció no es podrà desfer </string>
+    <string name="alertResetHistorial">Segur que vols buidar l\'historial?\nRecorda que questa acció no es podrà desfer i que eliminarà totes les dades d\'aquest.\nPots fer\-ne una còpia exportant\-lo en format csv </string>
     <string name="resetParkingStatus">Places buidades</string>
     <string name="alertResetStatus">Segur que vols buidar les places del parking? Recorda que questa acció no es podrà desfer </string>
     <string name="priceText">Preu per minut: </string>
@@ -103,6 +104,6 @@
     <string name="exportNoWrite">No hi ha permisos per escriure a la memoria del dispositiu. Tens carpeta de Downloads?</string>
 
     <string name="plotsText">Nombre de places:</string>
-    <string name="changeNumPlotsAdvise">Atenció! Si el nombre de places es redueix i hi havia algun cotxe en les últimes places, aquests seran eliminats sense fer cap registre de sortida</string>
+    <string name="changeNumPlotsAdvise">Atenció! Si el nombre de places es redueix i hi havia algun cotxe en les últimes places, aquests seran eliminats sense fer cap registre de sortida \nAtenció! si canvies el nombre de places, no podràs desfer l\'últim moviment realitzat</string>
     <string name="plotsMin">El nombre de plots ha de ser més gran a 0</string>
 </resources>

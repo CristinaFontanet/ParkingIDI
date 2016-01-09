@@ -21,7 +21,7 @@ import java.util.Date;
 public class DialogHistory extends android.app.DialogFragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
-    private TextView tiniDate,tIniHour,fiDate,tFiHour,tIni,tEnd;
+    private TextView tiniDate,tIniHour,fiDate,tFiHour;
     private int dateChoose,hourChoose;
     private RadioButton rbAll,rbDay,rbDates, rbMonth;
     private LinearLayout linlay1;
@@ -71,23 +71,20 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
         show.setOnClickListener(this);
         linlay1 = (LinearLayout) v.findViewById(R.id.linlay1);
 
-        tIni = (TextView) v.findViewById(R.id.textView14);
-        tEnd = (TextView) v.findViewById(R.id.textView17);
-
         tiniDate = (TextView) v.findViewById(R.id.tiniDate);
-        tiniDate.setText(getResources().getString(R.string.hdTriaData));
+        tiniDate.setText(getResources().getString(R.string.hdTriaDataIn));
         tiniDate.setOnClickListener(this);
 
         fiDate = (TextView) v.findViewById(R.id.fiDate);
-        fiDate.setText(getResources().getString(R.string.hdTriaData));
+        fiDate.setText(getResources().getString(R.string.hdTriaDataF));
         fiDate.setOnClickListener(this);
 
         tIniHour = (TextView) v.findViewById(R.id.tiniHour);
-        tIniHour.setText(getResources().getString(R.string.hdTriaHora));
+        tIniHour.setText(getResources().getString(R.string.hdTriaHoraIn));
         tIniHour.setOnClickListener(this);
 
         tFiHour= (TextView) v.findViewById(R.id.fiHour);
-        tFiHour.setText(getResources().getString(R.string.hdTriaHora));
+        tFiHour.setText(getResources().getString(R.string.hdTriaHoraFi));
         tFiHour.setOnClickListener(this);
 
         if(histType==0)rbAll.setChecked(true);
@@ -113,8 +110,6 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
         tiniDate.setVisibility(View.INVISIBLE);
         tIniHour.setVisibility(View.INVISIBLE);
         fiDate.setVisibility(View.INVISIBLE);
-        tEnd.setVisibility(View.INVISIBLE);
-        tIni.setVisibility(View.INVISIBLE);
     }
 
     private void showExtras() {
@@ -123,8 +118,6 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
         tiniDate.setVisibility(View.VISIBLE);
         tIniHour.setVisibility(View.VISIBLE);
         fiDate.setVisibility(View.VISIBLE);
-        tEnd.setVisibility(View.VISIBLE);
-        tIni.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -157,7 +150,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 dateChoose = 0;
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment;
-                if(tiniDate.getText().equals(getString(R.string.hdTriaData))) dialogFragment = DialogDateChooser.newInstance();
+                if(tiniDate.getText().equals(getString(R.string.hdTriaDataIn))) dialogFragment = DialogDateChooser.newInstance();
                 else dialogFragment = DialogDateChooser.newInstance(iniDay);
                 dialogFragment.show(frag,"DialogDateIniChoose");
                 break;
@@ -165,7 +158,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 hourChoose =0;
                 FragmentTransaction frag2 = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment2;
-                if (tIniHour.getText().equals(getString(R.string.hdTriaHora)))dialogFragment2 = DialogHourChoose.newInstance();
+                if (tIniHour.getText().equals(getString(R.string.hdTriaHoraIn)))dialogFragment2 = DialogHourChoose.newInstance();
                 else dialogFragment2 = DialogHourChoose.newInstance(iniHour);
                 dialogFragment2.show(frag2,"DialogHourIniChoose");
                 break;
@@ -173,7 +166,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 dateChoose =1;
                 FragmentTransaction frag3 = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment3;
-                if(fiDate.getText().equals(getString(R.string.hdTriaData))) dialogFragment3 = DialogDateChooser.newInstance();
+                if(fiDate.getText().equals(getString(R.string.hdTriaDataF))) dialogFragment3 = DialogDateChooser.newInstance();
                 else dialogFragment3 = DialogDateChooser.newInstance(endDay);
                 dialogFragment3.show(frag3,"DialogDateEndChoose");
                 break;
@@ -181,7 +174,7 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
                 hourChoose =1;
                 FragmentTransaction frag4 = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment4;
-                if (tFiHour.getText().equals(getString(R.string.hdTriaHora)))dialogFragment4 = DialogHourChoose.newInstance();
+                if (tFiHour.getText().equals(getString(R.string.hdTriaHoraFi)))dialogFragment4 = DialogHourChoose.newInstance();
                 else dialogFragment4 = DialogHourChoose.newInstance(endHour);
                 dialogFragment4.show(frag4,"DialogHourEndChoose");
                 break;
@@ -225,19 +218,19 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
             else {
                     boolean inc = false;
                     String message = null;
-                    if(tiniDate.getText().equals(getResources().getString(R.string.hdTriaData))) {
+                    if(tiniDate.getText().equals(getResources().getString(R.string.hdTriaDataIn))) {
                         inc = true;
                         message = getResources().getString(R.string.hderrorNoDIni);
                     }
-                    else if(fiDate.getText().equals(getResources().getString(R.string.hdTriaData))) {
+                    else if(fiDate.getText().equals(getResources().getString(R.string.hdTriaDataF))) {
                         inc = true;
                         message =getResources().getString(R.string.hderrorNoDFi);
                     }
-                    else if (tIniHour.getText().equals(getResources().getString(R.string.hdTriaHora))) {
+                    else if (tIniHour.getText().equals(getResources().getString(R.string.hdTriaHoraIn))) {
                         inc = true;
                         message =getResources().getString(R.string.hderrorNoHIni);
                     }
-                    else if (tFiHour.getText().equals(getResources().getString(R.string.hdTriaHora))) {
+                    else if (tFiHour.getText().equals(getResources().getString(R.string.hdTriaHoraFi))) {
                         inc = true;
                         message =getResources().getString(R.string.hderrorNoHFi);
                     }

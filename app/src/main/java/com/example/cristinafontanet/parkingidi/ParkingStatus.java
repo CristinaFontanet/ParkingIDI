@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,34 +13,47 @@ import android.view.ViewGroup;
 public class ParkingStatus extends android.support.v4.app.Fragment implements View.OnClickListener, DialogNewCar.OnCompleteListener, DialogExitCar.OnFragmentInteractionListener {
 
     private static RecyclerView mRecyclerViewx;
-    public static ParkingAdapter parkAdapter;
-    static private Controller bigControl;
-    int actualCar;
-    static private TabPagerAdapter pare;
-    View parentView;
+    private static ParkingAdapter parkAdapter;
+    private static Controller bigControl;
+    static int actualCar;
     private static ParkingActivity father;
 
-    public ParkingStatus(){
+    public ParkingStatus(){ }
 
-    }
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
-        parentView = inflater.inflate(R.layout.activity_main, container,false);
-       StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-       // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
+    private void newPage(View parentView) {
+        StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(father,LinearLayoutManager.VERTICAL,false);
         mRecyclerViewx = (RecyclerView) parentView.findViewById(R.id.rv);
         mRecyclerViewx.setLayoutManager(manager);
+        mRecyclerViewx.setHasFixedSize(true);
 
         parkAdapter = new ParkingAdapter(bigControl,this,father);
         mRecyclerViewx.setAdapter(parkAdapter);
-        mRecyclerViewx.setHasFixedSize(true);
+    }
+
+    private void carClicked(int i) {
+        if(!bigControl.isFree(i)) {
+            actualCar = i;
+            FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
+            DialogFragment dialogFragment = DialogExitCar.newInstance(i, bigControl);
+            dialogFragment.show(frag,"ExitRegistre");
+        }
+        else {
+            FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
+            DialogFragment dialogFragment = DialogNewCar.newInstance(father,i,bigControl);
+            dialogFragment.show(frag, "AskRegistration");
+        }
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,  Bundle savedInstanceState) {
+        View parentView = inflater.inflate(R.layout.activity_main, container,false);
+       newPage(parentView);
         return parentView;
     }
 
-    public void sendFather(TabPagerAdapter pareAd, Controller am, ParkingActivity fatherAct){
+    public void sendFather(Controller am, ParkingActivity fatherAct){
         bigControl = am;
         father =fatherAct;
-        pare = pareAd;
         bigControl.BDPakingStaus();
     }
 
@@ -55,19 +67,6 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
             }
     }
 
-        private void carClicked(int i) {
-        if(!bigControl.isFree(i)) {
-            actualCar = i;
-            FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = DialogExitCar.newInstance(i, bigControl);
-            dialogFragment.show(frag,"ExitRegistre");
-        }
-        else {
-            FragmentTransaction frag = getActivity().getFragmentManager().beginTransaction();
-            DialogFragment dialogFragment = DialogNewCar.newInstance(father,i,bigControl);
-            dialogFragment.show(frag, "AskRegistration");
-        }
-    }
 
     @Override
     public int onComplete(String res, int pos) {
@@ -97,9 +96,7 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
 
     public void forceNotifyRemoved() {parkAdapter.notifyItemRangeChanged(0,parkAdapter.getItemCount()); }
 
-    public void forceNotifyNumPlotsChanged(int removed) {
-        Log.i("PLOTS","num removed: "+removed);
-        if(removed>0)parkAdapter.notifyItemRangeInserted(mRecyclerViewx.getChildCount(),removed);
-        else parkAdapter.notifyItemRangeRemoved(mRecyclerViewx.getChildCount()-1,removed);
+    public void forceNotifyNumPlotsChanged() {
+        newPage(getView());
     }
 }
