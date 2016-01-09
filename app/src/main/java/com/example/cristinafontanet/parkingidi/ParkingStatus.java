@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,4 +96,10 @@ public class ParkingStatus extends android.support.v4.app.Fragment implements Vi
     public void forceNotifyDataSetChanged() { parkAdapter.notifyItemRangeChanged(0, mRecyclerViewx.getChildCount());}
 
     public void forceNotifyRemoved() {parkAdapter.notifyItemRangeChanged(0,parkAdapter.getItemCount()); }
+
+    public void forceNotifyNumPlotsChanged(int removed) {
+        Log.i("PLOTS","num removed: "+removed);
+        if(removed>0)parkAdapter.notifyItemRangeInserted(mRecyclerViewx.getChildCount(),removed);
+        else parkAdapter.notifyItemRangeRemoved(mRecyclerViewx.getChildCount()-1,removed);
+    }
 }

@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 
-
 /*
  * Created by CristinaFontanet on 16/12/2015.
  */
@@ -57,7 +56,6 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
             adapterViewholder.matr.setText(bigControl.getCarReg(position));
             adapterViewholder.matr.setTextColor(father.getResources().getColor(R.color.busyStateText));
             adapterViewholder.layout.setBackgroundResource(R.drawable.busy_peach);
-          //  adapterViewholder.layout.setBackgroundColor(Color.parseColor("#ff9898"));
         }
         adapterViewholder.v.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +67,7 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
 
     @Override
     public int getItemCount() {
-        return 15;
+        return bigControl.getNumPlots();
     }
 
     public class BusyPlotViewHolder extends RecyclerView.ViewHolder {
@@ -89,10 +87,6 @@ public class ParkingAdapter extends RecyclerView.Adapter<ParkingAdapter.BusyPlot
             this.idCar = (TextView) itemView.findViewById(R.id.idCar);
             this.layout = (RelativeLayout) itemView.findViewById(R.id.carLayout);
             this.v = itemView;
-        }
-
-        public void drain() {
-
         }
     }
 

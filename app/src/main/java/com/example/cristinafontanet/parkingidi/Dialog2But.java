@@ -32,6 +32,7 @@ public class Dialog2But extends android.app.DialogFragment implements View.OnCli
 
         Button b1 = (Button) v.findViewById(R.id.byes);
         b1.setOnClickListener(this);
+
         b1 = (Button) v.findViewById(R.id.bno);
         b1.setOnClickListener(this);
         return  v;

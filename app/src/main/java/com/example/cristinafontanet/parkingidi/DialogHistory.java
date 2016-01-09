@@ -67,7 +67,8 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
 
         Button show = (Button) v.findViewById(R.id.bShow);
         show.setOnClickListener(this);
-
+        show = (Button) v.findViewById(R.id.button6);
+        show.setOnClickListener(this);
         linlay1 = (LinearLayout) v.findViewById(R.id.linlay1);
 
         tIni = (TextView) v.findViewById(R.id.textView14);
@@ -148,6 +149,9 @@ public class DialogHistory extends android.app.DialogFragment implements View.On
         switch (v.getId()) {
             case R.id.bShow:
                 showClicked();
+                break;
+            case R.id.button6:
+                dismiss();
                 break;
             case R.id.tiniDate:
                 dateChoose = 0;

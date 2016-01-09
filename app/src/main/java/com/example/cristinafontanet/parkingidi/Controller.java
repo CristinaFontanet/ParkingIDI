@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
@@ -23,7 +24,6 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Controller {
 
-    static private int maxPlaces = 15;
     private static double pricePerMinute = 0.02;
     private static final int segDay = 24*60*60;
     private SimpleDateFormat logAux = new SimpleDateFormat("yyyMMdd-HH.mm");
@@ -36,12 +36,14 @@ public final class Controller {
     private Timestamp actualT;
     private double price;
     private static File exportFile;
+    private static int maxPlaces;
 
     protected static final int undoExit = 0;
     protected static final int undoError = -1;
     protected static final int undoEntry = 1;
 
-    public Controller(ParkingActivity vista, Double price) {
+    public Controller(ParkingActivity vista, Double price, int nplots) {
+        maxPlaces = nplots;
         plots = new ArrayList<>(Collections.nCopies(maxPlaces, (Parking)null));
         busyPlots = 0;
         pricePerMinute = price;
@@ -92,6 +94,10 @@ public final class Controller {
     public Double getPrice() {  return pricePerMinute; }
 
     public File getFilePath() { return exportFile; }
+
+    public int getNumPlots() {
+        return maxPlaces;
+    }
 
 /** Notifications */
     public void showNormalToast(String message, ParkingActivity father) {
@@ -236,6 +242,30 @@ public final class Controller {
         editor.apply();
     }
 
+    public void changeNumberPlots(int num) {
+        SharedPreferences settings = father.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("numPlots", num);
+        editor.apply();
+        if(num<maxPlaces) {
+            Log.i("PLOTS", "Reduim el num de places ant: " + maxPlaces + " noves: " + num);
+            for (int i = maxPlaces-1; i >= num; --i) {
+                if(!isFree(i)) {
+                    --busyPlots;
+                    bdContr.removeFromStatus(i);
+                }
+                plots.remove(i);
+            }
+        }
+        else if(num>maxPlaces) {
+            Log.i("PLOTS", "Augmentem el num de places ant: " + maxPlaces + " noves: " + num);
+            for(int i = maxPlaces; i < num;++i) {
+                plots.add(null);
+            }
+        }
+        maxPlaces = num;
+    }
+
     public int exportHistorialState() {
         String state = Environment.getExternalStorageState();
         if (!Environment.MEDIA_MOUNTED.equals(state))  return -1;
@@ -255,4 +285,5 @@ public final class Controller {
         }
         return false;
     }
+
 }

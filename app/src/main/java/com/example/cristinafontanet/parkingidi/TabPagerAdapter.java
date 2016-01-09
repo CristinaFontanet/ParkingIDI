@@ -69,6 +69,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
 
     public void forceParkingRemoved() {ajudaParking.forceNotifyRemoved();}
 
-
+    public void forceParkingPlotChange() {
+        ajudaParking = new ParkingStatus();
+        ajudaParking.sendFather(this, bigControl,father);
+        tab = ajudaParking;
+        ajudaParking.forceNotifyDataSetChanged();
+    }
 }
 

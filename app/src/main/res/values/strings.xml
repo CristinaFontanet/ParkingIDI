@@ -11,12 +11,16 @@
     <string name="menu_about">About</string>
     <string name="menu_help">Help</string>
     <string name="menu_price">Canvia el preu </string>
+    <string name="menu_plots">Canvia el nombre de places </string>
     <string name="menu_export">Exporta a Csv</string>
 
     <!--Titles -->
     <string name="help_title">Help</string>
     <string name="title_error">Error</string>
-
+    <string name="edcTitle">Dades nou cotxe </string>
+    <string name="escTitle">Dades de sortida del cotxe </string>
+    <string name="priceTitle">Canvi de preu </string>
+    <string name="plots_title">Canvi de nombre de places </string>
 
     <!-- Help -->
     <string name="help_button">Tanca</string>
@@ -29,7 +33,6 @@
 
     <!-- Dialog New Car -->
     <string name="introdueix_matricula">Introdueix una matricula si us plau</string>
-    <string name="edcTitle">Dades nou cotxe </string>
     <string name="matriculaJaDins">Ja hi ha un cotxe amb aquesta matricula ara mateix</string>
 
     <!--  Exit Car-->
@@ -41,7 +44,6 @@
     <string name="edmPreu">Preu total: </string>
     <string name="edmDies">dies i </string>
     <string name="edmMoneda">€</string>
-    <string name="escTitle">Dades de sortida del cotxe: </string>
 
     <!--  ParkingActivity -->
     <string name="busyParking">El parking està ple, no pot entrar cap més cotxe.</string>
@@ -50,7 +52,7 @@
 
     <!-- TabPagerAdapter -->
     <string name="tabParking">Estat places</string>
-    <string name="tabHisto">Recaptament</string>
+    <string name="tabHisto">Recaptació</string>
 
     <!--  HistoricFragment -->
     <string name="historicRecaud">Recaudament: </string>
@@ -93,11 +95,14 @@
     <string name="resetParkingStatus">Places buidades</string>
     <string name="alertResetStatus">Segur que vols buidar les places del parking? Recorda que questa acció no es podrà desfer </string>
     <string name="priceText">Preu per minut: </string>
-    <string name="priceTitle">Canvi de preu </string>
     <string name="freePeach">Lliure</string>
 
 
     <string name="exportOk">S\'ha creat un arxiu a la carpeta de Downloads. Vols obrir-lo?</string>
     <string name="exportNo">Hi ha hagut algun problema a l\'hora de crear el fitxer. El teu dispositiu fa servir algun format concret?</string>
     <string name="exportNoWrite">No hi ha permisos per escriure a la memoria del dispositiu. Tens carpeta de Downloads?</string>
+
+    <string name="plotsText">Nombre de places:</string>
+    <string name="changeNumPlotsAdvise">Atenció! Si el nombre de places es redueix i hi havia algun cotxe en les últimes places, aquests seran eliminats sense fer cap registre de sortida</string>
+    <string name="plotsMin">El nombre de plots ha de ser més gran a 0</string>
 </resources>

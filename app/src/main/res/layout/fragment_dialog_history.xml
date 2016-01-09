@@ -97,7 +97,8 @@
                         android:text="iniDate"
                         android:id="@+id/tiniDate"
                         android:layout_weight="5"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        style="@android:style/Widget.Holo.Spinner"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -107,7 +108,8 @@
                         android:id="@+id/tiniHour"
                         android:layout_weight="5"
                         android:layout_gravity="center"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        style="@android:style/Widget.DeviceDefault.Spinner" />
 
             </LinearLayout>
 
@@ -140,7 +142,8 @@
                         android:id="@+id/fiDate"
                         android:layout_weight="5"
                         android:layout_gravity="center"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        style="@android:style/Widget.Holo.Light.Spinner"/>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -150,20 +153,35 @@
                         android:id="@+id/fiHour"
                         android:layout_weight="5"
                         android:layout_gravity="center"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        style="@android:style/Widget.Holo.Light.Spinner"/>
 
             </LinearLayout>
         </LinearLayout>
 
-        <Button
-            style="@style/ButtonTheme"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hdMostra"
-            android:id="@+id/bShow"
-            android:layout_marginStart="0dp"
             android:layout_below="@id/linlay1"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="20dp" >
+
+            <Button
+                style="@style/ButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Cancel"
+                android:id="@+id/button6"
+                android:layout_weight="5" />
+
+            <Button
+                style="@style/ButtonTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hdMostra"
+                android:id="@+id/bShow"
+                android:layout_weight="5" />
+        </LinearLayout>
 
     </RelativeLayout>
 

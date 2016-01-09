@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 /*
  * Created by CristinaFontanet on 20/12/2015.
  */
-public class ParkingActivity extends AppCompatActivity implements View.OnClickListener, DialogNewCar.OnCompleteListener, DialogExitCar.OnFragmentInteractionListener, ViewPager.OnPageChangeListener, DialogHistory.OnFragmentInteractionListener, DialogDateChooser.OnFragmentInteractionListener,DialogHourChoose.OnFragmentInteractionListener, Dialog2But.OnCompleteListener, DialogPriceChanger.OnFragmentInteractionListener {
+public class ParkingActivity extends AppCompatActivity implements View.OnClickListener, DialogNewCar.OnCompleteListener, DialogExitCar.OnFragmentInteractionListener, ViewPager.OnPageChangeListener, DialogHistory.OnFragmentInteractionListener, DialogDateChooser.OnFragmentInteractionListener,DialogHourChoose.OnFragmentInteractionListener, Dialog2But.OnCompleteListener, DialogPriceChanger.OnFragmentInteractionListener, DialogPlotsChanger.OnFragmentInteractionListener {
     private Controller bigControl;
     private TabPagerAdapter pagAdapt;
     private DialogHistory dialogHistoryFragment;
@@ -82,8 +82,9 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.pageadapter_layout);
         SharedPreferences settings = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         Double price = Double.valueOf(settings.getString("Price", "0.02"));
+        int numplots = settings.getInt("numPlots", 15);
+        bigControl = new Controller(this,price,numplots);
 
-        bigControl = new Controller(this,price);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         pagAdapt = new TabPagerAdapter(getSupportFragmentManager(), this, bigControl);
         viewPager.setAdapter(pagAdapt);     //Solo para MATERIAL
@@ -134,6 +135,11 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
                FragmentTransaction frag5 = getFragmentManager().beginTransaction();
                DialogFragment dialogFragment5 = DialogPriceChanger.newInstance(bigControl.getPrice());
                dialogFragment5.show(frag5, "ShowPriceChangeDialog");
+               break;
+           case R.id.menu_plots:
+               FragmentTransaction frag8 = getFragmentManager().beginTransaction();
+               DialogFragment dialogFragment8 = DialogPlotsChanger.newInstance(bigControl.getNumPlots());
+               dialogFragment8.show(frag8, "ShowPlotsChangeDialog");
                break;
            case R.id.menu_desfer:
                FragmentTransaction frag6 = getFragmentManager().beginTransaction();
@@ -289,4 +295,10 @@ public class ParkingActivity extends AppCompatActivity implements View.OnClickLi
     @Override       //en canviar el preu
     public void onFragmentInteraction(Double price) { bigControl.changePrice(price); }
 
+    @Override   //en canviar el nombre de places
+    public void onFragmentInteraction(int num) {
+        bigControl.changeNumberPlots(num);
+        pagAdapt.forceParkingPlotChange();
+     //   bigControl.resetStatus();
+    }
 }

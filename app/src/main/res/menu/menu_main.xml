@@ -2,24 +2,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
+    <item android:id="@+id/menu_about" android:title="@string/menu_about"
+        android:orderInCategory="10"  app:showAsAction="always" android:icon="@android:drawable/ic_menu_info_details"/>
+
     <item android:id="@+id/menu_help" android:title="@string/menu_help"
         android:orderInCategory="20" app:showAsAction="always" android:icon="@android:drawable/ic_menu_help"/>
-
-    <item android:id="@+id/menu_drain" android:title="@string/menu_drain"
-    android:orderInCategory="20" app:showAsAction="never"/>
-
-    <item android:id="@+id/menu_historicDrain" android:title="@string/menu_historicDrain"
-        android:orderInCategory="50" app:showAsAction="never" />
-
-    <item android:id="@+id/menu_price" android:title="@string/menu_price"
-        android:orderInCategory="10" app:showAsAction="never" />
-
-    <item android:id="@+id/menu_export" android:title="@string/menu_export"
-        android:orderInCategory="10" app:showAsAction="never" />
 
     <item android:id="@+id/menu_desfer" android:title="@string/menu_undo"
         android:orderInCategory="30" app:showAsAction="always" android:icon="@android:drawable/ic_menu_revert"/>
 
-    <item android:id="@+id/menu_about" android:title="@string/menu_about"
-        android:orderInCategory="10"  app:showAsAction="always" android:icon="@android:drawable/ic_menu_info_details"/>
+    <item android:id="@+id/menu_export" android:title="@string/menu_export"
+        android:orderInCategory="10" app:showAsAction="never" />
+
+    <item android:id="@+id/menu_price" android:title="@string/menu_price"
+        android:orderInCategory="20" app:showAsAction="never" />
+
+    <item android:id="@+id/menu_drain" android:title="@string/menu_drain"
+    android:orderInCategory="30" app:showAsAction="never"/>
+
+    <item android:id="@+id/menu_historicDrain" android:title="@string/menu_historicDrain"
+        android:orderInCategory="50" app:showAsAction="never" />
+
+    <item android:id="@+id/menu_plots" android:title="@string/menu_plots"
+        android:orderInCategory="60" app:showAsAction="never"/>
+
 </menu>

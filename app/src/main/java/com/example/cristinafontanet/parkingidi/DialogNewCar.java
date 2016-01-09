@@ -14,7 +14,6 @@ import android.widget.EditText;
 public class DialogNewCar extends android.app.DialogFragment implements View.OnClickListener {
 
     EditText matr;
-    Button enter;
     private static ParkingActivity father;
     private static int position;
     private OnCompleteListener mListener;
@@ -43,9 +42,10 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().setTitle(getString(R.string.edcTitle));
         matr = (EditText) v.findViewById(R.id.editText);
-        enter = (Button) v.findViewById(R.id.button);
+        Button enter = (Button) v.findViewById(R.id.button);
         enter.setOnClickListener(this);
-
+        enter = (Button) v.findViewById(R.id.button7);
+        enter.setOnClickListener(this);
         return v;
     }
 
@@ -72,7 +72,8 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
 
     @Override
     public void onClick(View view) {
-        if (view.getId()== R.id.button &&mListener != null) {
+        if(view.getId()==R.id.button7) dismiss();
+        else if (view.getId()== R.id.button &&mListener != null) {
             if(matr.getText().toString().isEmpty() || matr.getText().toString().trim().isEmpty()){
                 FragmentTransaction frag = getFragmentManager().beginTransaction();
                 DialogFragment dialogFragment = DialogBasic.newInstance(getString(R.string.introdueix_matricula), getString(R.string.ok),getString(R.string.title_error));
@@ -91,6 +92,5 @@ public class DialogNewCar extends android.app.DialogFragment implements View.OnC
     }
 
     public interface OnCompleteListener { int onComplete(String res, int pos); }
-
 
 }

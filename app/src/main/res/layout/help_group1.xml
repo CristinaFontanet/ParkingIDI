@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="@color/material_blue_grey_800">
+    android:background="@color/material_blue_grey_800"
+    style="@android:style/Widget.Holo.Light.ExpandableListView">
 
 
     <TextView
@@ -13,6 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textSize="17dp"
-        android:textColor="@color/abc_primary_text_material_dark" />
+        android:textColor="@color/abc_primary_text_material_dark"
+        style="@android:style/Widget.Holo.Light.ExpandableListView" />
 
 </LinearLayout>
